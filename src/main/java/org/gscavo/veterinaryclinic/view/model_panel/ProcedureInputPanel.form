@@ -21,7 +21,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
@@ -48,9 +48,9 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="procedureHeaderLabel" alignment="1" min="-2" pref="408" max="-2" attributes="0"/>
+                  <Component id="procedureHeaderLabel" alignment="1" pref="408" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -197,7 +197,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="procedureNameInputFieldActionPerformed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="procedureNameInputFieldKeyReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JSpinner" name="procedurePriceInputField">
@@ -215,6 +215,9 @@
           <Dimension value="[300, 30]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="procedurePriceInputFieldStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JSeparator" name="headerSeparator">
     </Component>
@@ -225,11 +228,14 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="ProcedureDescriptionTextArea">
+        <Component class="javax.swing.JTextArea" name="procedureDescriptionTextArea">
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
           </Properties>
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="procedureDescriptionTextAreaKeyReleased"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

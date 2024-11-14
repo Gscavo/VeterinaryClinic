@@ -9,41 +9,25 @@ import javafx.stage.Stage;
 
 
 import java.io.IOException;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import org.gscavo.veterinaryclinic.utils.connection.MongoDBConnection;
 
 import static org.gscavo.veterinaryclinic.utils.connection.MongoDBConnection.startConnection;
+import org.gscavo.veterinaryclinic.view.LoginFrame;
+import org.gscavo.veterinaryclinic.view.TestFrame;
+import org.gscavo.veterinaryclinic.view.panels.register.ProcedureRegisterPanel;
 
 
-/**
- * JavaFX App
- */
-public class App extends Application {
-    
-    private static Scene scene;
+public class App {
 
     public static MongoDBConnection mongoDBConnection;
 
-    @Override
-    public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"));
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
-    }
-    
     public static void main(String[] args) {
         startConnection(null);
 
-        launch();
-
+        TestFrame tf = new TestFrame();
+        
+        tf.setVisible(true);
     }
 }

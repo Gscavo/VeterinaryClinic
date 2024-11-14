@@ -4,12 +4,28 @@
  */
 package org.gscavo.veterinaryclinic.view.model_panel;
 
+import lombok.Getter;
+import org.gscavo.veterinaryclinic.utils.ViewUtils;
+import org.gscavo.veterinaryclinic.utils.enums.ProcedureType;
+
 /**
  *
  * @author gscavo
  */
 public class ProcedureInputPanel extends javax.swing.JPanel {
 
+    @Getter
+    String procedureName = "";
+    
+    @Getter
+    Float price = 0f;
+    
+    @Getter
+    ProcedureType type = ProcedureType.TREATMENT;
+    
+    @Getter
+    String description = "";
+    
     /**
      * Creates new form AddressInputPanel
      */
@@ -36,7 +52,7 @@ public class ProcedureInputPanel extends javax.swing.JPanel {
         procedurePriceInputField = new javax.swing.JSpinner();
         headerSeparator = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ProcedureDescriptionTextArea = new javax.swing.JTextArea();
+        procedureDescriptionTextArea = new javax.swing.JTextArea();
         treatmentRadioButton = new javax.swing.JRadioButton();
         examRadioButton = new javax.swing.JRadioButton();
 
@@ -79,9 +95,9 @@ public class ProcedureInputPanel extends javax.swing.JPanel {
         procedureNameInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         procedureNameInputField.setPreferredSize(new java.awt.Dimension(300, 30));
         procedureNameInputField.setSize(new java.awt.Dimension(300, 30));
-        procedureNameInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                procedureNameInputFieldActionPerformed(evt);
+        procedureNameInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                procedureNameInputFieldKeyReleased(evt);
             }
         });
 
@@ -89,10 +105,20 @@ public class ProcedureInputPanel extends javax.swing.JPanel {
         procedurePriceInputField.setModel(new javax.swing.SpinnerNumberModel(0.0f, null, null, 1.0f));
         procedurePriceInputField.setPreferredSize(new java.awt.Dimension(300, 30));
         procedurePriceInputField.setSize(new java.awt.Dimension(300, 30));
+        procedurePriceInputField.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                procedurePriceInputFieldStateChanged(evt);
+            }
+        });
 
-        ProcedureDescriptionTextArea.setColumns(20);
-        ProcedureDescriptionTextArea.setRows(5);
-        jScrollPane1.setViewportView(ProcedureDescriptionTextArea);
+        procedureDescriptionTextArea.setColumns(20);
+        procedureDescriptionTextArea.setRows(5);
+        procedureDescriptionTextArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                procedureDescriptionTextAreaKeyReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(procedureDescriptionTextArea);
 
         procedureTypeButtonGroup.add(treatmentRadioButton);
         treatmentRadioButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -147,7 +173,7 @@ public class ProcedureInputPanel extends javax.swing.JPanel {
                         .addComponent(procedureDescriptionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1))
-                    .addComponent(procedureHeaderLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(procedureHeaderLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -181,25 +207,33 @@ public class ProcedureInputPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void procedureNameInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procedureNameInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_procedureNameInputFieldActionPerformed
+    private void procedureNameInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_procedureNameInputFieldKeyReleased
+        this.procedureName = this.procedureNameInputField.getText();
+    }//GEN-LAST:event_procedureNameInputFieldKeyReleased
+
+    private void procedurePriceInputFieldStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_procedurePriceInputFieldStateChanged
+        this.price = ViewUtils.getFloatFromJSpinner(this.procedurePriceInputField);
+    }//GEN-LAST:event_procedurePriceInputFieldStateChanged
 
     private void treatmentRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_treatmentRadioButtonActionPerformed
-        // TODO add your handling code here:
+        this.type = ProcedureType.TREATMENT;
     }//GEN-LAST:event_treatmentRadioButtonActionPerformed
 
     private void examRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_examRadioButtonActionPerformed
-        // TODO add your handling code here:
+        this.type = ProcedureType.EXAM;
     }//GEN-LAST:event_examRadioButtonActionPerformed
+
+    private void procedureDescriptionTextAreaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_procedureDescriptionTextAreaKeyReleased
+        this.description = this.procedureDescriptionTextArea.getText();
+    }//GEN-LAST:event_procedureDescriptionTextAreaKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea ProcedureDescriptionTextArea;
     private javax.swing.JRadioButton examRadioButton;
     private javax.swing.JSeparator headerSeparator;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel procedureDescriptionLabel;
+    private javax.swing.JTextArea procedureDescriptionTextArea;
     private javax.swing.JLabel procedureHeaderLabel;
     private javax.swing.JTextField procedureNameInputField;
     private javax.swing.JLabel procedureNameLabel;

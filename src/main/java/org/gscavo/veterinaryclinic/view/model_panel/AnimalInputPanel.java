@@ -4,17 +4,34 @@
  */
 package org.gscavo.veterinaryclinic.view.model_panel;
 
+import java.util.ArrayList;
+import lombok.Getter;
+import org.gscavo.veterinaryclinic.controller.UserController;
+import org.gscavo.veterinaryclinic.model.Animal;
+import org.gscavo.veterinaryclinic.model.Client;
+import org.gscavo.veterinaryclinic.model.Species;
+import org.gscavo.veterinaryclinic.utils.ViewUtils;
+
 /**
  *
  * @author gscavo
  */
 public class AnimalInputPanel extends javax.swing.JPanel {
 
+    @Getter
+    private Animal animalData;
+    
+    private ArrayList<Client> tutorList;
+    
+    private ArrayList<Species> speciesList;
+    
     /**
      * Creates new form AddressInputPanel
      */
     public AnimalInputPanel() {
         initComponents();
+        animalData = new Animal();
+//        tutorList = UserController
     }
 
     /**
@@ -78,9 +95,9 @@ public class AnimalInputPanel extends javax.swing.JPanel {
         animalNameInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         animalNameInputField.setPreferredSize(new java.awt.Dimension(300, 30));
         animalNameInputField.setSize(new java.awt.Dimension(300, 30));
-        animalNameInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                animalNameInputFieldActionPerformed(evt);
+        animalNameInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                animalNameInputFieldKeyReleased(evt);
             }
         });
 
@@ -88,14 +105,19 @@ public class AnimalInputPanel extends javax.swing.JPanel {
         animalAgeInputField.setModel(new javax.swing.SpinnerNumberModel());
         animalAgeInputField.setPreferredSize(new java.awt.Dimension(300, 30));
         animalAgeInputField.setSize(new java.awt.Dimension(300, 30));
+        animalAgeInputField.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                animalAgeInputFieldStateChanged(evt);
+            }
+        });
 
         animalRaceInputField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         animalRaceInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         animalRaceInputField.setPreferredSize(new java.awt.Dimension(300, 30));
         animalRaceInputField.setSize(new java.awt.Dimension(300, 30));
-        animalRaceInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                animalRaceInputFieldActionPerformed(evt);
+        animalRaceInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                animalRaceInputFieldKeyReleased(evt);
             }
         });
 
@@ -109,20 +131,10 @@ public class AnimalInputPanel extends javax.swing.JPanel {
         animalSpeciesSelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ERROR" }));
         animalSpeciesSelection.setPreferredSize(new java.awt.Dimension(300, 30));
         animalSpeciesSelection.setSize(new java.awt.Dimension(300, 30));
-        animalSpeciesSelection.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                animalSpeciesSelectionActionPerformed(evt);
-            }
-        });
 
         animalTutorSelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ERROR" }));
         animalTutorSelection.setPreferredSize(new java.awt.Dimension(300, 30));
         animalTutorSelection.setSize(new java.awt.Dimension(300, 30));
-        animalTutorSelection.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                animalTutorSelectionActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -187,22 +199,23 @@ public class AnimalInputPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void animalNameInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_animalNameInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_animalNameInputFieldActionPerformed
+    private void animalNameInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_animalNameInputFieldKeyReleased
+        this.animalData.setName(
+                this.animalNameInputField.getText()
+        );
+    }//GEN-LAST:event_animalNameInputFieldKeyReleased
 
-    private void animalRaceInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_animalRaceInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_animalRaceInputFieldActionPerformed
+    private void animalAgeInputFieldStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_animalAgeInputFieldStateChanged
+        this.animalData.setAge(
+                ViewUtils.getIntFromJSpinner(this.animalAgeInputField)
+        );
+    }//GEN-LAST:event_animalAgeInputFieldStateChanged
 
-    private void animalSpeciesSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_animalSpeciesSelectionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_animalSpeciesSelectionActionPerformed
-
-    private void animalTutorSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_animalTutorSelectionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_animalTutorSelectionActionPerformed
-
+    private void animalRaceInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_animalRaceInputFieldKeyReleased
+        this.animalData.setRace(
+                this.animalRaceInputField.getText()
+        );
+    }//GEN-LAST:event_animalRaceInputFieldKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner animalAgeInputField;
