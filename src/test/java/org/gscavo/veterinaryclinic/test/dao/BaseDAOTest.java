@@ -46,8 +46,6 @@ public class BaseDAOTest {
                     new SymptomDAO(),
                     new VeterinarianDAO()
         ));
-
-        daos.forEach(BaseDAO::dropCollection);
     }
 
     @ParameterizedTest

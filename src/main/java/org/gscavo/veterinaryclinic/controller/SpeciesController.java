@@ -7,6 +7,8 @@ import org.gscavo.veterinaryclinic.utils.enums.StatusCode;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 import org.gscavo.veterinaryclinic.utils.security.Permissions;
 
+import java.util.ArrayList;
+
 import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
 
 public class SpeciesController {
@@ -25,5 +27,9 @@ public class SpeciesController {
         }
 
         return new SystemOperationResult(StatusCode.SUCCESS);
+    }
+    
+    public static ArrayList<Species> getAllSpecies() {
+        return SPECIES_DAO.findAll();
     }
 }

@@ -5,13 +5,17 @@
 package org.gscavo.veterinaryclinic.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lombok.*;
+import org.bson.Document;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import org.gscavo.veterinaryclinic.model.abstractions.Person;
 import org.gscavo.veterinaryclinic.utils.enums.PersonType;
 
+import static org.gscavo.veterinaryclinic.utils.ConversionUtils.listToArrayList;
 import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomNumericalString;
 import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomString;
 
@@ -21,12 +25,16 @@ import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomStri
  */
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Client extends Person implements BaseModel<Client> {
 
+    @BsonProperty("animal")
     private ArrayList<ObjectId> animal;
-    
+
+    @BsonProperty("appointmentList")
     private ArrayList<ObjectId> appointmentList;
+    
 
     @Builder
     public Client(ObjectId id,
@@ -38,7 +46,7 @@ public class Client extends Person implements BaseModel<Client> {
                   ObjectId address,
                   ArrayList<ObjectId> animal,
                   ArrayList<ObjectId> appointmentList) {
-        super(id, name, password, cpf, phoneNumber, email, address);
+        super(id, name, password, cpf, phoneNumber, email, address, PersonType.CLIENT);
         this.animal = animal;
         this.appointmentList = appointmentList;
     }
@@ -56,8 +64,15 @@ public class Client extends Person implements BaseModel<Client> {
                 .build();
     }
 
-    @Override
-    public PersonType getType() {
-        return PersonType.CLIENT;
+
+
+    public Client(Document document) {
+        super( document );
+
+        List<ObjectId> animals = document.getList("animal", ObjectId.class);
+        List<ObjectId> appointmentsList = document.getList("appointmentList", ObjectId.class);
+
+        this.animal = listToArrayList(animals);
+        this.appointmentList = listToArrayList(appointmentsList);
     }
 }

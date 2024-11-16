@@ -2,6 +2,7 @@ package org.gscavo.veterinaryclinic.controller;
 
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
+import java.util.ArrayList;
 import lombok.Getter;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.dao.*;
@@ -13,6 +14,7 @@ import org.gscavo.veterinaryclinic.utils.enums.StatusCode;
 import org.gscavo.veterinaryclinic.utils.security.Permissions;
 
 import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
+import org.gscavo.veterinaryclinic.utils.enums.PersonType;
 import static org.gscavo.veterinaryclinic.utils.information.SystemOperationResult.*;
 
 public class  UserController  {
@@ -127,6 +129,10 @@ public class  UserController  {
     @SuppressWarnings("unchecked")
     public static <T extends Person> T getUser(ObjectId clientId) {
         return (T) USERS_DAO.findById(clientId);
+    }
+    
+    public static ArrayList<Client> getAllClients() {
+        return CLIENT_DAO.findAll();
     }
 
     public static <T extends Person> SystemOperationResult appendAppointmentToUser(ObjectId appointmentId, ObjectId userId) {

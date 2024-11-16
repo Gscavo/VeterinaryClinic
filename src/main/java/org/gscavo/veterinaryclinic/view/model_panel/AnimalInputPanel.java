@@ -5,11 +5,17 @@
 package org.gscavo.veterinaryclinic.view.model_panel;
 
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+
 import lombok.Getter;
+import org.gscavo.veterinaryclinic.controller.SpeciesController;
 import org.gscavo.veterinaryclinic.controller.UserController;
 import org.gscavo.veterinaryclinic.model.Animal;
 import org.gscavo.veterinaryclinic.model.Client;
 import org.gscavo.veterinaryclinic.model.Species;
+import org.gscavo.veterinaryclinic.utils.StringUtils;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
 
 /**
@@ -30,8 +36,31 @@ public class AnimalInputPanel extends javax.swing.JPanel {
      */
     public AnimalInputPanel() {
         initComponents();
-        animalData = new Animal();
-//        tutorList = UserController
+        this.animalData = new Animal();
+        this.tutorList = UserController
+                .getAllClients();
+        this.speciesList = SpeciesController
+                .getAllSpecies();
+
+        ComboBoxModel<String> tutorModel = new DefaultComboBoxModel(
+                this.tutorList
+                        .stream()
+                        .map(client -> StringUtils.formatToSelection(client.getId(), client.getName()))
+                        .toList()
+                        .toArray()
+        );
+
+        ComboBoxModel<String> speciesModel = new DefaultComboBoxModel(
+                this.speciesList
+                .stream()
+                .map(species -> StringUtils.formatToSelection(species.getId(), species.getName()))
+                .toList()
+                .toArray()
+        );
+        
+        
+        animalTutorSelection.setModel(tutorModel);
+        animalSpeciesSelection.setModel(speciesModel);
     }
 
     /**
@@ -132,9 +161,13 @@ public class AnimalInputPanel extends javax.swing.JPanel {
         animalSpeciesSelection.setPreferredSize(new java.awt.Dimension(300, 30));
         animalSpeciesSelection.setSize(new java.awt.Dimension(300, 30));
 
-        animalTutorSelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ERROR" }));
         animalTutorSelection.setPreferredSize(new java.awt.Dimension(300, 30));
         animalTutorSelection.setSize(new java.awt.Dimension(300, 30));
+        animalTutorSelection.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                animalTutorSelectionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -192,9 +225,11 @@ public class AnimalInputPanel extends javax.swing.JPanel {
                     .addComponent(animalSpeciesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(animalSpeciesSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(animalTutorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(animalTutorSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(animalTutorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(animalTutorSelection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -216,6 +251,10 @@ public class AnimalInputPanel extends javax.swing.JPanel {
                 this.animalRaceInputField.getText()
         );
     }//GEN-LAST:event_animalRaceInputFieldKeyReleased
+
+    private void animalTutorSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_animalTutorSelectionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_animalTutorSelectionActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner animalAgeInputField;

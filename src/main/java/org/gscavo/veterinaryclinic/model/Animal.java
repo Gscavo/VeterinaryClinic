@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 
@@ -35,6 +36,20 @@ public class Animal implements BaseModel<Animal> {
     private String race;
     
     private int age;
+
+    public Animal(Document document) {
+        this.id = document.getObjectId("_id");
+
+        this.tutor = document.getObjectId("tutor");
+
+        this.name = document.getString("name");
+
+        this.species = document.getObjectId("species");
+
+        this.race = document.getString("race");
+
+        this.age = document.getInteger("age", -1);
+    }
 
     @Override
     public Animal randomizeAttributes() {

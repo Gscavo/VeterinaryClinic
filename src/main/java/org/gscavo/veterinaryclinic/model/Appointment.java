@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 
@@ -32,6 +33,17 @@ public class Appointment implements BaseModel<Appointment> {
     private ObjectId dateId;
 
     private float costAmount;
+
+    public Appointment(Document document) {
+        this.id = document.getObjectId("_id");
+        this.clientId = document.getObjectId("clientId");
+        this.animalId = document.getObjectId("animalId");
+        this.veterinarianId = document.getObjectId("veterinarianId");
+        this.symptomsIdList = new ArrayList<>(document.getList("symptomsIdList", ObjectId.class));
+        this.proceduresIdList = new ArrayList<>(document.getList("proceduresIdList", ObjectId.class));
+        this.dateId = document.getObjectId("dateId");
+        this.costAmount = document.getDouble("costAmount").floatValue();
+    }
 
     @Override
     public Appointment randomizeAttributes() {

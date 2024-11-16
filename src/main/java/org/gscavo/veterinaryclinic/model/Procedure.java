@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import org.gscavo.veterinaryclinic.utils.enums.ProcedureType;
@@ -26,6 +27,14 @@ public class Procedure implements BaseModel<Procedure> {
     private float price;
 
     private ProcedureType type;
+
+    public Procedure(Document document) {
+        this.id = document.getObjectId("_id");
+        this.name = document.getString("name");
+        this.description = document.getString("description");
+        this.price = document.getDouble("price").floatValue();
+        this.type = document.get("type", ProcedureType.class);
+    }
 
     @Override
     public Procedure randomizeAttributes() {

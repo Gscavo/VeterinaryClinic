@@ -1,8 +1,10 @@
 package org.gscavo.veterinaryclinic.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import org.gscavo.veterinaryclinic.model.abstractions.Person;
@@ -24,9 +26,12 @@ public class Admin extends Person implements BaseModel<Admin> {
                      String email,
                      ObjectId address)
     {
-        super(id, name, password, cpf, phoneNumber, email, address);
+        super(id, name, password, cpf, phoneNumber, email, address, PersonType.ADMIN);
     }
 
+    public Admin(Document document) {
+        super(document);
+    }
 
     @Override
     public Admin randomizeAttributes() {
@@ -38,10 +43,5 @@ public class Admin extends Person implements BaseModel<Admin> {
                 .email(getRandomString(null))
                 .address(new ObjectId())
                 .build();
-    }
-
-    @Override
-    public PersonType getType() {
-        return PersonType.ADMIN;
     }
 }

@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 
@@ -37,6 +38,16 @@ public class Address implements BaseModel<Address> {
     private String state;
     
     private String zipCode;
+
+    public Address(Document document) {
+        this.id = document.getObjectId("_id");
+        this.number = document.getInteger("number", -1);
+        this.street = document.getString("street");
+        this.neighborhood = document.getString("neighborhood");
+        this.city = document.getString("city");
+        this.state = document.getString("state");
+        this.zipCode = document.getString("zipCode");
+    }
 
     @Override
     public Address randomizeAttributes() {

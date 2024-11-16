@@ -1,6 +1,7 @@
 package org.gscavo.veterinaryclinic.model;
 
 import lombok.*;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import org.gscavo.veterinaryclinic.model.abstractions.Person;
@@ -31,9 +32,15 @@ public class Veterinarian extends Person implements BaseModel<Veterinarian> {
                         String crmv,
                         ArrayList<ObjectId> appointmentsList)
     {
-        super(id, name, password, cpf, phoneNumber, email, address);
+        super(id, name, password, cpf, phoneNumber, email, address, PersonType.VETERINARIAN);
         this.crmv = crmv;
         this.appointmentList = appointmentsList;
+    }
+
+    public Veterinarian(Document document) {
+        super(document);
+        this.crmv = document.getString("crmv");
+        this.appointmentList = new ArrayList<>(document.getList("appointmentList", ObjectId.class));
     }
 
     @Override
@@ -45,10 +52,5 @@ public class Veterinarian extends Person implements BaseModel<Veterinarian> {
                 .email(getRandomString(null))
                 .address(new ObjectId())
                 .build();
-    }
-
-    @Override
-    public PersonType getType() {
-        return PersonType.VETERINARIAN;
     }
 }

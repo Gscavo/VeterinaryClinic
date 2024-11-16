@@ -3,6 +3,7 @@ package org.gscavo.veterinaryclinic.model;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import org.gscavo.veterinaryclinic.model.abstractions.Person;
@@ -24,7 +25,11 @@ public class Secretary extends Person  implements BaseModel<Secretary> {
                      String email,
                      ObjectId address)
     {
-        super(id, name, password, cpf, phoneNumber, email, address);
+        super(id, name, password, cpf, phoneNumber, email, address, PersonType.SECRETARY);
+    }
+
+    public Secretary(Document document) {
+        super(document);
     }
 
     @Override
@@ -36,10 +41,5 @@ public class Secretary extends Person  implements BaseModel<Secretary> {
                 .email(getRandomString(null))
                 .address(new ObjectId())
                 .build();
-    }
-
-    @Override
-    public PersonType getType() {
-        return PersonType.SECRETARY;
     }
 }

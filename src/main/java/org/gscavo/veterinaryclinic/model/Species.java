@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 
@@ -32,6 +33,12 @@ public class Species implements BaseModel<Species> {
 
     private String description;
 
+    public Species(Document document) {
+        this.id = document.getObjectId("_id");
+        this.name = document.getString("name");
+        this.scientificName = document.getString("scientificName");
+        this.description = document.getString("description");
+    }
 
     @Override
     public Species randomizeAttributes() {
