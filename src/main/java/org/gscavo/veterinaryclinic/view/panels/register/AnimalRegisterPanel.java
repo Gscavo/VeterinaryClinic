@@ -6,7 +6,6 @@ package org.gscavo.veterinaryclinic.view.panels.register;
 
 import javax.swing.JFrame;
 import org.gscavo.veterinaryclinic.controller.AnimalController;
-import org.gscavo.veterinaryclinic.model.Animal;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 

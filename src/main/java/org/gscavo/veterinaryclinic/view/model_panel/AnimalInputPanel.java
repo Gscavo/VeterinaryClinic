@@ -60,9 +60,8 @@ public class AnimalInputPanel extends javax.swing.JPanel {
                         .toArray()
         );
         
-        
-        this.animalData.setTutor(this.tutorList.getFirst().getId());
-        this.animalData.setSpecies(this.speciesList.getFirst().getId());
+        this.animalData.setTutor(this.tutorList.get(0).getId());
+        this.animalData.setSpecies(this.speciesList.get(0).getId());
         
         animalTutorSelection.setModel(tutorModel);
         animalSpeciesSelection.setModel(speciesModel);

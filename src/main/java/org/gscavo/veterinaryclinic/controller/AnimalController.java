@@ -1,6 +1,7 @@
 package org.gscavo.veterinaryclinic.controller;
 
 import com.mongodb.client.result.InsertOneResult;
+import java.util.ArrayList;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.dao.AnimalDAO;
 import org.gscavo.veterinaryclinic.model.Animal;
@@ -37,5 +38,9 @@ public class AnimalController {
         }
 
         return new SystemOperationResult(StatusCode.SUCCESS, result_animal);
+    }
+
+    public static ArrayList<Animal> getAllAnimals() {
+        return ANIMAL_DAO.findAll();
     }
 }

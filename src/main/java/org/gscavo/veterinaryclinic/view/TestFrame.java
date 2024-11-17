@@ -5,6 +5,7 @@
 package org.gscavo.veterinaryclinic.view;
 
 import java.awt.BorderLayout;
+import org.gscavo.veterinaryclinic.controller.AnimalController;
 import org.gscavo.veterinaryclinic.view.panels.register.ProcedureRegisterPanel;
 
 /**
@@ -18,6 +19,10 @@ public class TestFrame extends javax.swing.JFrame {
      */
     public TestFrame() {
         initComponents();
+        this.databaseTable1.setHeader("Animais");
+        this.databaseTable1.setModel(
+                AnimalController.getAllAnimals()
+        );
     }
 
     /**
@@ -29,7 +34,7 @@ public class TestFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        animalRegisterPanel1 = new org.gscavo.veterinaryclinic.view.panels.register.AnimalRegisterPanel();
+        databaseTable1 = new org.gscavo.veterinaryclinic.view.panels.database_table.DatabaseTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -38,15 +43,16 @@ public class TestFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(animalRegisterPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(databaseTable1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(animalRegisterPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(databaseTable1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -88,6 +94,6 @@ public class TestFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.gscavo.veterinaryclinic.view.panels.register.AnimalRegisterPanel animalRegisterPanel1;
+    private org.gscavo.veterinaryclinic.view.panels.database_table.DatabaseTable databaseTable1;
     // End of variables declaration//GEN-END:variables
 }
