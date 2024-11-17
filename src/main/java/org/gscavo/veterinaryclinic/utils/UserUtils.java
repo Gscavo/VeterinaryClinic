@@ -8,9 +8,13 @@ import java.util.function.Function;
 import static org.gscavo.veterinaryclinic.controller.UserController.isUserLoggedIn;
 
 public class UserUtils {
+//    public static boolean canUserDoAction(Function<Person, Boolean> fn) {
+//            Person person = UserController.getCurrentUser();
+//            return isUserLoggedIn() && fn.apply(person);
+//        }
+
     public static boolean canUserDoAction(Function<Person, Boolean> fn) {
-            Person person = UserController.getCurrentUser();
-            return isUserLoggedIn() && fn.apply(person);
-        }
+        return true;
+    }
 
 }

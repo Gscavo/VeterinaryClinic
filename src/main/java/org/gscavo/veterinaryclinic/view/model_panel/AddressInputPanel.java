@@ -4,12 +4,19 @@
  */
 package org.gscavo.veterinaryclinic.view.model_panel;
 
+import lombok.Getter;
+import org.gscavo.veterinaryclinic.model.Address;
+import org.gscavo.veterinaryclinic.utils.ViewUtils;
+
 /**
  *
  * @author gscavo
  */
 public class AddressInputPanel extends javax.swing.JPanel {
 
+    @Getter
+    private Address address = new Address();
+    
     /**
      * Creates new form AddressInputPanel
      */
@@ -94,9 +101,9 @@ public class AddressInputPanel extends javax.swing.JPanel {
         cepInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         cepInputField.setPreferredSize(new java.awt.Dimension(300, 30));
         cepInputField.setSize(new java.awt.Dimension(300, 30));
-        cepInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cepInputFieldActionPerformed(evt);
+        cepInputField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                cepInputFieldMouseReleased(evt);
             }
         });
 
@@ -104,9 +111,9 @@ public class AddressInputPanel extends javax.swing.JPanel {
         streetInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         streetInputField.setPreferredSize(new java.awt.Dimension(300, 30));
         streetInputField.setSize(new java.awt.Dimension(300, 30));
-        streetInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                streetInputFieldActionPerformed(evt);
+        streetInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                streetInputFieldKeyReleased(evt);
             }
         });
 
@@ -114,9 +121,9 @@ public class AddressInputPanel extends javax.swing.JPanel {
         neighborhoodInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         neighborhoodInputField.setPreferredSize(new java.awt.Dimension(300, 30));
         neighborhoodInputField.setSize(new java.awt.Dimension(300, 30));
-        neighborhoodInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                neighborhoodInputFieldActionPerformed(evt);
+        neighborhoodInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                neighborhoodInputFieldKeyReleased(evt);
             }
         });
 
@@ -124,9 +131,9 @@ public class AddressInputPanel extends javax.swing.JPanel {
         cityInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         cityInputField.setPreferredSize(new java.awt.Dimension(300, 30));
         cityInputField.setSize(new java.awt.Dimension(300, 30));
-        cityInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cityInputFieldActionPerformed(evt);
+        cityInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cityInputFieldKeyReleased(evt);
             }
         });
 
@@ -134,15 +141,20 @@ public class AddressInputPanel extends javax.swing.JPanel {
         stateInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         stateInputField.setPreferredSize(new java.awt.Dimension(300, 30));
         stateInputField.setSize(new java.awt.Dimension(300, 30));
-        stateInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stateInputFieldActionPerformed(evt);
+        stateInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                stateInputFieldKeyReleased(evt);
             }
         });
 
         numberInputField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         numberInputField.setPreferredSize(new java.awt.Dimension(300, 30));
         numberInputField.setSize(new java.awt.Dimension(300, 30));
+        numberInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                numberInputFieldKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -206,25 +218,41 @@ public class AddressInputPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cepInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cepInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cepInputFieldActionPerformed
+    private void cepInputFieldMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cepInputFieldMouseReleased
+        this.address.setZipCode(
+                this.cepInputField.getText()
+        );
+    }//GEN-LAST:event_cepInputFieldMouseReleased
 
-    private void streetInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_streetInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_streetInputFieldActionPerformed
+    private void numberInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numberInputFieldKeyReleased
+        this.address.setNumber(
+                ViewUtils.getIntFromJSpinner(this.numberInputField)
+        );
+    }//GEN-LAST:event_numberInputFieldKeyReleased
 
-    private void neighborhoodInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_neighborhoodInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_neighborhoodInputFieldActionPerformed
+    private void streetInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_streetInputFieldKeyReleased
+        this.address.setStreet(
+            this.streetInputField.getText()
+        );
+    }//GEN-LAST:event_streetInputFieldKeyReleased
 
-    private void cityInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cityInputFieldActionPerformed
+    private void neighborhoodInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_neighborhoodInputFieldKeyReleased
+        this.address.setNeighborhood(
+                this.neighborhoodInputField.getText()
+        );
+    }//GEN-LAST:event_neighborhoodInputFieldKeyReleased
 
-    private void stateInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stateInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_stateInputFieldActionPerformed
+    private void cityInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cityInputFieldKeyReleased
+        this.address.setCity(
+                this.cityInputField.getText()
+        );
+    }//GEN-LAST:event_cityInputFieldKeyReleased
+
+    private void stateInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_stateInputFieldKeyReleased
+        this.address.setState(
+                this.stateInputField.getText()
+        );
+    }//GEN-LAST:event_stateInputFieldKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

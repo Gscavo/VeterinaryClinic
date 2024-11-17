@@ -4,9 +4,11 @@
  */
 package org.gscavo.veterinaryclinic.model.abstractions;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.bson.Document;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
@@ -16,32 +18,25 @@ import org.gscavo.veterinaryclinic.utils.enums.PersonType;
 import static org.gscavo.veterinaryclinic.utils.ConversionUtils.getNullableDocumentObjectId;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class Person  {
-
-    @BsonId
+public abstract class Person implements BaseModel<Person>  {
+    @JsonIgnore
     private ObjectId id;
 
-    @BsonProperty("name")
     private String name;
 
-    @BsonProperty("password")
     private String password;
 
-    @BsonProperty("cpf")
     private String cpf;
 
-    @BsonProperty("phoneNumber")
     private String phoneNumber;
 
-    @BsonProperty("email")
     private String email;
 
-    @BsonProperty("address")
     private ObjectId address;
 
-    @BsonProperty("type")
     private PersonType type;
 
 

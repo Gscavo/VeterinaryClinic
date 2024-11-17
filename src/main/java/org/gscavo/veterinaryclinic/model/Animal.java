@@ -4,6 +4,7 @@
  */
 package org.gscavo.veterinaryclinic.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +25,7 @@ import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomStri
 @NoArgsConstructor
 @AllArgsConstructor
 public class Animal implements BaseModel<Animal> {
-    
+    @JsonIgnore
     private ObjectId id;
     
     private ObjectId tutor;

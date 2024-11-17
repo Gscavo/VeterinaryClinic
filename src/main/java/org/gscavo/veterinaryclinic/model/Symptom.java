@@ -1,5 +1,6 @@
 package org.gscavo.veterinaryclinic.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,7 @@ import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomStri
 @NoArgsConstructor
 @AllArgsConstructor
 public class Symptom implements BaseModel<Symptom> {
+    @JsonIgnore
     private ObjectId id;
 
     private String description;

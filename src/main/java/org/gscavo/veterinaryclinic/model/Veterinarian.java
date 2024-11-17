@@ -15,7 +15,7 @@ import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomStri
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Veterinarian extends Person implements BaseModel<Veterinarian> {
+public class Veterinarian extends Person {
 
     private String crmv;
 

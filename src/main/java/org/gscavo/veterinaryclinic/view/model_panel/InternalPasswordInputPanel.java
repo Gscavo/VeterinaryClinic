@@ -4,12 +4,20 @@
  */
 package org.gscavo.veterinaryclinic.view.model_panel;
 
+import lombok.Getter;
+
 /**
  *
  * @author gscavo
  */
 public class InternalPasswordInputPanel extends javax.swing.JPanel {
 
+    @Getter
+    private String password = "";
+    
+    @Getter
+    private String retypedPassword = "";
+    
     /**
      * Creates new form AddressInputPanel
      */
@@ -52,9 +60,9 @@ public class InternalPasswordInputPanel extends javax.swing.JPanel {
         passwordInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         passwordInputField.setPreferredSize(new java.awt.Dimension(150, 30));
         passwordInputField.setSize(new java.awt.Dimension(300, 30));
-        passwordInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordInputFieldActionPerformed(evt);
+        passwordInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                passwordInputFieldKeyReleased(evt);
             }
         });
 
@@ -69,9 +77,9 @@ public class InternalPasswordInputPanel extends javax.swing.JPanel {
         retypePasswordInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         retypePasswordInputField.setPreferredSize(new java.awt.Dimension(150, 30));
         retypePasswordInputField.setSize(new java.awt.Dimension(300, 30));
-        retypePasswordInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                retypePasswordInputFieldActionPerformed(evt);
+        retypePasswordInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                retypePasswordInputFieldKeyReleased(evt);
             }
         });
 
@@ -113,13 +121,13 @@ public class InternalPasswordInputPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void passwordInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordInputFieldActionPerformed
+    private void passwordInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordInputFieldKeyReleased
+        this.password = passwordInputField.getText();
+    }//GEN-LAST:event_passwordInputFieldKeyReleased
 
-    private void retypePasswordInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retypePasswordInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_retypePasswordInputFieldActionPerformed
+    private void retypePasswordInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_retypePasswordInputFieldKeyReleased
+        this.retypedPassword = retypePasswordInputField.getText();
+    }//GEN-LAST:event_retypePasswordInputFieldKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

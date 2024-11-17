@@ -36,6 +36,9 @@ public class ConversionUtils {
             return type.getConstructor(Document.class).newInstance(document);
         } catch (Exception e) {
             System.err.println("!ERROR!\n" + e.getMessage());
+            for (StackTraceElement ste : e.getStackTrace()) {
+                System.out.println(ste.getClassName() + " " + ste.getMethodName() + " " + ste.getLineNumber());
+            }
             return null;
         }
     }

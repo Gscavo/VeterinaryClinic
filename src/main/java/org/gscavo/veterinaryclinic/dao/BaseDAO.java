@@ -60,17 +60,18 @@ public abstract class BaseDAO<T> {
     }
 
     public ArrayList<T> findAll() {
-        ArrayList<T> returnedList = new ArrayList<>();
+        ArrayList<T> allDocuments = new ArrayList<>();
 
-        collection.find().into(new ArrayList<>());
+        for(Document document : this.collection.find()) {
+            allDocuments.add(documentToType(document, classType));
+        }
 
-        return returnedList;
+        return allDocuments;
     }
 
     public InsertOneResult insertOne(T item) throws InsertOnDatabaseException {
         try {
             Document document = objectToDocument(item);
-            System.out.println(document.toJson());
             return collection.insertOne(Objects.requireNonNull(document));
         } catch (Exception e) {
             throw new InsertOnDatabaseException(e);
@@ -91,22 +92,25 @@ public abstract class BaseDAO<T> {
 
     public UpdateResult updateById(ObjectId id, T item) throws UpdateDocumentException, IllegalAccessException {
         T upstreamDocument = this.findById(id);
-        Class<?> itemClass = item.getClass();
-
-        Field[] fields = itemClass.getDeclaredFields();
+        Class<?> currentClass = item.getClass();
 
         try {
-            for (Field field : fields) {
-                field.setAccessible(true);
+            while (currentClass != null && currentClass != Object.class) {
+                Field[] fields = currentClass.getDeclaredFields();
+
+                for (Field field : fields) {
+                    field.setAccessible(true);
 
 
-                if (field.get(item) == null || field.get(item).toString().isEmpty()) {
-                    Object nonNullValue = field.get(upstreamDocument);
+                    if (field.get(item) == null || field.get(item).toString().isEmpty()) {
+                        Object nonNullValue = field.get(upstreamDocument);
 
-                    field.set(item, nonNullValue);
+                        field.set(item, nonNullValue);
+                    }
                 }
-            }
 
+                currentClass = currentClass.getSuperclass();
+            }
             return this.collection.replaceOne(Filters.eq("_id", id), Objects.requireNonNull(objectToDocument(item)));
         } catch (IllegalAccessException e) {
             throw new IllegalAccessException(e.getMessage());

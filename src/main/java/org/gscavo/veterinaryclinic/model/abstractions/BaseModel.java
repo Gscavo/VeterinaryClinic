@@ -1,5 +1,7 @@
 package org.gscavo.veterinaryclinic.model.abstractions;
 
-public interface BaseModel<T> extends RandomizedAttributes<T> {
+import org.bson.types.ObjectId;
 
+public interface BaseModel<T> extends RandomizedAttributes<T> {
+    public ObjectId getId();
 }

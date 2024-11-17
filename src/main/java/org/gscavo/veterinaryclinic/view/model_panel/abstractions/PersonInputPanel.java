@@ -4,6 +4,9 @@
  */
 package org.gscavo.veterinaryclinic.view.model_panel.abstractions;
 
+import lombok.Getter;
+import org.gscavo.veterinaryclinic.model.Secretary;
+import org.gscavo.veterinaryclinic.model.abstractions.Person;
 import org.gscavo.veterinaryclinic.view.model_panel.*;
 
 /**
@@ -12,6 +15,9 @@ import org.gscavo.veterinaryclinic.view.model_panel.*;
  */
 public class PersonInputPanel extends javax.swing.JPanel {
 
+    @Getter
+    Person person = new Secretary();
+    
     /**
      * Creates new form AddressInputPanel
      */
@@ -78,9 +84,9 @@ public class PersonInputPanel extends javax.swing.JPanel {
         personNameInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         personNameInputField.setPreferredSize(new java.awt.Dimension(300, 30));
         personNameInputField.setSize(new java.awt.Dimension(300, 30));
-        personNameInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                personNameInputFieldActionPerformed(evt);
+        personNameInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                personNameInputFieldKeyReleased(evt);
             }
         });
 
@@ -88,9 +94,9 @@ public class PersonInputPanel extends javax.swing.JPanel {
         cpfInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         cpfInputField.setPreferredSize(new java.awt.Dimension(300, 30));
         cpfInputField.setSize(new java.awt.Dimension(300, 30));
-        cpfInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cpfInputFieldActionPerformed(evt);
+        cpfInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cpfInputFieldKeyReleased(evt);
             }
         });
 
@@ -98,9 +104,9 @@ public class PersonInputPanel extends javax.swing.JPanel {
         telephoneInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         telephoneInputField.setPreferredSize(new java.awt.Dimension(300, 30));
         telephoneInputField.setSize(new java.awt.Dimension(300, 30));
-        telephoneInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                telephoneInputFieldActionPerformed(evt);
+        telephoneInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                telephoneInputFieldKeyReleased(evt);
             }
         });
 
@@ -108,9 +114,9 @@ public class PersonInputPanel extends javax.swing.JPanel {
         emailInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         emailInputField.setPreferredSize(new java.awt.Dimension(300, 30));
         emailInputField.setSize(new java.awt.Dimension(300, 30));
-        emailInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailInputFieldActionPerformed(evt);
+        emailInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                emailInputFieldKeyReleased(evt);
             }
         });
 
@@ -164,21 +170,29 @@ public class PersonInputPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void personNameInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_personNameInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_personNameInputFieldActionPerformed
+    private void personNameInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_personNameInputFieldKeyReleased
+        this.person.setName(
+                personNameInputField.getText()
+        );
+    }//GEN-LAST:event_personNameInputFieldKeyReleased
 
-    private void cpfInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpfInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cpfInputFieldActionPerformed
+    private void cpfInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cpfInputFieldKeyReleased
+        this.person.setCpf(
+                cpfInputField.getText()
+        );
+    }//GEN-LAST:event_cpfInputFieldKeyReleased
 
-    private void telephoneInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telephoneInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_telephoneInputFieldActionPerformed
+    private void telephoneInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telephoneInputFieldKeyReleased
+        this.person.setCpf(
+            this.telephoneInputField.getText()
+        );
+    }//GEN-LAST:event_telephoneInputFieldKeyReleased
 
-    private void emailInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_emailInputFieldActionPerformed
+    private void emailInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailInputFieldKeyReleased
+        this.person.setEmail(
+                this.emailInputField.getText()
+        );
+    }//GEN-LAST:event_emailInputFieldKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

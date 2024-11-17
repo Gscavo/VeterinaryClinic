@@ -27,7 +27,7 @@ import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomStri
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Client extends Person implements BaseModel<Client> {
+public class Client extends Person {
 
     @BsonProperty("animal")
     private ArrayList<ObjectId> animal;
@@ -64,11 +64,9 @@ public class Client extends Person implements BaseModel<Client> {
                 .build();
     }
 
-
-
     public Client(Document document) {
         super( document );
-
+        
         List<ObjectId> animals = document.getList("animal", ObjectId.class);
         List<ObjectId> appointmentsList = document.getList("appointmentList", ObjectId.class);
 

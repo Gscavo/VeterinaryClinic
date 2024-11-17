@@ -1,5 +1,6 @@
 package org.gscavo.veterinaryclinic.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +18,7 @@ import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomNumb
 @NoArgsConstructor
 @AllArgsConstructor
 public class Appointment implements BaseModel<Appointment> {
-
+    @JsonIgnore
     private ObjectId id;
 
     private ObjectId clientId;

@@ -4,22 +4,25 @@
  */
 package org.gscavo.veterinaryclinic.view.panels.register;
 
-import javax.swing.JFrame;
-import org.gscavo.veterinaryclinic.controller.AnimalController;
-import org.gscavo.veterinaryclinic.model.Animal;
+import lombok.Getter;
+import org.gscavo.veterinaryclinic.dao.AddressDAO;
+import org.gscavo.veterinaryclinic.model.Secretary;
+import org.gscavo.veterinaryclinic.model.abstractions.Person;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
-import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 
 /**
  *
  * @author gscavo
  */
-public class AnimalRegisterPanel extends javax.swing.JPanel {
+public class WorkerRegisterPanel extends javax.swing.JPanel {
 
+    @Getter
+    private Person worker;
+    
     /**
-     * Creates new form AnimalRegisterPanel
+     * Creates new form WorkerRegisterPanel
      */
-    public AnimalRegisterPanel() {
+    public WorkerRegisterPanel() {
         initComponents();
     }
 
@@ -32,9 +35,10 @@ public class AnimalRegisterPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        animalInputPanel1 = new org.gscavo.veterinaryclinic.view.model_panel.AnimalInputPanel();
+        internalPasswordInputPanel1 = new org.gscavo.veterinaryclinic.view.model_panel.InternalPasswordInputPanel();
         cancelButton = new javax.swing.JButton();
         registerButton = new javax.swing.JButton();
+        personRegisterPanel1 = new org.gscavo.veterinaryclinic.view.panels.register.abstraction.PersonRegisterPanel();
 
         cancelButton.setText("Cancelar");
         cancelButton.setPreferredSize(new java.awt.Dimension(100, 25));
@@ -59,7 +63,7 @@ public class AnimalRegisterPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(animalInputPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(internalPasswordInputPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -67,16 +71,23 @@ public class AnimalRegisterPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(personRegisterPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(animalInputPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(personRegisterPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(internalPasswordInputPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -85,17 +96,18 @@ public class AnimalRegisterPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-      SystemOperationResult<?> res = AnimalController
-                .registerAnimal(this.animalInputPanel1.getAnimalData());
-                
+       
         
-        ViewUtils.showInformationDialog((JFrame) this.getTopLevelAncestor(), res);
+        this.worker.setAddress(
+                this.personRegisterPanel1.getAddressInputPanel().getAddress().getId()
+        );
     }//GEN-LAST:event_registerButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.gscavo.veterinaryclinic.view.model_panel.AnimalInputPanel animalInputPanel1;
     private javax.swing.JButton cancelButton;
+    private org.gscavo.veterinaryclinic.view.model_panel.InternalPasswordInputPanel internalPasswordInputPanel1;
+    private org.gscavo.veterinaryclinic.view.panels.register.abstraction.PersonRegisterPanel personRegisterPanel1;
     private javax.swing.JButton registerButton;
     // End of variables declaration//GEN-END:variables
 }

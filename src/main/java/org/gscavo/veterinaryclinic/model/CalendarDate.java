@@ -1,5 +1,6 @@
 package org.gscavo.veterinaryclinic.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +15,7 @@ import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CalendarDate implements BaseModel<CalendarDate> {
-
+    @JsonIgnore
     private ObjectId id;
 
     private BsonDateTime date;

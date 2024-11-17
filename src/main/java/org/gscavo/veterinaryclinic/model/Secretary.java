@@ -14,7 +14,7 @@ import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomStri
 
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Secretary extends Person  implements BaseModel<Secretary> {
+public class Secretary extends Person {
 
     @Builder
     public Secretary(ObjectId id,

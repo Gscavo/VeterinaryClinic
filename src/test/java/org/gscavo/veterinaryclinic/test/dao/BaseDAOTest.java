@@ -12,6 +12,7 @@ import org.gscavo.veterinaryclinic.utils.connection.MongoDBConnection;
 import org.gscavo.veterinaryclinic.utils.exceptions.DeleteDocumentException;
 import org.gscavo.veterinaryclinic.utils.exceptions.InsertOnDatabaseException;
 import org.gscavo.veterinaryclinic.utils.exceptions.UpdateDocumentException;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,7 +31,7 @@ public class BaseDAOTest {
 
     @BeforeAll
     public static void setUpClass() {
-        MongoDBConnection.startConnection(true);
+        MongoDBConnection.startConnection(false);
 
         daos = new ArrayList<>(
                 Arrays.asList(
@@ -46,6 +47,17 @@ public class BaseDAOTest {
                     new SymptomDAO(),
                     new VeterinarianDAO()
         ));
+
+        daos.forEach(
+                BaseDAO::dropCollection
+        );
+    }
+
+    @AfterAll
+    public static void afterAll() {
+//        daos.forEach(
+//                BaseDAO::dropCollection
+//        );
     }
 
     @ParameterizedTest

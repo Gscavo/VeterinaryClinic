@@ -2,6 +2,7 @@ package org.gscavo.veterinaryclinic.controller;
 
 import com.mongodb.client.result.InsertOneResult;
 import lombok.Getter;
+import org.bson.BsonValue;
 import org.gscavo.veterinaryclinic.dao.AddressDAO;
 import org.gscavo.veterinaryclinic.model.Address;
 import org.gscavo.veterinaryclinic.utils.enums.StatusCode;
@@ -28,6 +29,6 @@ public class AddressController {
             return failedToInsertResourceSOR(Address.class);
         }
 
-        return new SystemOperationResult(StatusCode.SUCCESS);
+        return new SystemOperationResult<BsonValue>(StatusCode.SUCCESS, result.getInsertedId());
     }
 }

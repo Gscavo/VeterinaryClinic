@@ -178,7 +178,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="personNameInputFieldActionPerformed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="personNameInputFieldKeyReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="cpfInputField">
@@ -195,7 +195,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cpfInputFieldActionPerformed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="cpfInputFieldKeyReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="telephoneInputField">
@@ -212,7 +212,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="telephoneInputFieldActionPerformed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="telephoneInputFieldKeyReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="emailInputField">
@@ -229,7 +229,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emailInputFieldActionPerformed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="emailInputFieldKeyReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JSeparator" name="headerSeparator">

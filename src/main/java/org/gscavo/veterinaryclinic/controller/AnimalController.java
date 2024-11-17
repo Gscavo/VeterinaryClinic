@@ -18,9 +18,9 @@ public class AnimalController {
     private static final AnimalDAO ANIMAL_DAO = new AnimalDAO();
 
     public static SystemOperationResult registerAnimal(Animal animal) {
-        if (!canUserDoAction(Permissions::canRegister)) {
-            return notAuthenticatedOrAllowedActionSOR();
-        }
+//        if (!canUserDoAction(Permissions::canRegister)) {
+//            return notAuthenticatedOrAllowedActionSOR();
+//        }
 
         InsertOneResult result_animal = ANIMAL_DAO.insertOne(animal);
 
@@ -36,6 +36,6 @@ public class AnimalController {
             return SystemOperationResult.failedToUpdateResourceSOR(Client.class);
         }
 
-        return new SystemOperationResult(StatusCode.SUCCESS);
+        return new SystemOperationResult(StatusCode.SUCCESS, result_animal);
     }
 }

@@ -15,9 +15,11 @@ public enum StatusCode {
         this.status = status;
         this.isSuccess = isSuccess;
     }
+    
+    
 
     private enum Status {
         SUCCESS,
-        ERROR
+        ERROR;
     }
 }

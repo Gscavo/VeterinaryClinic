@@ -9,7 +9,7 @@ public class StringUtils {
         return str == null || str.isEmpty();
     }
     
-    public static String formatToSelection(ObjectId id, String str) {
+    public static String formatToSelection(Object id, Object str) {
         return id + " " + str;
     }
 }

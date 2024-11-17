@@ -3,7 +3,11 @@ package org.gscavo.veterinaryclinic.controller;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
 import java.util.ArrayList;
+import java.util.Objects;
+
 import lombok.Getter;
+import org.bson.BsonObjectId;
+import org.bson.BsonValue;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.dao.*;
 import org.gscavo.veterinaryclinic.model.*;
@@ -91,7 +95,7 @@ public class  UserController  {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends Person> SystemOperationResult updateUser(T person) {
+    public static <T extends Person> SystemOperationResult<ObjectId> updateUser(T person) {
         if (!canUserDoAction(Permissions::any)) {
             return notAuthenticatedOrAllowedActionSOR();
         }
@@ -108,7 +112,7 @@ public class  UserController  {
             return failedToUpdateResourceSOR(person.getClass());
         }
 
-        return new SystemOperationResult(StatusCode.SUCCESS);
+        return new SystemOperationResult<ObjectId>(StatusCode.SUCCESS, person.getId());
     }
 
     @SuppressWarnings("rawtypes")
@@ -126,9 +130,13 @@ public class  UserController  {
         return currentUser != null;
     }
 
-    @SuppressWarnings("unchecked")
+    
     public static <T extends Person> T getUser(ObjectId clientId) {
         return (T) USERS_DAO.findById(clientId);
+    }
+
+    public static Client getClient(ObjectId id) {
+        return CLIENT_DAO.findById(id);
     }
     
     public static ArrayList<Client> getAllClients() {
@@ -156,8 +164,8 @@ public class  UserController  {
         return updateUser(databaseUser);
     }
 
-    public static SystemOperationResult appendAnimalToClient(ObjectId animalId, ObjectId clientId) {
-        Client databaseUser = UserController.getUser(clientId);
+    public static SystemOperationResult<ObjectId> appendAnimalToClient(ObjectId animalId, ObjectId clientId) {
+        Client databaseUser = UserController.getClient(clientId);
 
         if (databaseUser == null) {
             return SystemOperationResult.objectNotFound();

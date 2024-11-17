@@ -6,6 +6,7 @@ package org.gscavo.veterinaryclinic.view.model_panel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 
@@ -41,23 +42,27 @@ public class AnimalInputPanel extends javax.swing.JPanel {
                 .getAllClients();
         this.speciesList = SpeciesController
                 .getAllSpecies();
+       
 
         ComboBoxModel<String> tutorModel = new DefaultComboBoxModel(
-                this.tutorList
-                        .stream()
-                        .map(client -> StringUtils.formatToSelection(client.getId(), client.getName()))
+                IntStream
+                        .range(0, this.tutorList.size())
+                        .mapToObj(idx -> StringUtils.formatToSelection(idx, this.tutorList.get(idx).getName()))
                         .toList()
                         .toArray()
         );
 
         ComboBoxModel<String> speciesModel = new DefaultComboBoxModel(
-                this.speciesList
-                .stream()
-                .map(species -> StringUtils.formatToSelection(species.getId(), species.getName()))
-                .toList()
-                .toArray()
+                IntStream
+                        .range(0, this.speciesList.size())
+                        .mapToObj(idx -> StringUtils.formatToSelection(idx, this.speciesList.get(idx).getName()))
+                        .toList()
+                        .toArray()
         );
         
+        
+        this.animalData.setTutor(this.tutorList.getFirst().getId());
+        this.animalData.setSpecies(this.speciesList.getFirst().getId());
         
         animalTutorSelection.setModel(tutorModel);
         animalSpeciesSelection.setModel(speciesModel);
@@ -160,6 +165,11 @@ public class AnimalInputPanel extends javax.swing.JPanel {
         animalSpeciesSelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ERROR" }));
         animalSpeciesSelection.setPreferredSize(new java.awt.Dimension(300, 30));
         animalSpeciesSelection.setSize(new java.awt.Dimension(300, 30));
+        animalSpeciesSelection.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                animalSpeciesSelectionActionPerformed(evt);
+            }
+        });
 
         animalTutorSelection.setPreferredSize(new java.awt.Dimension(300, 30));
         animalTutorSelection.setSize(new java.awt.Dimension(300, 30));
@@ -253,8 +263,20 @@ public class AnimalInputPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_animalRaceInputFieldKeyReleased
 
     private void animalTutorSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_animalTutorSelectionActionPerformed
-        // TODO add your handling code here:
+        Integer selectedIndex = this.animalTutorSelection.getSelectedIndex();
+        
+        this.animalData.setTutor(
+                this.tutorList.get(selectedIndex).getId()
+        );
     }//GEN-LAST:event_animalTutorSelectionActionPerformed
+
+    private void animalSpeciesSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_animalSpeciesSelectionActionPerformed
+        Integer selectedIndex = this.animalSpeciesSelection.getSelectedIndex();
+        
+        this.animalData.setSpecies(
+                this.speciesList.get(selectedIndex).getId()
+        );
+    }//GEN-LAST:event_animalSpeciesSelectionActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner animalAgeInputField;
