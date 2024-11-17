@@ -21,13 +21,13 @@ public class Procedure implements BaseModel<Procedure> {
     @JsonIgnore
     private ObjectId id;
 
-    private String name;
+    private String name = "";
 
-    private String description;
+    private String description = "";
 
-    private float price;
+    private float price = -1f;
 
-    private ProcedureType type;
+    private ProcedureType type = ProcedureType.TREATMENT;
 
     public Procedure(Document document) {
         this.id = document.getObjectId("_id");

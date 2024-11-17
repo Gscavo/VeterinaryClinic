@@ -12,6 +12,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.TableModel;
 import lombok.Getter;
 import lombok.Setter;
+import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
+import org.gscavo.veterinaryclinic.dao.BaseDAO;
 import org.gscavo.veterinaryclinic.utils.ObjectUtils;
 import org.gscavo.veterinaryclinic.utils.StringUtils;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
@@ -32,9 +34,12 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
         initComponents();        
     }
     
-    public DatabaseTable(ArrayList<T> objectList) {
+    public DatabaseTable(Class<T> classType) {
         initComponents();  
-        this.allFieldsFromClass = ObjectUtils.getAllFieldsFromClass(objectList.get(0).getClass());
+        
+        ArrayList<T> dataList = BaseController.getAll(classType);
+        
+        this.allFieldsFromClass = ObjectUtils.getAllFieldsFromClass(classType);
         
         ComboBoxModel<String> searchModel = new DefaultComboBoxModel(
                 this.allFieldsFromClass.stream()
@@ -43,6 +48,10 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
         );
         
         this.fieldSearchSelection.setModel(searchModel);
+        
+        this.setHeader(classType.getName());
+        
+        this.setModel(dataList);
         
     }
     

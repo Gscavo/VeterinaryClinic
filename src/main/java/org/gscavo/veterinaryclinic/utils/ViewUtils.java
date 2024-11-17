@@ -5,11 +5,7 @@ import java.awt.event.ActionEvent;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -80,7 +76,8 @@ public class ViewUtils {
         );
     }
 
-    public static void showInformationDialog(JFrame frame, SystemOperationResult<?> sysOpRes) {
+    public static void showInformationDialog(JPanel panel, SystemOperationResult<?> sysOpRes) {
+           JFrame frame =  (JFrame) panel.getTopLevelAncestor();
            OperationStatusDialog dialog = new OperationStatusDialog(frame, false, sysOpRes);
            dialog.setVisible(true);
     }

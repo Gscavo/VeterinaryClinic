@@ -11,22 +11,25 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 
 import lombok.Getter;
+import org.gscavo.veterinaryclinic.controller.ClientController;
 import org.gscavo.veterinaryclinic.controller.SpeciesController;
 import org.gscavo.veterinaryclinic.controller.UserController;
 import org.gscavo.veterinaryclinic.model.Animal;
 import org.gscavo.veterinaryclinic.model.Client;
 import org.gscavo.veterinaryclinic.model.Species;
+import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import org.gscavo.veterinaryclinic.utils.StringUtils;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
+import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
 /**
  *
  * @author gscavo
  */
-public class AnimalInputPanel extends javax.swing.JPanel {
+public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPanel<Animal> {
 
     @Getter
-    private Animal animalData;
+    private Animal data;
     
     private ArrayList<Client> tutorList;
     
@@ -37,11 +40,11 @@ public class AnimalInputPanel extends javax.swing.JPanel {
      */
     public AnimalInputPanel() {
         initComponents();
-        this.animalData = new Animal();
-        this.tutorList = UserController
-                .getAllClients();
+        this.data = new Animal();
+        this.tutorList = ClientController
+                .getAll();
         this.speciesList = SpeciesController
-                .getAllSpecies();
+                .getAll();
        
 
         ComboBoxModel<String> tutorModel = new DefaultComboBoxModel(
@@ -60,11 +63,16 @@ public class AnimalInputPanel extends javax.swing.JPanel {
                         .toArray()
         );
         
-        this.animalData.setTutor(this.tutorList.get(0).getId());
-        this.animalData.setSpecies(this.speciesList.get(0).getId());
+        this.data.setTutor(this.tutorList.get(0).getId());
+        this.data.setSpecies(this.speciesList.get(0).getId());
         
         animalTutorSelection.setModel(tutorModel);
         animalSpeciesSelection.setModel(speciesModel);
+    }
+    
+    public AnimalInputPanel(Animal animal) {
+        initComponents();
+        this.data = animal;
     }
 
     /**
@@ -244,19 +252,19 @@ public class AnimalInputPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void animalNameInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_animalNameInputFieldKeyReleased
-        this.animalData.setName(
+        this.data.setName(
                 this.animalNameInputField.getText()
         );
     }//GEN-LAST:event_animalNameInputFieldKeyReleased
 
     private void animalAgeInputFieldStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_animalAgeInputFieldStateChanged
-        this.animalData.setAge(
+        this.data.setAge(
                 ViewUtils.getIntFromJSpinner(this.animalAgeInputField)
         );
     }//GEN-LAST:event_animalAgeInputFieldStateChanged
 
     private void animalRaceInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_animalRaceInputFieldKeyReleased
-        this.animalData.setRace(
+        this.data.setRace(
                 this.animalRaceInputField.getText()
         );
     }//GEN-LAST:event_animalRaceInputFieldKeyReleased
@@ -264,7 +272,7 @@ public class AnimalInputPanel extends javax.swing.JPanel {
     private void animalTutorSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_animalTutorSelectionActionPerformed
         Integer selectedIndex = this.animalTutorSelection.getSelectedIndex();
         
-        this.animalData.setTutor(
+        this.data.setTutor(
                 this.tutorList.get(selectedIndex).getId()
         );
     }//GEN-LAST:event_animalTutorSelectionActionPerformed
@@ -272,7 +280,7 @@ public class AnimalInputPanel extends javax.swing.JPanel {
     private void animalSpeciesSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_animalSpeciesSelectionActionPerformed
         Integer selectedIndex = this.animalSpeciesSelection.getSelectedIndex();
         
-        this.animalData.setSpecies(
+        this.data.setSpecies(
                 this.speciesList.get(selectedIndex).getId()
         );
     }//GEN-LAST:event_animalSpeciesSelectionActionPerformed

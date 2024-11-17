@@ -5,32 +5,33 @@
 package org.gscavo.veterinaryclinic.view.model_panel;
 
 import lombok.Getter;
+import org.gscavo.veterinaryclinic.model.Procedure;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
 import org.gscavo.veterinaryclinic.utils.enums.ProcedureType;
+import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
 /**
  *
  * @author gscavo
  */
-public class ProcedureInputPanel extends javax.swing.JPanel {
+public class ProcedureInputPanel extends javax.swing.JPanel implements BaseInputPanel<Procedure> {
 
     @Getter
-    String procedureName = "";
-    
-    @Getter
-    Float price = 0f;
-    
-    @Getter
-    ProcedureType type = ProcedureType.TREATMENT;
-    
-    @Getter
-    String description = "";
+    private Procedure data;
     
     /**
      * Creates new form AddressInputPanel
      */
     public ProcedureInputPanel() {
         initComponents();
+
+        this.data = new Procedure();
+    }
+    
+    public ProcedureInputPanel(Procedure procedure) {
+        initComponents();
+
+        this.data = procedure;
     }
 
     /**
@@ -208,23 +209,33 @@ public class ProcedureInputPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void procedureNameInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_procedureNameInputFieldKeyReleased
-        this.procedureName = this.procedureNameInputField.getText();
+        this.data.setName(
+            procedureNameInputField.getText()
+        );
     }//GEN-LAST:event_procedureNameInputFieldKeyReleased
 
     private void procedurePriceInputFieldStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_procedurePriceInputFieldStateChanged
-        this.price = ViewUtils.getFloatFromJSpinner(this.procedurePriceInputField);
+        this.data.setPrice(
+                ViewUtils.getFloatFromJSpinner(this.procedurePriceInputField)
+        );
     }//GEN-LAST:event_procedurePriceInputFieldStateChanged
 
     private void treatmentRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_treatmentRadioButtonActionPerformed
-        this.type = ProcedureType.TREATMENT;
+        this.data.setType(
+                ProcedureType.TREATMENT
+        );
     }//GEN-LAST:event_treatmentRadioButtonActionPerformed
 
     private void examRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_examRadioButtonActionPerformed
-        this.type = ProcedureType.EXAM;
+        this.data.setType(
+                ProcedureType.EXAM
+        );
     }//GEN-LAST:event_examRadioButtonActionPerformed
 
     private void procedureDescriptionTextAreaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_procedureDescriptionTextAreaKeyReleased
-        this.description = this.procedureDescriptionTextArea.getText();
+        this.data.setDescription(
+                this.procedureDescriptionTextArea.getText()
+        );
     }//GEN-LAST:event_procedureDescriptionTextAreaKeyReleased
 
 

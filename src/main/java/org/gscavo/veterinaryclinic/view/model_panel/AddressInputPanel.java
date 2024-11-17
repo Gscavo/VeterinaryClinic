@@ -7,21 +7,28 @@ package org.gscavo.veterinaryclinic.view.model_panel;
 import lombok.Getter;
 import org.gscavo.veterinaryclinic.model.Address;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
+import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
 /**
  *
  * @author gscavo
  */
-public class AddressInputPanel extends javax.swing.JPanel {
+public class AddressInputPanel extends javax.swing.JPanel implements BaseInputPanel<Address> {
 
     @Getter
-    private Address address = new Address();
+    private Address data;
     
     /**
      * Creates new form AddressInputPanel
      */
     public AddressInputPanel() {
         initComponents();
+        this.data = new Address();
+    }
+    
+    public AddressInputPanel(Address address) {
+        initComponents();
+        this.data = address;
     }
 
     /**
@@ -219,37 +226,37 @@ public class AddressInputPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cepInputFieldMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cepInputFieldMouseReleased
-        this.address.setZipCode(
+        this.data.setZipCode(
                 this.cepInputField.getText()
         );
     }//GEN-LAST:event_cepInputFieldMouseReleased
 
     private void numberInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numberInputFieldKeyReleased
-        this.address.setNumber(
+        this.data.setNumber(
                 ViewUtils.getIntFromJSpinner(this.numberInputField)
         );
     }//GEN-LAST:event_numberInputFieldKeyReleased
 
     private void streetInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_streetInputFieldKeyReleased
-        this.address.setStreet(
+        this.data.setStreet(
             this.streetInputField.getText()
         );
     }//GEN-LAST:event_streetInputFieldKeyReleased
 
     private void neighborhoodInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_neighborhoodInputFieldKeyReleased
-        this.address.setNeighborhood(
+        this.data.setNeighborhood(
                 this.neighborhoodInputField.getText()
         );
     }//GEN-LAST:event_neighborhoodInputFieldKeyReleased
 
     private void cityInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cityInputFieldKeyReleased
-        this.address.setCity(
+        this.data.setCity(
                 this.cityInputField.getText()
         );
     }//GEN-LAST:event_cityInputFieldKeyReleased
 
     private void stateInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_stateInputFieldKeyReleased
-        this.address.setState(
+        this.data.setState(
                 this.stateInputField.getText()
         );
     }//GEN-LAST:event_stateInputFieldKeyReleased

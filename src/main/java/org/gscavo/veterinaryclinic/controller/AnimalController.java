@@ -6,22 +6,21 @@ import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.dao.AnimalDAO;
 import org.gscavo.veterinaryclinic.model.Animal;
 import org.gscavo.veterinaryclinic.model.Client;
+import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 import org.gscavo.veterinaryclinic.utils.enums.StatusCode;
-import org.gscavo.veterinaryclinic.utils.security.Permissions;
-
-import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
 import static org.gscavo.veterinaryclinic.utils.information.SystemOperationResult.failedToInsertResourceSOR;
 import static org.gscavo.veterinaryclinic.utils.information.SystemOperationResult.notAuthenticatedOrAllowedActionSOR;
+import org.gscavo.veterinaryclinic.utils.security.Permissions;
 
 public class AnimalController {
 
-    private static final AnimalDAO ANIMAL_DAO = new AnimalDAO();
+    private static final AnimalDAO ANIMAL_DAO = DAOController.getDaoByClass(Animal.class);
 
     public static SystemOperationResult registerAnimal(Animal animal) {
-//        if (!canUserDoAction(Permissions::canRegister)) {
-//            return notAuthenticatedOrAllowedActionSOR();
-//        }
+        if (!canUserDoAction(Permissions::canRegister)) {
+            return notAuthenticatedOrAllowedActionSOR();
+        }
 
         InsertOneResult result_animal = ANIMAL_DAO.insertOne(animal);
 
@@ -38,9 +37,5 @@ public class AnimalController {
         }
 
         return new SystemOperationResult(StatusCode.SUCCESS, result_animal);
-    }
-
-    public static ArrayList<Animal> getAllAnimals() {
-        return ANIMAL_DAO.findAll();
     }
 }

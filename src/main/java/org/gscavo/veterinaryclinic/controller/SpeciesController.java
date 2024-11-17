@@ -13,7 +13,7 @@ import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
 
 public class SpeciesController {
 
-    private static final SpeciesDAO SPECIES_DAO = new SpeciesDAO();
+    private static final SpeciesDAO SPECIES_DAO = DAOController.getDaoByClass(Species.class);
 
     public static SystemOperationResult registerSpecies(Species species) {
         if (!canUserDoAction(Permissions::canRegister)) {
@@ -27,9 +27,5 @@ public class SpeciesController {
         }
 
         return new SystemOperationResult(StatusCode.SUCCESS);
-    }
-    
-    public static ArrayList<Species> getAllSpecies() {
-        return SPECIES_DAO.findAll();
     }
 }

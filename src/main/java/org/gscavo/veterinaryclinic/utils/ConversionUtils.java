@@ -3,6 +3,7 @@ package org.gscavo.veterinaryclinic.utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.mongodb.client.MongoIterable;
+import org.bson.BsonValue;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.utils.mapper.ObjectIdDeserializer;
@@ -79,6 +80,15 @@ public class ConversionUtils {
                 return document.getObjectId(key);
             }
         }
+        return null;
+    }
+
+    public static ObjectId bsonValueToObjectId(BsonValue value) {
+
+        if (value != null) {
+            return value.asObjectId().getValue();
+        }
+
         return null;
     }
 }

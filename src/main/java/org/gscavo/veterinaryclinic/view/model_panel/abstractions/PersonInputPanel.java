@@ -6,6 +6,7 @@ package org.gscavo.veterinaryclinic.view.model_panel.abstractions;
 
 import lombok.Getter;
 import org.gscavo.veterinaryclinic.model.Secretary;
+import org.gscavo.veterinaryclinic.model.SimplePerson;
 import org.gscavo.veterinaryclinic.model.abstractions.Person;
 import org.gscavo.veterinaryclinic.view.model_panel.*;
 
@@ -13,17 +14,25 @@ import org.gscavo.veterinaryclinic.view.model_panel.*;
  *
  * @author gscavo
  */
-public class PersonInputPanel extends javax.swing.JPanel {
+public class PersonInputPanel extends javax.swing.JPanel implements BaseInputPanel<SimplePerson
+        > {
 
     @Getter
-    Person person = new Secretary();
+    private SimplePerson data;
     
     /**
      * Creates new form AddressInputPanel
      */
     public PersonInputPanel() {
         initComponents();
+        this.data = new SimplePerson();
     }
+    
+    public PersonInputPanel(SimplePerson simplePerson) {
+        initComponents();
+        this.data = simplePerson;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -171,25 +180,25 @@ public class PersonInputPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void personNameInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_personNameInputFieldKeyReleased
-        this.person.setName(
+        this.data.setName(
                 personNameInputField.getText()
         );
     }//GEN-LAST:event_personNameInputFieldKeyReleased
 
     private void cpfInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cpfInputFieldKeyReleased
-        this.person.setCpf(
+        this.data.setCpf(
                 cpfInputField.getText()
         );
     }//GEN-LAST:event_cpfInputFieldKeyReleased
 
     private void telephoneInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telephoneInputFieldKeyReleased
-        this.person.setCpf(
+        this.data.setPhoneNumber(
             this.telephoneInputField.getText()
         );
     }//GEN-LAST:event_telephoneInputFieldKeyReleased
 
     private void emailInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailInputFieldKeyReleased
-        this.person.setEmail(
+        this.data.setEmail(
                 this.emailInputField.getText()
         );
     }//GEN-LAST:event_emailInputFieldKeyReleased

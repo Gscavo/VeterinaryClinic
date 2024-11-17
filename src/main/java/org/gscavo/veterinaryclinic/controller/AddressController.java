@@ -16,7 +16,7 @@ import static org.gscavo.veterinaryclinic.utils.information.SystemOperationResul
 @Getter
 public class AddressController {
 
-    private static final AddressDAO ADDRESS_DAO = new AddressDAO();
+    private static final AddressDAO ADDRESS_DAO = DAOController.getDaoByClass(Address.class);
 
     public static SystemOperationResult registerAddress(Address address) {
         if (!canUserDoAction(Permissions::canRegister)) {

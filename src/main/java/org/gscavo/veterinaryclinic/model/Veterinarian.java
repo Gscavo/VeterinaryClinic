@@ -17,7 +17,7 @@ import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomStri
 @EqualsAndHashCode(callSuper = true)
 public class Veterinarian extends Person {
 
-    private String crmv;
+    private String crmv = "";
 
     private ArrayList<ObjectId> appointmentList;
 

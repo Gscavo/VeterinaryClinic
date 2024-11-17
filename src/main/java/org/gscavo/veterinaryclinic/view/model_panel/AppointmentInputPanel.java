@@ -4,17 +4,30 @@
  */
 package org.gscavo.veterinaryclinic.view.model_panel;
 
+import lombok.Getter;
+import org.gscavo.veterinaryclinic.model.Appointment;
+import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
+
 /**
  *
  * @author gscavo
  */
-public class AppointmentInputPanel extends javax.swing.JPanel {
+public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInputPanel {
+
+    @Getter
+    private Appointment data;
 
     /**
      * Creates new form AddressInputPanel
      */
     public AppointmentInputPanel() {
         initComponents();
+        this.data = new Appointment();
+    }
+
+    public AppointmentInputPanel(Appointment appointment) {
+        initComponents();
+        this.data = appointment;
     }
 
     /**

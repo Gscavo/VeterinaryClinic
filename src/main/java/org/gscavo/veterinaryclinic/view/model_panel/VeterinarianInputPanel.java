@@ -4,19 +4,30 @@
  */
 package org.gscavo.veterinaryclinic.view.model_panel;
 
+import lombok.Getter;
+import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
+
 /**
  *
  * @author gscavo
  */
-public class VeterinarianInputPanel extends javax.swing.JPanel {
+public class VeterinarianInputPanel extends javax.swing.JPanel implements BaseInputPanel<String> {
 
+    @Getter
+    private String data;
+    
     /**
      * Creates new form AddressInputPanel
      */
     public VeterinarianInputPanel() {
         initComponents();
     }
-
+    
+    public VeterinarianInputPanel(String crmv) {
+        initComponents();
+        this.data = crmv;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,9 +61,9 @@ public class VeterinarianInputPanel extends javax.swing.JPanel {
         veterinarianCrmvInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         veterinarianCrmvInputField.setPreferredSize(new java.awt.Dimension(150, 30));
         veterinarianCrmvInputField.setSize(new java.awt.Dimension(300, 30));
-        veterinarianCrmvInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                veterinarianCrmvInputFieldActionPerformed(evt);
+        veterinarianCrmvInputField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                veterinarianCrmvInputFieldMouseReleased(evt);
             }
         });
 
@@ -86,9 +97,9 @@ public class VeterinarianInputPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void veterinarianCrmvInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_veterinarianCrmvInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_veterinarianCrmvInputFieldActionPerformed
+    private void veterinarianCrmvInputFieldMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_veterinarianCrmvInputFieldMouseReleased
+        this.data = this.veterinarianCrmvInputField.getText();
+    }//GEN-LAST:event_veterinarianCrmvInputFieldMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

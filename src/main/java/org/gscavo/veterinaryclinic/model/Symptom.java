@@ -19,7 +19,7 @@ public class Symptom implements BaseModel<Symptom> {
     @JsonIgnore
     private ObjectId id;
 
-    private String description;
+    private String description = "";
 
     public Symptom(Document document) {
         this.id = document.getObjectId("_id");

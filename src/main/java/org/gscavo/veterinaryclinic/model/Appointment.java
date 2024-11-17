@@ -33,7 +33,7 @@ public class Appointment implements BaseModel<Appointment> {
 
     private ObjectId dateId;
 
-    private float costAmount;
+    private float costAmount = -1f;
 
     public Appointment(Document document) {
         this.id = document.getObjectId("_id");

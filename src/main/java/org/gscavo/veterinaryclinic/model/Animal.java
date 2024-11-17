@@ -30,13 +30,13 @@ public class Animal implements BaseModel<Animal> {
     
     private ObjectId tutor;
     
-    private String name;
+    private String name = "";
     
     private ObjectId species;
     
-    private String race;
+    private String race = "";
     
-    private int age;
+    private int age = -1;
 
     public Animal(Document document) {
         this.id = document.getObjectId("_id");

@@ -4,19 +4,32 @@
  */
 package org.gscavo.veterinaryclinic.view.model_panel;
 
+import lombok.Getter;
+import org.gscavo.veterinaryclinic.model.Species;
+import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
+
 /**
  *
  * @author gscavo
  */
-public class SpeciesInputPanel extends javax.swing.JPanel {
+public class SpeciesInputPanel extends javax.swing.JPanel implements BaseInputPanel<Species> {
 
+    @Getter
+    private Species data;
+    
     /**
      * Creates new form AddressInputPanel
      */
     public SpeciesInputPanel() {
         initComponents();
+        this.data = new Species();
     }
-
+    
+    public SpeciesInputPanel(Species species) {
+        initComponents();
+        this.data = species;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,14 +75,19 @@ public class SpeciesInputPanel extends javax.swing.JPanel {
         speciesNameInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         speciesNameInputField.setPreferredSize(new java.awt.Dimension(150, 30));
         speciesNameInputField.setSize(new java.awt.Dimension(300, 30));
-        speciesNameInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                speciesNameInputFieldActionPerformed(evt);
+        speciesNameInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                speciesNameInputFieldKeyReleased(evt);
             }
         });
 
         speciesDescriptionTextArea.setColumns(20);
         speciesDescriptionTextArea.setRows(5);
+        speciesDescriptionTextArea.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                speciesDescriptionTextAreaMouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(speciesDescriptionTextArea);
 
         speciesScientificNameLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -83,9 +101,9 @@ public class SpeciesInputPanel extends javax.swing.JPanel {
         speciesScientificNameInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         speciesScientificNameInputField.setPreferredSize(new java.awt.Dimension(150, 30));
         speciesScientificNameInputField.setSize(new java.awt.Dimension(300, 30));
-        speciesScientificNameInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                speciesScientificNameInputFieldActionPerformed(evt);
+        speciesScientificNameInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                speciesScientificNameInputFieldKeyReleased(evt);
             }
         });
 
@@ -135,13 +153,23 @@ public class SpeciesInputPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void speciesNameInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_speciesNameInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_speciesNameInputFieldActionPerformed
+    private void speciesNameInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_speciesNameInputFieldKeyReleased
+        this.data.setName(
+                this.speciesNameInputField.getText()
+        );
+    }//GEN-LAST:event_speciesNameInputFieldKeyReleased
 
-    private void speciesScientificNameInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_speciesScientificNameInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_speciesScientificNameInputFieldActionPerformed
+    private void speciesScientificNameInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_speciesScientificNameInputFieldKeyReleased
+        this.data.setScientificName(
+                this.speciesScientificNameInputField.getText()
+        );
+    }//GEN-LAST:event_speciesScientificNameInputFieldKeyReleased
+
+    private void speciesDescriptionTextAreaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_speciesDescriptionTextAreaMouseReleased
+        this.data.setDescription(
+                this.speciesDescriptionTextArea.getText()
+        );
+    }//GEN-LAST:event_speciesDescriptionTextAreaMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

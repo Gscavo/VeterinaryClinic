@@ -1,10 +1,7 @@
 package org.gscavo.veterinaryclinic.utils.enums;
 
 import lombok.Getter;
-import org.gscavo.veterinaryclinic.model.Admin;
-import org.gscavo.veterinaryclinic.model.Client;
-import org.gscavo.veterinaryclinic.model.Secretary;
-import org.gscavo.veterinaryclinic.model.Veterinarian;
+import org.gscavo.veterinaryclinic.model.*;
 import org.gscavo.veterinaryclinic.model.abstractions.Person;
 
 @Getter
@@ -12,7 +9,8 @@ public enum PersonType {
     ADMIN(Admin.class),
     SECRETARY(Secretary.class),
     CLIENT(Client.class),
-    VETERINARIAN(Veterinarian.class);
+    VETERINARIAN(Veterinarian.class),
+    NONE(SimplePerson.class);
 
     private final Class<? extends Person> modelClass;
 

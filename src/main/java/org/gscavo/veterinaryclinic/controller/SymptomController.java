@@ -11,7 +11,7 @@ import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
 
 public class SymptomController {
 
-    private static final SymptomDAO SYMPTOM_DAO = new SymptomDAO();
+    private static final SymptomDAO SYMPTOM_DAO = DAOController.getDaoByClass(Symptom.class);
 
     public static SystemOperationResult registerSymptom(Symptom symptom) {
         if (!canUserDoAction(Permissions::canRegisterSymptoms)) {

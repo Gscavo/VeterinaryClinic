@@ -5,8 +5,11 @@
 
 package org.gscavo.veterinaryclinic.view.panels.register;
 
+import org.bson.types.ObjectId;
+import org.gscavo.veterinaryclinic.controller.ProcedureController;
 import org.gscavo.veterinaryclinic.model.Procedure;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
+import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 
 /**
  *
@@ -75,15 +78,10 @@ public class ProcedureRegisterPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        // TODO add your handling code here:
-        Procedure procedureData = Procedure
-                .builder()
-                .name(procedureInputPanel.getProcedureName())
-                .price(procedureInputPanel.getPrice())
-                .type(procedureInputPanel.getType())
-                .description(procedureInputPanel.getDescription())
-                .build();
-        
+        SystemOperationResult<ObjectId> res = ProcedureController.registerProcedure(
+                this.procedureInputPanel.getData()
+        );
+        ViewUtils.showInformationDialog(this, res);
         
     }//GEN-LAST:event_registerButtonActionPerformed
 

@@ -4,17 +4,30 @@
  */
 package org.gscavo.veterinaryclinic.view.model_panel;
 
+import lombok.Getter;
+import org.gscavo.veterinaryclinic.model.Symptom;
+import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
+
 /**
  *
  * @author gscavo
  */
-public class SymptomInputPanel extends javax.swing.JPanel {
+public class SymptomInputPanel extends javax.swing.JPanel implements BaseInputPanel<Symptom>{
 
+    @Getter
+    private Symptom data;
+    
     /**
      * Creates new form AddressInputPanel
      */
     public SymptomInputPanel() {
         initComponents();
+        this.data = new Symptom();
+    }
+    
+    public SymptomInputPanel(Symptom symptom) {
+        initComponents();
+        this.data = symptom;
     }
 
     /**
@@ -49,6 +62,11 @@ public class SymptomInputPanel extends javax.swing.JPanel {
 
         symptomsDescriptionTextArea.setColumns(20);
         symptomsDescriptionTextArea.setRows(5);
+        symptomsDescriptionTextArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                symptomsDescriptionTextAreaKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(symptomsDescriptionTextArea);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -82,6 +100,12 @@ public class SymptomInputPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void symptomsDescriptionTextAreaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_symptomsDescriptionTextAreaKeyReleased
+        this.data.setDescription(
+                this.symptomsDescriptionTextArea.getText()
+        );
+    }//GEN-LAST:event_symptomsDescriptionTextAreaKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

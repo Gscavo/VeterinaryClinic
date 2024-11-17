@@ -3,11 +3,8 @@ package org.gscavo.veterinaryclinic.controller;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import lombok.Getter;
-import org.bson.BsonObjectId;
-import org.bson.BsonValue;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.dao.*;
 import org.gscavo.veterinaryclinic.model.*;
@@ -18,24 +15,23 @@ import org.gscavo.veterinaryclinic.utils.enums.StatusCode;
 import org.gscavo.veterinaryclinic.utils.security.Permissions;
 
 import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
-import org.gscavo.veterinaryclinic.utils.enums.PersonType;
 import static org.gscavo.veterinaryclinic.utils.information.SystemOperationResult.*;
 
-public class  UserController  {
+public class UserController  {
     @Getter
-    private static final UsersDAO USERS_DAO = new UsersDAO();
+    private static final UsersDAO USERS_DAO = DAOController.getDaoByClass(SimplePerson.class);
 
     @Getter
-    private static final ClientDAO CLIENT_DAO = new ClientDAO();
+    private static final ClientDAO CLIENT_DAO = DAOController.getDaoByClass(Client.class);
 
     @Getter
-    private static final VeterinarianDAO VETERINARIAN_DAO = new VeterinarianDAO();
+    private static final VeterinarianDAO VETERINARIAN_DAO = DAOController.getDaoByClass(Veterinarian.class)
 
     @Getter
-    private static final SecretaryDAO SECRETARY_DAO = new SecretaryDAO();
+    private static final SecretaryDAO SECRETARY_DAO = DAOController.getDaoByClass(Secretary.class);
 
     @Getter
-    private static final AdminDAO ADMIN_DAO = new AdminDAO();
+    private static final AdminDAO ADMIN_DAO = DAOController.getDaoByClass(Admin.class);
 
     @Getter
     private static Person currentUser = null;
@@ -123,6 +119,7 @@ public class  UserController  {
             case SECRETARY -> SECRETARY_DAO;
             case VETERINARIAN -> VETERINARIAN_DAO;
             case CLIENT -> CLIENT_DAO;
+            case NONE -> USERS_DAO;
         };
     }
 

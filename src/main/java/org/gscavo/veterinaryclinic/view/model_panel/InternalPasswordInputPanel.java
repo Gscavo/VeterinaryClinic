@@ -4,19 +4,24 @@
  */
 package org.gscavo.veterinaryclinic.view.model_panel;
 
+import lombok.Data;
 import lombok.Getter;
+import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
 /**
  *
  * @author gscavo
  */
-public class InternalPasswordInputPanel extends javax.swing.JPanel {
+public class InternalPasswordInputPanel extends javax.swing.JPanel implements BaseInputPanel<String> {
 
     @Getter
-    private String password = "";
+    private String data;
+
+    @Getter
+    private String password;
     
     @Getter
-    private String retypedPassword = "";
+    private String retypedPassword;
     
     /**
      * Creates new form AddressInputPanel

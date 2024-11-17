@@ -25,19 +25,19 @@ public abstract class Person implements BaseModel<Person>  {
     @JsonIgnore
     private ObjectId id;
 
-    private String name;
+    private String name = "";
 
-    private String password;
+    private String password = "";
 
-    private String cpf;
+    private String cpf = "";
 
-    private String phoneNumber;
+    private String phoneNumber = "";
 
-    private String email;
+    private String email = "";
 
     private ObjectId address;
 
-    private PersonType type;
+    private PersonType type = PersonType.NONE;
 
 
     public Person(Document document) {

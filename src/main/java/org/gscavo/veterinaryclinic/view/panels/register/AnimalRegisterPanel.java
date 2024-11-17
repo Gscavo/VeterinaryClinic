@@ -85,10 +85,10 @@ public class AnimalRegisterPanel extends javax.swing.JPanel {
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
       SystemOperationResult<?> res = AnimalController
-                .registerAnimal(this.animalInputPanel1.getAnimalData());
+                .registerAnimal(this.animalInputPanel1.getData());
                 
         
-        ViewUtils.showInformationDialog((JFrame) this.getTopLevelAncestor(), res);
+        ViewUtils.showInformationDialog(this, res);
     }//GEN-LAST:event_registerButtonActionPerformed
 
 

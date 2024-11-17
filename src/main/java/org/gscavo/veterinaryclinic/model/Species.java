@@ -28,11 +28,11 @@ public class Species implements BaseModel<Species> {
     @JsonIgnore
     private ObjectId id;
 
-    private String name;
+    private String name = "";
 
-    private String scientificName;
+    private String scientificName = "";
 
-    private String description;
+    private String description = "";
 
     public Species(Document document) {
         this.id = document.getObjectId("_id");

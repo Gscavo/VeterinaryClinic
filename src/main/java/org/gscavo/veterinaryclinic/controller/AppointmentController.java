@@ -16,7 +16,7 @@ import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
 @Getter
 public class AppointmentController {
 
-    private static final AppointmentDAO APPOINTMENT_DAO = new AppointmentDAO();
+    private static final AppointmentDAO APPOINTMENT_DAO = DAOController.getDaoByClass(Appointment.class);
 
     public static SystemOperationResult registerAppointment(Appointment appointment) {
         if (!canUserDoAction(Permissions::canRegister)) {

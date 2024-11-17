@@ -29,17 +29,17 @@ public class Address implements BaseModel<Address> {
     @JsonIgnore
     private ObjectId id;
     
-    private int number;
+    private int number = -1;
     
-    private String street;
+    private String street = "";
     
-    private String neighborhood;
+    private String neighborhood = "";
     
-    private String city;
+    private String city = "";
     
-    private String state;
+    private String state = "";
     
-    private String zipCode;
+    private String zipCode = "";
 
     public Address(Document document) {
         this.id = document.getObjectId("_id");
