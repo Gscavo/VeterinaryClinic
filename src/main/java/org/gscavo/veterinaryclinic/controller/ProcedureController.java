@@ -10,15 +10,20 @@ import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 import org.gscavo.veterinaryclinic.utils.security.Permissions;
 
 import java.util.Objects;
+import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
 
 import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
 
-public class ProcedureController {
+public class ProcedureController extends BaseController<Procedure> {
 
     private static final ProcedureDAO PROCEDURE_DAO = DAOController.getDaoByClass(Procedure.class);
 
-
-    public static SystemOperationResult registerProcedure(Procedure procedure) {
+    public ProcedureController() {
+        super(Procedure.class);
+    }
+    
+    @Override
+    public SystemOperationResult register(Procedure procedure) {
         if (!canUserDoAction(Permissions::canRegisterProcedures)) {
             return SystemOperationResult.notAuthenticatedOrAllowedActionSOR();
         }

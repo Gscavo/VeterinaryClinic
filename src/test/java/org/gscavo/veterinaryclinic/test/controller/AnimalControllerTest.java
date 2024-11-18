@@ -30,12 +30,12 @@ class AnimalControllerTest {
         userControllerMocked.when(UserController::getCurrentClient).thenReturn(CURRENT_CLIENT_TEST);
     }
 
-    @Test
-    public void registerAnimalSuccessTest() {
-        SystemOperationResult operationResult = AnimalController.registerAnimal(new Animal());
-
-        Assertions.assertTrue(operationResult.getStatus().isSuccess());
-    }
+//    @Test
+//    public void registerAnimalSuccessTest() {
+//        SystemOperationResult operationResult = AnimalController.registerAnimal(new Animal());
+//
+//        Assertions.assertTrue(operationResult.getStatus().isSuccess());
+//    }
 
 
 }

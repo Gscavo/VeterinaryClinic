@@ -5,8 +5,10 @@
 package org.gscavo.veterinaryclinic.view.model_panel;
 
 import lombok.Getter;
+import org.gscavo.veterinaryclinic.controller.ProcedureController;
 import org.gscavo.veterinaryclinic.model.Procedure;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
+import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.utils.enums.ProcedureType;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
@@ -19,17 +21,24 @@ public class ProcedureInputPanel extends javax.swing.JPanel implements BaseInput
     @Getter
     private Procedure data;
     
+    @Getter
+    private ProcedureController procedureController;
+    
     /**
      * Creates new form AddressInputPanel
      */
     public ProcedureInputPanel() {
         initComponents();
+        
+        this.procedureController = (ProcedureController) Controllers.getByName(Procedure.class);
 
         this.data = new Procedure();
     }
     
     public ProcedureInputPanel(Procedure procedure) {
         initComponents();
+        
+        this.procedureController = (ProcedureController) Controllers.getByName(Procedure.class);
 
         this.data = procedure;
     }

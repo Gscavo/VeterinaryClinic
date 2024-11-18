@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import org.gscavo.veterinaryclinic.utils.exceptions.ExceptionOutput;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 import org.gscavo.veterinaryclinic.view.dialog.OperationStatusDialog;
 
@@ -62,9 +63,7 @@ public class ViewUtils {
                     Object value = field.get(object);
                     row[idx_col++] = value;
                 } catch (Exception ex) {
-                    System.err.println("!ERROR!");
-                    System.err.println(ex.getCause().getMessage());
-                    System.err.println(ex.getLocalizedMessage());
+                    ExceptionOutput.showExceptionErr(ex);
                 }
             };
             data[idx_row++] = row;

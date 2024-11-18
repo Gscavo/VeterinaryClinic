@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import lombok.Getter;
 import org.bson.types.ObjectId;
+import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
 import org.gscavo.veterinaryclinic.dao.*;
 import org.gscavo.veterinaryclinic.model.*;
 import org.gscavo.veterinaryclinic.model.abstractions.Person;
@@ -17,7 +18,7 @@ import org.gscavo.veterinaryclinic.utils.security.Permissions;
 import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
 import static org.gscavo.veterinaryclinic.utils.information.SystemOperationResult.*;
 
-public class UserController  {
+public class UserController extends BaseController<SimplePerson>  {
     @Getter
     private static final UsersDAO USERS_DAO = DAOController.getDaoByClass(SimplePerson.class);
 
@@ -25,7 +26,7 @@ public class UserController  {
     private static final ClientDAO CLIENT_DAO = DAOController.getDaoByClass(Client.class);
 
     @Getter
-    private static final VeterinarianDAO VETERINARIAN_DAO = DAOController.getDaoByClass(Veterinarian.class)
+    private static final VeterinarianDAO VETERINARIAN_DAO = DAOController.getDaoByClass(Veterinarian.class);
 
     @Getter
     private static final SecretaryDAO SECRETARY_DAO = DAOController.getDaoByClass(Secretary.class);
@@ -39,6 +40,15 @@ public class UserController  {
     @Getter
     private static Client currentClient = null;
 
+    public UserController() {
+        super(SimplePerson.class);
+    }
+    
+    @Override
+    public SystemOperationResult register(SimplePerson person) {
+        return null;
+    }
+    
     public static SystemOperationResult login(String email, String password) {
         if (StringUtils.isEmpty(email) || StringUtils.isEmpty(password)) {
             return new SystemOperationResult(StatusCode.FAILED, "Either email or password is empty.");

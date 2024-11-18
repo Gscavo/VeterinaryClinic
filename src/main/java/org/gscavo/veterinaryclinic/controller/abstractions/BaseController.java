@@ -4,18 +4,28 @@
  */
 package org.gscavo.veterinaryclinic.controller.abstractions;
 
+import com.sun.jdi.ClassType;
 import java.util.ArrayList;
 import org.gscavo.veterinaryclinic.controller.DAOController;
 import org.gscavo.veterinaryclinic.dao.BaseDAO;
+import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 
 /**
  *
  * @author gscavo
  */
-public abstract class BaseController {
+public abstract class BaseController<T> {
     
-    public static <T> ArrayList<T> getAll(Class<T> classType) {
-        BaseDAO<T> dao = DAOController.getDaoByClass(classType);
+    private Class<T> classType;
+    
+    public BaseController(Class<T> classType) {
+        this.classType = classType;
+    }
+    
+    public abstract SystemOperationResult register(T object);
+    
+    public <T> ArrayList<T> getAll() {
+        BaseDAO<T> dao = DAOController.getDaoByClass(this.classType);
         
         return dao.findAll();
     };

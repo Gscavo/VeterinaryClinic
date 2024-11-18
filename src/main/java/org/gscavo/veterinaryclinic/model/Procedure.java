@@ -34,7 +34,9 @@ public class Procedure implements BaseModel<Procedure> {
         this.name = document.getString("name");
         this.description = document.getString("description");
         this.price = document.getDouble("price").floatValue();
-        this.type = document.get("type", ProcedureType.class);
+        this.type = ProcedureType.valueOf(
+                document.getString("type")
+        );
     }
 
     @Override

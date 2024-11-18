@@ -11,14 +11,20 @@ import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 import org.gscavo.veterinaryclinic.utils.security.Permissions;
 
 import static org.gscavo.veterinaryclinic.controller.UserController.appendAppointmentToUser;
+import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
 import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
 
 @Getter
-public class AppointmentController {
+public class AppointmentController extends BaseController<Appointment> {
 
     private static final AppointmentDAO APPOINTMENT_DAO = DAOController.getDaoByClass(Appointment.class);
 
-    public static SystemOperationResult registerAppointment(Appointment appointment) {
+    public AppointmentController() {
+        super(Appointment.class);
+    }
+    
+    @Override
+    public SystemOperationResult register(Appointment appointment) {
         if (!canUserDoAction(Permissions::canRegister)) {
             return SystemOperationResult.notAuthenticatedOrAllowedActionSOR();
         }

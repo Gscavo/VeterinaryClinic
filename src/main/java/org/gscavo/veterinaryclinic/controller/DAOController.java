@@ -24,6 +24,7 @@ public class DAOController {
         DAO_MAP.put(Procedure.class, new ProcedureDAO());
         DAO_MAP.put(Secretary.class, new SecretaryDAO());
         DAO_MAP.put(Symptom.class, new SymptomDAO());
+        DAO_MAP.put(Species.class, new SpeciesDAO());
         DAO_MAP.put(SimplePerson.class, new UsersDAO());
         DAO_MAP.put(Veterinarian.class, new VeterinarianDAO());
     }

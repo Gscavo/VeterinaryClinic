@@ -8,14 +8,20 @@ import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 import org.gscavo.veterinaryclinic.utils.security.Permissions;
 
 import java.util.ArrayList;
+import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
 
 import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
 
-public class SpeciesController {
+public class SpeciesController extends BaseController<Species> {
 
     private static final SpeciesDAO SPECIES_DAO = DAOController.getDaoByClass(Species.class);
 
-    public static SystemOperationResult registerSpecies(Species species) {
+    public SpeciesController() {
+        super(Species.class);
+    }
+    
+    @Override
+    public SystemOperationResult register(Species species) {
         if (!canUserDoAction(Permissions::canRegister)) {
             return SystemOperationResult.notAuthenticatedOrAllowedActionSOR();
         }

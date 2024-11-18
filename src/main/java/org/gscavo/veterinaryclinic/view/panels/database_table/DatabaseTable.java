@@ -17,6 +17,7 @@ import org.gscavo.veterinaryclinic.dao.BaseDAO;
 import org.gscavo.veterinaryclinic.utils.ObjectUtils;
 import org.gscavo.veterinaryclinic.utils.StringUtils;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
+import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 
 /**
  *
@@ -24,6 +25,8 @@ import org.gscavo.veterinaryclinic.utils.ViewUtils;
  */
 public class DatabaseTable<T> extends javax.swing.JPanel {
 
+    private final BaseController<T> CONTROLLER; 
+    
     @Getter @Setter
     private ArrayList<Field> allFieldsFromClass;
     
@@ -31,13 +34,17 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
      * Creates new form DatabaseTable
      */
     public DatabaseTable() {
-        initComponents();        
+        initComponents();
+        this.CONTROLLER = null;
     }
     
     public DatabaseTable(Class<T> classType) {
         initComponents();  
         
-        ArrayList<T> dataList = BaseController.getAll(classType);
+        this.CONTROLLER = Controllers.getByName(classType);
+        
+        ArrayList<T> dataList = this.CONTROLLER
+                .getAll();
         
         this.allFieldsFromClass = ObjectUtils.getAllFieldsFromClass(classType);
         

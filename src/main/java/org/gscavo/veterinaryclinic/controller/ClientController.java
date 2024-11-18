@@ -9,17 +9,22 @@ import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
 import org.gscavo.veterinaryclinic.dao.ClientDAO;
 import org.gscavo.veterinaryclinic.model.Client;
+import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 
 /**
  *
  * @author gscavo
  */
-public class ClientController extends BaseController{
+public class ClientController extends BaseController<Client> {
     
     private static ClientDAO clientDAO = DAOController.getDaoByClass(Client.class);
     
+    public ClientController() {
+        super(Client.class);
+    }
     
-    public static ArrayList<Client> getAll() {
-        return clientDAO.findAll();
+    @Override
+    public SystemOperationResult register(Client client) {
+        return null;
     }
 }

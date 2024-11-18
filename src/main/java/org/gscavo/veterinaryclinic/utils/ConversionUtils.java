@@ -6,6 +6,7 @@ import com.mongodb.client.MongoIterable;
 import org.bson.BsonValue;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.gscavo.veterinaryclinic.utils.exceptions.ExceptionOutput;
 import org.gscavo.veterinaryclinic.utils.mapper.ObjectIdDeserializer;
 import org.gscavo.veterinaryclinic.utils.mapper.ObjectIdSerializer;
 
@@ -34,12 +35,10 @@ public class ConversionUtils {
 
     public static <T> T documentToType(Document document, Class<T> type) {
         try {
-            return type.getConstructor(Document.class).newInstance(document);
+            T obj = type.getConstructor(Document.class).newInstance(document);
+            return obj;
         } catch (Exception e) {
-            System.err.println("!ERROR!\n" + e.getMessage());
-            for (StackTraceElement ste : e.getStackTrace()) {
-                System.out.println(ste.getClassName() + " " + ste.getMethodName() + " " + ste.getLineNumber());
-            }
+            ExceptionOutput.showExceptionErr(e);
             return null;
         }
     }

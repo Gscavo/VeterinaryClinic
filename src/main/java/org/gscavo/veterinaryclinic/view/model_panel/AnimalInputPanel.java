@@ -11,6 +11,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 
 import lombok.Getter;
+import org.gscavo.veterinaryclinic.controller.AnimalController;
 import org.gscavo.veterinaryclinic.controller.ClientController;
 import org.gscavo.veterinaryclinic.controller.SpeciesController;
 import org.gscavo.veterinaryclinic.controller.UserController;
@@ -20,6 +21,7 @@ import org.gscavo.veterinaryclinic.model.Species;
 import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import org.gscavo.veterinaryclinic.utils.StringUtils;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
+import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
 /**
@@ -35,16 +37,29 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
     
     private ArrayList<Species> speciesList;
     
+    @Getter
+    private AnimalController animalController;
+    
+    private ClientController clientController;
+            
+    private SpeciesController speciesController;
+    
     /**
      * Creates new form AddressInputPanel
      */
     public AnimalInputPanel() {
         initComponents();
+        
+        this.animalController = (AnimalController) Controllers
+                .getByName(Animal.class.getName());
+        this.clientController = (ClientController) Controllers
+                .getByName(Client.class.getName());
+        this.speciesController = (SpeciesController) Controllers
+                .getByName(SpeciesController.class.getName());
+        
         this.data = new Animal();
-        this.tutorList = ClientController
-                .getAll();
-        this.speciesList = SpeciesController
-                .getAll();
+        this.tutorList = this.clientController.getAll();
+        this.speciesList = this.speciesController.getAll();
        
 
         ComboBoxModel<String> tutorModel = new DefaultComboBoxModel(

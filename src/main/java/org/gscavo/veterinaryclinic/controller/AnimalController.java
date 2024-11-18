@@ -3,6 +3,7 @@ package org.gscavo.veterinaryclinic.controller;
 import com.mongodb.client.result.InsertOneResult;
 import java.util.ArrayList;
 import org.bson.types.ObjectId;
+import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
 import org.gscavo.veterinaryclinic.dao.AnimalDAO;
 import org.gscavo.veterinaryclinic.model.Animal;
 import org.gscavo.veterinaryclinic.model.Client;
@@ -13,11 +14,16 @@ import static org.gscavo.veterinaryclinic.utils.information.SystemOperationResul
 import static org.gscavo.veterinaryclinic.utils.information.SystemOperationResult.notAuthenticatedOrAllowedActionSOR;
 import org.gscavo.veterinaryclinic.utils.security.Permissions;
 
-public class AnimalController {
+public class AnimalController extends BaseController<Animal> {
 
     private static final AnimalDAO ANIMAL_DAO = DAOController.getDaoByClass(Animal.class);
 
-    public static SystemOperationResult registerAnimal(Animal animal) {
+    public AnimalController() {
+        super(Animal.class);
+    }
+    
+    @Override
+    public SystemOperationResult register(Animal animal) {
         if (!canUserDoAction(Permissions::canRegister)) {
             return notAuthenticatedOrAllowedActionSOR();
         }
