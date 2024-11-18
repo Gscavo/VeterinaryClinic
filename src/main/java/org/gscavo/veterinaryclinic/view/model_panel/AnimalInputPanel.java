@@ -11,6 +11,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 
 import lombok.Getter;
+import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.controller.AnimalController;
 import org.gscavo.veterinaryclinic.controller.ClientController;
 import org.gscavo.veterinaryclinic.controller.SpeciesController;
@@ -38,7 +39,7 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
     private ArrayList<Species> speciesList;
     
     @Getter
-    private AnimalController animalController;
+    private AnimalController  mainController;
     
     private ClientController clientController;
             
@@ -49,18 +50,41 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
      */
     public AnimalInputPanel() {
         initComponents();
-        
-        this.animalController = (AnimalController) Controllers
-                .getByName(Animal.class.getName());
+        initControllers();
+        initSelections();
+    }
+    
+    public AnimalInputPanel(Animal animal) {
+        initComponents();
+        initControllers();
+
+        initSelections(this.data.getTutor(), this.data.getSpecies());
+
+        this.data = animal;
+
+        initSelections();
+    }
+
+    private void initControllers() {
+        this.mainController = (AnimalController) Controllers.getByName(Animal.class);
+        this.clientController = (ClientController) Controllers.getByName(Client.class);
+        this.speciesController = (SpeciesController) Controllers.getByName(Species.class);
+    }
+
+    private void initSelections(ObjectId tutorId, ObjectId speciesId) {
+        initSelections();
+    }
+
+    private void initSelections() {
         this.clientController = (ClientController) Controllers
                 .getByName(Client.class.getName());
         this.speciesController = (SpeciesController) Controllers
                 .getByName(SpeciesController.class.getName());
-        
+
         this.data = new Animal();
         this.tutorList = this.clientController.getAll();
         this.speciesList = this.speciesController.getAll();
-       
+
 
         ComboBoxModel<String> tutorModel = new DefaultComboBoxModel(
                 IntStream
@@ -77,17 +101,12 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
                         .toList()
                         .toArray()
         );
-        
+
         this.data.setTutor(this.tutorList.get(0).getId());
         this.data.setSpecies(this.speciesList.get(0).getId());
-        
+
         animalTutorSelection.setModel(tutorModel);
         animalSpeciesSelection.setModel(speciesModel);
-    }
-    
-    public AnimalInputPanel(Animal animal) {
-        initComponents();
-        this.data = animal;
     }
 
     /**

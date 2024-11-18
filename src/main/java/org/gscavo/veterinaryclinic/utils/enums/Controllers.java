@@ -17,10 +17,12 @@ public enum Controllers {
     ANIMAL(new AnimalController()),
     APPOINTMENT(new AppointmentController()),
     CLIENT(new ClientController()),
+    PASSWORD(new PasswordController()),
     PROCEDURE(new ProcedureController()),
     SPECIES(new SpeciesController()),
     SYMPTOM(new SymptomController()),
-    USER(new UserController());
+    USER(new UserController()),
+    VETERINARIAN(new VeterinarianController());
     
     @Getter
     private final BaseController controller;

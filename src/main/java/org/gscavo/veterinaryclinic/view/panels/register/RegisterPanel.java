@@ -4,8 +4,11 @@
  */
 package org.gscavo.veterinaryclinic.view.panels.register;
 
-import javax.swing.JFrame;
-import org.gscavo.veterinaryclinic.controller.AnimalController;
+import javax.swing.JPanel;
+import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
+
+import java.awt.*;
+import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 
@@ -13,13 +16,33 @@ import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
  *
  * @author gscavo
  */
-public class AnimalRegisterPanel extends javax.swing.JPanel {
+public class RegisterPanel extends javax.swing.JPanel {
+
+    private final String CARD_NAME = "inputPanelCard";
+
+    private BaseInputPanel baseInputPanel;
 
     /**
-     * Creates new form AnimalRegisterPanel
+     * Creates new form RegisterPanel
      */
-    public AnimalRegisterPanel() {
+    public RegisterPanel() {
         initComponents();
+    }
+    
+    public <T extends JPanel> RegisterPanel(T panel) {
+        initComponents();
+
+        if (panel instanceof BaseInputPanel) {
+            this.baseInputPanel = (BaseInputPanel<?>) panel;
+        } else {
+            System.err.println("Panel: " + panel.getClass().getSimpleName() + " doesn't implements BaseInputPanel");
+        }
+
+        mainPanel.add(panel, CARD_NAME);
+        
+        CardLayout cl = (CardLayout) mainPanel.getLayout();
+        
+        cl.show(mainPanel, CARD_NAME);
     }
 
     /**
@@ -31,9 +54,11 @@ public class AnimalRegisterPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        animalInputPanel1 = new org.gscavo.veterinaryclinic.view.model_panel.AnimalInputPanel();
+        mainPanel = new javax.swing.JPanel();
         cancelButton = new javax.swing.JButton();
         registerButton = new javax.swing.JButton();
+
+        mainPanel.setLayout(new java.awt.CardLayout());
 
         cancelButton.setText("Cancelar");
         cancelButton.setPreferredSize(new java.awt.Dimension(100, 25));
@@ -57,9 +82,7 @@ public class AnimalRegisterPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(animalInputPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -70,12 +93,12 @@ public class AnimalRegisterPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(animalInputPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -84,18 +107,17 @@ public class AnimalRegisterPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-      SystemOperationResult<?> res = this.animalInputPanel1
-              .getMainController()
-              .register(this.animalInputPanel1.getData());
-                
-        
+        SystemOperationResult<ObjectId> res = this.baseInputPanel
+                .getMainController()
+                .register(this.baseInputPanel.getData());
         ViewUtils.showInformationDialog(this, res);
+
     }//GEN-LAST:event_registerButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.gscavo.veterinaryclinic.view.model_panel.AnimalInputPanel animalInputPanel1;
     private javax.swing.JButton cancelButton;
+    private javax.swing.JPanel mainPanel;
     private javax.swing.JButton registerButton;
     // End of variables declaration//GEN-END:variables
 }

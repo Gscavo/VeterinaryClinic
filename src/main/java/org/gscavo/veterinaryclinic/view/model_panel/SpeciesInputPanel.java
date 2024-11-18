@@ -5,7 +5,9 @@
 package org.gscavo.veterinaryclinic.view.model_panel;
 
 import lombok.Getter;
+import org.gscavo.veterinaryclinic.controller.SpeciesController;
 import org.gscavo.veterinaryclinic.model.Species;
+import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
 /**
@@ -16,20 +18,29 @@ public class SpeciesInputPanel extends javax.swing.JPanel implements BaseInputPa
 
     @Getter
     private Species data;
-    
+
+    @Getter
+    private SpeciesController mainController;
+
     /**
      * Creates new form AddressInputPanel
      */
     public SpeciesInputPanel() {
         initComponents();
+        initControllers();
         this.data = new Species();
     }
     
     public SpeciesInputPanel(Species species) {
         initComponents();
+        initControllers();
         this.data = species;
     }
-    
+
+    private void initControllers() {
+        this.mainController = (SpeciesController) Controllers.getByName(Species.class);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

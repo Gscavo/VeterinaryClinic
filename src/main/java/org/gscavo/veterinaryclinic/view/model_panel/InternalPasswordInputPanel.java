@@ -6,6 +6,9 @@ package org.gscavo.veterinaryclinic.view.model_panel;
 
 import lombok.Data;
 import lombok.Getter;
+import org.gscavo.veterinaryclinic.controller.PasswordController;
+import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
+import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
 /**
@@ -22,12 +25,20 @@ public class InternalPasswordInputPanel extends javax.swing.JPanel implements Ba
     
     @Getter
     private String retypedPassword;
+
+    @Getter
+    private PasswordController mainController;
     
     /**
      * Creates new form AddressInputPanel
      */
     public InternalPasswordInputPanel() {
         initComponents();
+        initControllers();
+    }
+
+    private void initControllers() {
+        this.mainController = (PasswordController) Controllers.getByName("Password");
     }
 
     /**
@@ -144,4 +155,11 @@ public class InternalPasswordInputPanel extends javax.swing.JPanel implements Ba
     private javax.swing.JTextField retypePasswordInputField;
     private javax.swing.JLabel retypePasswordLabel;
     // End of variables declaration//GEN-END:variables
+
+
+    @Override
+    public BaseController<String> getMainController() {
+        System.err.println("There isn't a specific controller for the password input");
+        return null;
+    }
 }

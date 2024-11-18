@@ -4,10 +4,14 @@
  */
 package org.gscavo.veterinaryclinic.view.model_panel.abstractions;
 
+import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
+
 /**
  *
  * @author gscavo
  */
-public interface BaseInputPanel<T> {    
+public interface BaseInputPanel<T> {
     public T getData();
+    
+    public BaseController<T> getMainController();
 }

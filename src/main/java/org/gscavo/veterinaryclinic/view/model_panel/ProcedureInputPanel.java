@@ -22,26 +22,27 @@ public class ProcedureInputPanel extends javax.swing.JPanel implements BaseInput
     private Procedure data;
     
     @Getter
-    private ProcedureController procedureController;
+    private ProcedureController mainController;
     
     /**
      * Creates new form AddressInputPanel
      */
     public ProcedureInputPanel() {
         initComponents();
-        
-        this.procedureController = (ProcedureController) Controllers.getByName(Procedure.class);
-
+        initControllers();
         this.data = new Procedure();
     }
     
     public ProcedureInputPanel(Procedure procedure) {
         initComponents();
-        
-        this.procedureController = (ProcedureController) Controllers.getByName(Procedure.class);
-
+        initControllers();
         this.data = procedure;
     }
+
+    private void initControllers() {
+        this.mainController = (ProcedureController) Controllers.getByName(Procedure.class);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

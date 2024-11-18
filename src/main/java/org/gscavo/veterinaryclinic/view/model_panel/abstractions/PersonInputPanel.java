@@ -5,34 +5,45 @@
 package org.gscavo.veterinaryclinic.view.model_panel.abstractions;
 
 import lombok.Getter;
+import org.gscavo.veterinaryclinic.controller.UserController;
 import org.gscavo.veterinaryclinic.model.Secretary;
 import org.gscavo.veterinaryclinic.model.SimplePerson;
 import org.gscavo.veterinaryclinic.model.abstractions.Person;
+import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.view.model_panel.*;
 
 /**
  *
  * @author gscavo
  */
-public class PersonInputPanel extends javax.swing.JPanel implements BaseInputPanel<SimplePerson
-        > {
+public class PersonInputPanel extends javax.swing.JPanel implements BaseInputPanel<SimplePerson> {
 
     @Getter
     private SimplePerson data;
+
+    @Getter
+    private UserController mainController;
     
     /**
      * Creates new form AddressInputPanel
      */
     public PersonInputPanel() {
         initComponents();
+        initControllers();
+
         this.data = new SimplePerson();
     }
     
     public PersonInputPanel(SimplePerson simplePerson) {
         initComponents();
+        initControllers();
         this.data = simplePerson;
+
     }
-    
+
+    private void initControllers() {
+        this.mainController = (UserController) Controllers.getByName(SimplePerson.class);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

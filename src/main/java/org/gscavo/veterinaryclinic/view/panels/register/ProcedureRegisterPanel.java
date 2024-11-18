@@ -80,7 +80,7 @@ public class ProcedureRegisterPanel extends javax.swing.JPanel {
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         SystemOperationResult<ObjectId> res = this.
             procedureInputPanel
-            .getProcedureController()
+            .getMainController()
             .register(
         this.procedureInputPanel.getData()
         );

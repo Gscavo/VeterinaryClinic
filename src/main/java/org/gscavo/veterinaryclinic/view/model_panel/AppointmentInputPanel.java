@@ -5,7 +5,9 @@
 package org.gscavo.veterinaryclinic.view.model_panel;
 
 import lombok.Getter;
+import org.gscavo.veterinaryclinic.controller.AppointmentController;
 import org.gscavo.veterinaryclinic.model.Appointment;
+import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
 /**
@@ -17,17 +19,26 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
     @Getter
     private Appointment data;
 
+    @Getter
+    private AppointmentController mainController;
+
     /**
      * Creates new form AddressInputPanel
      */
     public AppointmentInputPanel() {
         initComponents();
+        initControllers();
         this.data = new Appointment();
     }
 
     public AppointmentInputPanel(Appointment appointment) {
         initComponents();
+        initControllers();
         this.data = appointment;
+    }
+
+    private void initControllers() {
+        this.mainController = (AppointmentController) Controllers.getByName(Appointment.class);
     }
 
     /**
