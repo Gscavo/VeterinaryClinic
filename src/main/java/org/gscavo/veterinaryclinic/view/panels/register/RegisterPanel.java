@@ -10,6 +10,8 @@ import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 import java.awt.*;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
+import org.gscavo.veterinaryclinic.utils.enums.Models;
+import org.gscavo.veterinaryclinic.utils.exceptions.ExceptionOutput;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 
 /**
@@ -27,6 +29,24 @@ public class RegisterPanel extends javax.swing.JPanel {
      */
     public RegisterPanel() {
         initComponents();
+    }
+    
+    public <T extends JPanel> RegisterPanel(Models model) {
+        initComponents();
+        try {
+            T panel = (T) model.getInputPanelClass().getDeclaredConstructor().newInstance();
+            if (panel instanceof BaseInputPanel) {
+                this.baseInputPanel = (BaseInputPanel<?>) panel;
+            } else {
+                System.err.println("Panel: " + panel.getClass().getSimpleName() + " doesn't implements BaseInputPanel");
+            }        
+        
+            mainPanel.add(panel, BorderLayout.CENTER);
+        } catch (Exception e) {
+            ExceptionOutput.showExceptionErr(e);
+        }
+
+        
     }
     
     public <T extends JPanel> RegisterPanel(T panel) {
@@ -58,6 +78,7 @@ public class RegisterPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(420, 420));
         setLayout(new java.awt.BorderLayout());
 
+        mainPanel.setRequestFocusEnabled(false);
         mainPanel.setLayout(new java.awt.BorderLayout());
         add(mainPanel, java.awt.BorderLayout.CENTER);
 
@@ -89,12 +110,9 @@ public class RegisterPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        SystemOperationResult<ObjectId> res = this.
-        baseInputPanel
-            .getMainController()
-            .register(
-            this.baseInputPanel.getData()
-        );
+        SystemOperationResult<ObjectId> res = this.baseInputPanel.getMainController()
+                .register(this.baseInputPanel.getData());
+
         ViewUtils.showInformationDialog(this, res);
 
     }//GEN-LAST:event_registerButtonActionPerformed

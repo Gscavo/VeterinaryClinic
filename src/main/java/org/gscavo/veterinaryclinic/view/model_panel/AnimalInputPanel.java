@@ -11,6 +11,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.controller.AnimalController;
 import org.gscavo.veterinaryclinic.controller.ClientController;
@@ -32,6 +33,7 @@ import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPanel<Animal> {
 
     @Getter
+    @Setter
     private Animal data;
     
     private ArrayList<Client> tutorList;

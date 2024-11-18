@@ -10,7 +10,10 @@ import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
 import org.gscavo.veterinaryclinic.dao.*;
 import org.gscavo.veterinaryclinic.model.*;
 import org.gscavo.veterinaryclinic.model.abstractions.Person;
+import org.gscavo.veterinaryclinic.model.simpleModels.PersonXAddress;
+import org.gscavo.veterinaryclinic.utils.ConversionUtils;
 import org.gscavo.veterinaryclinic.utils.StringUtils;
+import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 import org.gscavo.veterinaryclinic.utils.enums.StatusCode;
 import org.gscavo.veterinaryclinic.utils.security.Permissions;
@@ -18,9 +21,9 @@ import org.gscavo.veterinaryclinic.utils.security.Permissions;
 import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
 import static org.gscavo.veterinaryclinic.utils.information.SystemOperationResult.*;
 
-public class UserController extends BaseController<SimplePerson>  {
+public class UserController extends BaseController<User>  {
     @Getter
-    private static final UsersDAO USERS_DAO = DAOController.getDaoByClass(SimplePerson.class);
+    private static final UsersDAO USERS_DAO = DAOController.getDaoByClass(User.class);
 
     @Getter
     private static final ClientDAO CLIENT_DAO = DAOController.getDaoByClass(Client.class);
@@ -41,12 +44,39 @@ public class UserController extends BaseController<SimplePerson>  {
     private static Client currentClient = null;
 
     public UserController() {
-        super(SimplePerson.class);
+        super(User.class);
     }
     
     @Override
-    public SystemOperationResult register(SimplePerson person) {
-        return null;
+    public SystemOperationResult<?> register(User person) {
+
+
+        InsertOneResult result = getDAOByUseCase(person).insertOne(person);
+
+        if (result == null || !result.wasAcknowledged() || result.getInsertedId() == null) {
+            return failedToInsertResourceSOR(Person.class);
+        }
+
+        return new SystemOperationResult<>(
+                StatusCode.SUCCESS,
+                ConversionUtils.bsonValueToObjectId(result.getInsertedId())
+        );
+    }
+
+    public SystemOperationResult<?> register(PersonXAddress personXAddress) {
+
+        AddressController addressController = (AddressController) Controllers.getByName(Address.class);
+
+        SystemOperationResult<?> addressResult = addressController.register(personXAddress.getAddress());
+
+        if (!addressResult.isSuccess()) {
+            return SystemOperationResult.failedToInsertResourceSOR(User.class);
+        };
+
+        personXAddress.getPerson().setAddress((ObjectId) addressResult.getValue());
+
+
+        return register((User) personXAddress.getPerson());
     }
     
     public static SystemOperationResult login(String email, String password) {
@@ -123,7 +153,6 @@ public class UserController extends BaseController<SimplePerson>  {
 
     @SuppressWarnings("rawtypes")
     private static PersonDAO getDAOByUseCase(Person person) {
-
         return switch (person.getType()) {
             case ADMIN -> ADMIN_DAO;
             case SECRETARY -> SECRETARY_DAO;

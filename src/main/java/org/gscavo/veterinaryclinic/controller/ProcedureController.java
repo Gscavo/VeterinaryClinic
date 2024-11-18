@@ -23,7 +23,7 @@ public class ProcedureController extends BaseController<Procedure> {
     }
     
     @Override
-    public SystemOperationResult register(Procedure procedure) {
+    public SystemOperationResult<?> register(Procedure procedure) {
         if (!canUserDoAction(Permissions::canRegisterProcedures)) {
             return SystemOperationResult.notAuthenticatedOrAllowedActionSOR();
         }
@@ -33,8 +33,6 @@ public class ProcedureController extends BaseController<Procedure> {
         if (result == null || !result.wasAcknowledged()) {
             return SystemOperationResult.failedToInsertResourceSOR(procedure.getClass());
         }
-
-
 
         return new SystemOperationResult<>(StatusCode.SUCCESS, ConversionUtils.bsonValueToObjectId(result.getInsertedId()));
     }

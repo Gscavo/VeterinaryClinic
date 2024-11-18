@@ -5,10 +5,9 @@
 package org.gscavo.veterinaryclinic.view.model_panel;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.gscavo.veterinaryclinic.controller.AddressController;
-import org.gscavo.veterinaryclinic.controller.UserController;
 import org.gscavo.veterinaryclinic.model.Address;
-import org.gscavo.veterinaryclinic.model.SimplePerson;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
@@ -20,6 +19,7 @@ import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 public class AddressInputPanel extends javax.swing.JPanel implements BaseInputPanel<Address> {
 
     @Getter
+    @Setter
     private Address data;
 
     @Getter

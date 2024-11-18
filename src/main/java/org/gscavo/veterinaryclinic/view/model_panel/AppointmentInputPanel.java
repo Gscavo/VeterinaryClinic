@@ -5,8 +5,9 @@
 package org.gscavo.veterinaryclinic.view.model_panel;
 
 import lombok.Getter;
-import org.gscavo.veterinaryclinic.controller.AppointmentController;
-import org.gscavo.veterinaryclinic.model.Appointment;
+import lombok.Setter;
+import org.gscavo.veterinaryclinic.controller.*;
+import org.gscavo.veterinaryclinic.model.*;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
@@ -14,13 +15,29 @@ import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
  *
  * @author gscavo
  */
-public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInputPanel {
+public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInputPanel<Appointment> {
 
     @Getter
+    @Setter
     private Appointment data;
 
     @Getter
     private AppointmentController mainController;
+
+    @Getter
+    private ClientController clientController;
+
+    @Getter
+    private AnimalController animalController;
+
+    @Getter
+    private VeterinarianController veterinarianController;
+
+    @Getter
+    private SymptomController symptomController;
+
+    @Getter
+    private ProcedureController procedureController;
 
     /**
      * Creates new form AddressInputPanel
@@ -39,6 +56,11 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
 
     private void initControllers() {
         this.mainController = (AppointmentController) Controllers.getByName(Appointment.class);
+        this.clientController = (ClientController) Controllers.getByName(Client.class);
+        this.animalController = (AnimalController) Controllers.getByName(Animal.class);
+        this.veterinarianController = (VeterinarianController) Controllers.getByName("VETERINARIAN");
+        this.symptomController = (SymptomController) Controllers.getByName(Symptom.class);
+        this.procedureController = (ProcedureController) Controllers.getByName(Procedure.class);
     }
 
     /**
@@ -160,9 +182,7 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
                             .addComponent(appointmentPriceInputField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(appointmentDateSelection, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(headerSeparator, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(appointmentHeaderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(appointmentHeaderLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(appointmentTutorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)

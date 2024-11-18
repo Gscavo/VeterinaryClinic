@@ -8,6 +8,8 @@ import org.gscavo.veterinaryclinic.dao.AnimalDAO;
 import org.gscavo.veterinaryclinic.model.Animal;
 import org.gscavo.veterinaryclinic.model.Client;
 import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
+
+import org.gscavo.veterinaryclinic.utils.ConversionUtils;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 import org.gscavo.veterinaryclinic.utils.enums.StatusCode;
 import static org.gscavo.veterinaryclinic.utils.information.SystemOperationResult.failedToInsertResourceSOR;
@@ -23,7 +25,7 @@ public class AnimalController extends BaseController<Animal> {
     }
     
     @Override
-    public SystemOperationResult register(Animal animal) {
+    public SystemOperationResult<?> register(Animal animal) {
         if (!canUserDoAction(Permissions::canRegister)) {
             return notAuthenticatedOrAllowedActionSOR();
         }
@@ -34,14 +36,14 @@ public class AnimalController extends BaseController<Animal> {
             return failedToInsertResourceSOR(Animal.class);
         }
 
-        ObjectId animalId = result_animal.getInsertedId().asObjectId().getValue();
+        ObjectId animalId = ConversionUtils.bsonValueToObjectId(result_animal.getInsertedId());
 
-        SystemOperationResult result_client = UserController.appendAnimalToClient(animalId, animal.getTutor());
+        SystemOperationResult<?> result_client = UserController.appendAnimalToClient(animalId, animal.getTutor());
 
         if (!result_client.getStatus().isSuccess()) {
             return SystemOperationResult.failedToUpdateResourceSOR(Client.class);
         }
 
-        return new SystemOperationResult(StatusCode.SUCCESS, result_animal);
+        return new SystemOperationResult<ObjectId>(StatusCode.SUCCESS, animalId);
     }
 }

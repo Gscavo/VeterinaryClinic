@@ -13,6 +13,7 @@ import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomNume
 import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomString;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Veterinarian extends Person {

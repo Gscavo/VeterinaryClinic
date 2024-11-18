@@ -5,21 +5,21 @@
 package org.gscavo.veterinaryclinic.view.model_panel.abstractions;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.gscavo.veterinaryclinic.controller.UserController;
-import org.gscavo.veterinaryclinic.model.Secretary;
-import org.gscavo.veterinaryclinic.model.SimplePerson;
+import org.gscavo.veterinaryclinic.model.User;
 import org.gscavo.veterinaryclinic.model.abstractions.Person;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
-import org.gscavo.veterinaryclinic.view.model_panel.*;
 
 /**
  *
  * @author gscavo
  */
-public class PersonInputPanel extends javax.swing.JPanel implements BaseInputPanel<SimplePerson> {
+public class PersonInputPanel extends javax.swing.JPanel implements BaseInputPanel<Person> {
 
     @Getter
-    private SimplePerson data;
+    @Setter
+    private Person data;
 
     @Getter
     private UserController mainController;
@@ -31,18 +31,18 @@ public class PersonInputPanel extends javax.swing.JPanel implements BaseInputPan
         initComponents();
         initControllers();
 
-        this.data = new SimplePerson();
+        this.data = new User();
     }
     
-    public PersonInputPanel(SimplePerson simplePerson) {
+    public PersonInputPanel(User user) {
         initComponents();
         initControllers();
-        this.data = simplePerson;
+        this.data = user;
 
     }
 
     private void initControllers() {
-        this.mainController = (UserController) Controllers.getByName("PERSON");
+        this.mainController = (UserController) Controllers.getByName("USER");
     }
 
     /**

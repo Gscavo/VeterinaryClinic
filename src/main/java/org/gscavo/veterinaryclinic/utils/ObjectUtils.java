@@ -28,4 +28,10 @@ public class ObjectUtils {
         }
         return new ArrayList<>(fields);
     }
+    
+    public static <T> void updateAttribute(T object, T value) {
+        if (object != null && value != null) {
+            object = value;
+        }
+    }
 }

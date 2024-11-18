@@ -7,35 +7,38 @@ package org.gscavo.veterinaryclinic.utils.enums;
 import lombok.Getter;
 import org.gscavo.veterinaryclinic.controller.*;
 import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
+import org.gscavo.veterinaryclinic.model.Secretary;
+import org.gscavo.veterinaryclinic.model.User;
 
 /**
  *
  * @author gscavo
  */
+@Getter
 public enum Controllers {
     ADDRESS(new AddressController()),
+    ADMIN(new AdminController()),
     ANIMAL(new AnimalController()),
     APPOINTMENT(new AppointmentController()),
     CLIENT(new ClientController()),
-    PASSWORD(new PasswordController()),
-    PERSON(new UserController()),
     PROCEDURE(new ProcedureController()),
+    USER(new UserController()),
+    SECRETARY(new SecretaryController()),
     SPECIES(new SpeciesController()),
     SYMPTOM(new SymptomController()),
     VETERINARIAN(new VeterinarianController());
     
-    @Getter
-    private final BaseController controller;
+    private final BaseController<?> controller;
 
-    private Controllers(BaseController controller) {
+    private Controllers(BaseController<?> controller) {
         this.controller = controller;
     }
     
-    public static BaseController getByName(String name) {
+    public static BaseController<?> getByName(String name) {
         return Controllers.valueOf(name.toUpperCase()).getController();
     }
     
-    public static <T> BaseController<T> getByName(Class<T> classType) {
+    public static BaseController<?> getByName(Class<?> classType) {
         return Controllers.valueOf(classType.getSimpleName().toUpperCase()).getController();
     }
 }

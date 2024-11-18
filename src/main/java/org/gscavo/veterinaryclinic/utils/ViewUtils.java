@@ -1,5 +1,6 @@
 package org.gscavo.veterinaryclinic.utils;
 
+import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.lang.reflect.Field;
@@ -11,6 +12,7 @@ import javax.swing.table.TableModel;
 
 import org.gscavo.veterinaryclinic.utils.exceptions.ExceptionOutput;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
+import org.gscavo.veterinaryclinic.view.dialog.BaseOperationsDialog;
 import org.gscavo.veterinaryclinic.view.dialog.OperationStatusDialog;
 
 /*
@@ -45,8 +47,10 @@ public class ViewUtils {
         win.dispose();
     }
     
-    public static <T> TableModel generateDataModelFromObjectList(ArrayList<T> objectList) {
-        ArrayList<Field> allFields = ObjectUtils.getAllFieldsFromClass(objectList.get(0).getClass());
+    public static <T> TableModel generateDataModelFromObjectList(ArrayList<T> objectList, Class<T> classType) {
+
+
+        ArrayList<Field> allFields = ObjectUtils.getAllFieldsFromClass(classType);
 
         List<String> columnNames = allFields.stream()
                 .map(Field::getName)
@@ -76,8 +80,19 @@ public class ViewUtils {
     }
 
     public static void showInformationDialog(JPanel panel, SystemOperationResult<?> sysOpRes) {
-           JFrame frame =  (JFrame) panel.getTopLevelAncestor();
-           OperationStatusDialog dialog = new OperationStatusDialog(frame, false, sysOpRes);
-           dialog.setVisible(true);
+        Component topLevelAncestor = panel.getTopLevelAncestor();
+        JFrame frame = null;
+        if (topLevelAncestor instanceof JFrame) {
+            System.out.println("Here1");
+           frame = (JFrame) topLevelAncestor;
+        } else if (topLevelAncestor instanceof BaseOperationsDialog) {
+            System.out.println("Here2");
+           frame = (JFrame) ((BaseOperationsDialog) topLevelAncestor).getOwner();
+        }
+        
+        if (frame != null) {
+            OperationStatusDialog dialog = new OperationStatusDialog(frame, false, sysOpRes);
+            dialog.setVisible(true);
+        }
     }
 }

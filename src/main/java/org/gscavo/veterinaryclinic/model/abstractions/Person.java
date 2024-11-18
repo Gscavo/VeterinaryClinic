@@ -10,8 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bson.Document;
-import org.bson.codecs.pojo.annotations.BsonId;
-import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.utils.enums.PersonType;
 
@@ -49,6 +47,16 @@ public abstract class Person implements BaseModel<Person>  {
         this.phoneNumber = document.getString("phoneNumber");
         this.address = getNullableDocumentObjectId(document, "address");
         this.type = PersonType.getByName(document.getString("type"));
-
+    }
+    
+    public void fill(Person p) {
+        this.id = p.getId();
+        this.name = p.getName();
+        this.cpf = p.getCpf();
+        this.email = p.getEmail();
+        this.password = p.getPassword();
+        this.phoneNumber = p.getPhoneNumber();
+        this.address = p.getAddress();
+        this.type = p.getType();
     }
 }

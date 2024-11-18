@@ -75,7 +75,7 @@ public class ConversionUtils {
     public static ObjectId getNullableDocumentObjectId(Document document, String key) {
         if (document.containsKey(key)) {
             Object object = document.get(key);
-            if (object.getClass() == ObjectId.class) {
+            if (object != null && object.getClass() == ObjectId.class) {
                 return document.getObjectId(key);
             }
         }

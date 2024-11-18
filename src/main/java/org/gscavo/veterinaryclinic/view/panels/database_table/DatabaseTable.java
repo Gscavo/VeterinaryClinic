@@ -18,12 +18,15 @@ import org.gscavo.veterinaryclinic.utils.ObjectUtils;
 import org.gscavo.veterinaryclinic.utils.StringUtils;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
+import org.gscavo.veterinaryclinic.utils.enums.Models;
 
 /**
  *
  * @author gscavo
  */
 public class DatabaseTable<T> extends javax.swing.JPanel {
+
+    private final Class<T> classType;
 
     private final BaseController<T> CONTROLLER; 
     
@@ -36,12 +39,14 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
     public DatabaseTable() {
         initComponents();
         this.CONTROLLER = null;
+        this.classType = null;
     }
     
     public DatabaseTable(Class<T> classType) {
         initComponents();  
-        
-        this.CONTROLLER = Controllers.getByName(classType);
+
+        this.classType = classType;
+        this.CONTROLLER = (BaseController<T>) Controllers.getByName(classType);
         
         ArrayList<T> dataList = this.CONTROLLER
                 .getAll();
@@ -56,7 +61,9 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
         
         this.fieldSearchSelection.setModel(searchModel);
         
-        this.setHeader(classType.getName());
+        this.setHeader(
+                Models.getByClassType(classType).getLocalString()
+        );
         
         this.setModel(dataList);
         
@@ -67,7 +74,7 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
     }
     
     public void setModel(ArrayList<T> objectList) {
-        TableModel model = ViewUtils.generateDataModelFromObjectList(objectList);
+        TableModel model = ViewUtils.generateDataModelFromObjectList(objectList, classType);
         
         this.dataTable.setModel(model);
     }

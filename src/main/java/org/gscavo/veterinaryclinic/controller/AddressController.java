@@ -3,9 +3,11 @@ package org.gscavo.veterinaryclinic.controller;
 import com.mongodb.client.result.InsertOneResult;
 import lombok.Getter;
 import org.bson.BsonValue;
+import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
 import org.gscavo.veterinaryclinic.dao.AddressDAO;
 import org.gscavo.veterinaryclinic.model.Address;
+import org.gscavo.veterinaryclinic.utils.ConversionUtils;
 import org.gscavo.veterinaryclinic.utils.enums.StatusCode;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 import org.gscavo.veterinaryclinic.utils.security.Permissions;
@@ -24,7 +26,7 @@ public class AddressController extends BaseController<Address> {
     }
     
     @Override
-    public SystemOperationResult register(Address address) {
+    public SystemOperationResult<?> register(Address address) {
         if (!canUserDoAction(Permissions::canRegister)) {
             return notAuthenticatedOrAllowedActionSOR();
         }
@@ -35,6 +37,9 @@ public class AddressController extends BaseController<Address> {
             return failedToInsertResourceSOR(Address.class);
         }
 
-        return new SystemOperationResult<BsonValue>(StatusCode.SUCCESS, result.getInsertedId());
+        return new SystemOperationResult<ObjectId>(
+                StatusCode.SUCCESS,
+                ConversionUtils.bsonValueToObjectId(result.getInsertedId())
+        );
     }
 }

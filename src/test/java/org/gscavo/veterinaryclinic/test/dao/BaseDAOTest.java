@@ -55,9 +55,9 @@ public class BaseDAOTest {
 
     @AfterAll
     public static void afterAll() {
-//        daos.forEach(
-//                BaseDAO::dropCollection
-//        );
+        daos.forEach(
+                BaseDAO::dropCollection
+        );
     }
 
     @ParameterizedTest

@@ -19,13 +19,12 @@ public class DAOController {
         DAO_MAP.put(Admin.class, new AdminDAO());
         DAO_MAP.put(Animal.class, new AnimalDAO());
         DAO_MAP.put(Appointment.class, new AppointmentDAO());
-        DAO_MAP.put(CalendarDate.class, new CalendarDateDAO());
         DAO_MAP.put(Client.class, new ClientDAO());
         DAO_MAP.put(Procedure.class, new ProcedureDAO());
         DAO_MAP.put(Secretary.class, new SecretaryDAO());
         DAO_MAP.put(Symptom.class, new SymptomDAO());
         DAO_MAP.put(Species.class, new SpeciesDAO());
-        DAO_MAP.put(SimplePerson.class, new UsersDAO());
+        DAO_MAP.put(User.class, new UsersDAO());
         DAO_MAP.put(Veterinarian.class, new VeterinarianDAO());
     }
 

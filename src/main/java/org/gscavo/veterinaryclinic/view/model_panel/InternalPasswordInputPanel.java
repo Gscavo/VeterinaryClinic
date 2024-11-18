@@ -6,6 +6,7 @@ package org.gscavo.veterinaryclinic.view.model_panel;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import org.gscavo.veterinaryclinic.controller.PasswordController;
 import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
@@ -18,6 +19,7 @@ import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 public class InternalPasswordInputPanel extends javax.swing.JPanel implements BaseInputPanel<String> {
 
     @Getter
+    @Setter
     private String data;
 
     @Getter
@@ -26,7 +28,6 @@ public class InternalPasswordInputPanel extends javax.swing.JPanel implements Ba
     @Getter
     private String retypedPassword;
 
-    @Getter
     private PasswordController mainController;
     
     /**

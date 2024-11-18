@@ -5,6 +5,7 @@
 package org.gscavo.veterinaryclinic.view.model_panel;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.gscavo.veterinaryclinic.controller.ProcedureController;
 import org.gscavo.veterinaryclinic.model.Procedure;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
@@ -19,6 +20,7 @@ import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 public class ProcedureInputPanel extends javax.swing.JPanel implements BaseInputPanel<Procedure> {
 
     @Getter
+    @Setter
     private Procedure data;
     
     @Getter

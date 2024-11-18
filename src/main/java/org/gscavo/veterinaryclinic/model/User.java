@@ -11,28 +11,28 @@ import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomNume
 import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomString;
 
 @NoArgsConstructor
-public class SimplePerson extends Person {
+public class User extends Person {
 
     @Builder
-    public SimplePerson(ObjectId id,
-                     String name,
-                     String password,
-                     String cpf,
-                     String phoneNumber,
-                     String email,
-                     ObjectId address,
-                     PersonType personType)
+    public User(ObjectId id,
+                String name,
+                String password,
+                String cpf,
+                String phoneNumber,
+                String email,
+                ObjectId address,
+                PersonType personType)
     {
         super(id, name, password, cpf, phoneNumber, email, address, personType);
     }
 
-    public SimplePerson(Document document) {
+    public User(Document document) {
         super(document);
     }
 
     @Override
-    public SimplePerson randomizeAttributes() {
-        return SimplePerson.builder()
+    public User randomizeAttributes() {
+        return User.builder()
                 .name(getRandomString(null))
                 .cpf(getRandomNumericalString(11))
                 .phoneNumber(getRandomNumericalString(11))

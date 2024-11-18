@@ -1,8 +1,10 @@
 package org.gscavo.veterinaryclinic.controller;
 
 import com.mongodb.client.result.InsertOneResult;
+import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.dao.SpeciesDAO;
 import org.gscavo.veterinaryclinic.model.Species;
+import org.gscavo.veterinaryclinic.utils.ConversionUtils;
 import org.gscavo.veterinaryclinic.utils.enums.StatusCode;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 import org.gscavo.veterinaryclinic.utils.security.Permissions;
@@ -21,7 +23,7 @@ public class SpeciesController extends BaseController<Species> {
     }
     
     @Override
-    public SystemOperationResult register(Species species) {
+    public SystemOperationResult<?> register(Species species) {
         if (!canUserDoAction(Permissions::canRegister)) {
             return SystemOperationResult.notAuthenticatedOrAllowedActionSOR();
         }
@@ -32,6 +34,9 @@ public class SpeciesController extends BaseController<Species> {
             return SystemOperationResult.failedToInsertResourceSOR(species.getClass());
         }
 
-        return new SystemOperationResult(StatusCode.SUCCESS);
+        return new SystemOperationResult<ObjectId>(
+                StatusCode.SUCCESS,
+                ConversionUtils.bsonValueToObjectId(result.getInsertedId())
+        );
     }
 }

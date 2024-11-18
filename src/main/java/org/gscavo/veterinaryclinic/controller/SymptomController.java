@@ -1,9 +1,11 @@
 package org.gscavo.veterinaryclinic.controller;
 
 import com.mongodb.client.result.InsertOneResult;
+import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
 import org.gscavo.veterinaryclinic.dao.SymptomDAO;
 import org.gscavo.veterinaryclinic.model.Symptom;
+import org.gscavo.veterinaryclinic.utils.ConversionUtils;
 import org.gscavo.veterinaryclinic.utils.enums.StatusCode;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 import org.gscavo.veterinaryclinic.utils.security.Permissions;
@@ -20,7 +22,7 @@ public class SymptomController extends BaseController<Symptom> {
 
     
     @Override
-    public SystemOperationResult register(Symptom symptom) {
+    public SystemOperationResult<?> register(Symptom symptom) {
         if (!canUserDoAction(Permissions::canRegisterSymptoms)) {
             return SystemOperationResult.notAuthenticatedOrAllowedActionSOR();
         }
@@ -31,6 +33,9 @@ public class SymptomController extends BaseController<Symptom> {
             return SystemOperationResult.failedToInsertResourceSOR(symptom.getClass());
         }
 
-        return new SystemOperationResult(StatusCode.SUCCESS);
+        return new SystemOperationResult<ObjectId>(
+                StatusCode.SUCCESS,
+                ConversionUtils.bsonValueToObjectId(result.getInsertedId())
+        );
     }
 }

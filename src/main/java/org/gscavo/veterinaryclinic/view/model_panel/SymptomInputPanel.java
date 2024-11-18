@@ -5,6 +5,7 @@
 package org.gscavo.veterinaryclinic.view.model_panel;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.gscavo.veterinaryclinic.controller.SymptomController;
 import org.gscavo.veterinaryclinic.model.Symptom;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
@@ -17,6 +18,7 @@ import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 public class SymptomInputPanel extends javax.swing.JPanel implements BaseInputPanel<Symptom>{
 
     @Getter
+    @Setter
     private Symptom data;
 
     @Getter
