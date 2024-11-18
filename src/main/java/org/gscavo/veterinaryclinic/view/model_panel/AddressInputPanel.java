@@ -72,69 +72,63 @@ public class AddressInputPanel extends javax.swing.JPanel implements BaseInputPa
         numberInputField = new javax.swing.JSpinner();
         headerSeparator = new javax.swing.JSeparator();
 
+        setMinimumSize(new java.awt.Dimension(0, 0));
+        setSize(new java.awt.Dimension(420, 308));
+
         addressHeaderLabel.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         addressHeaderLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         addressHeaderLabel.setText("Endereço");
         addressHeaderLabel.setMaximumSize(new java.awt.Dimension(150, 30));
         addressHeaderLabel.setPreferredSize(new java.awt.Dimension(150, 30));
-        addressHeaderLabel.setSize(new java.awt.Dimension(150, 30));
 
         cepLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cepLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cepLabel.setText("CEP");
         cepLabel.setMaximumSize(new java.awt.Dimension(150, 30));
         cepLabel.setPreferredSize(new java.awt.Dimension(150, 30));
-        cepLabel.setSize(new java.awt.Dimension(150, 30));
 
         numberLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         numberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         numberLabel.setText("Número");
         numberLabel.setMaximumSize(new java.awt.Dimension(150, 30));
         numberLabel.setPreferredSize(new java.awt.Dimension(150, 30));
-        numberLabel.setSize(new java.awt.Dimension(150, 30));
 
         streetLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         streetLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         streetLabel.setText("Rua");
         streetLabel.setMaximumSize(new java.awt.Dimension(150, 30));
         streetLabel.setPreferredSize(new java.awt.Dimension(150, 30));
-        streetLabel.setSize(new java.awt.Dimension(150, 30));
 
         neighborhoodLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         neighborhoodLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         neighborhoodLabel.setText("Bairro");
         neighborhoodLabel.setMaximumSize(new java.awt.Dimension(150, 30));
         neighborhoodLabel.setPreferredSize(new java.awt.Dimension(150, 30));
-        neighborhoodLabel.setSize(new java.awt.Dimension(150, 30));
 
         citylabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         citylabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         citylabel.setText("Cidade");
         citylabel.setMaximumSize(new java.awt.Dimension(150, 30));
         citylabel.setPreferredSize(new java.awt.Dimension(150, 30));
-        citylabel.setSize(new java.awt.Dimension(150, 30));
 
         stateLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         stateLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         stateLabel.setText("Estado");
         stateLabel.setMaximumSize(new java.awt.Dimension(150, 30));
         stateLabel.setPreferredSize(new java.awt.Dimension(150, 30));
-        stateLabel.setSize(new java.awt.Dimension(150, 30));
 
         cepInputField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cepInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         cepInputField.setPreferredSize(new java.awt.Dimension(300, 30));
-        cepInputField.setSize(new java.awt.Dimension(300, 30));
-        cepInputField.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                cepInputFieldMouseReleased(evt);
+        cepInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cepInputFieldKeyReleased(evt);
             }
         });
 
         streetInputField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         streetInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         streetInputField.setPreferredSize(new java.awt.Dimension(300, 30));
-        streetInputField.setSize(new java.awt.Dimension(300, 30));
         streetInputField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 streetInputFieldKeyReleased(evt);
@@ -144,7 +138,6 @@ public class AddressInputPanel extends javax.swing.JPanel implements BaseInputPa
         neighborhoodInputField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         neighborhoodInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         neighborhoodInputField.setPreferredSize(new java.awt.Dimension(300, 30));
-        neighborhoodInputField.setSize(new java.awt.Dimension(300, 30));
         neighborhoodInputField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 neighborhoodInputFieldKeyReleased(evt);
@@ -154,7 +147,6 @@ public class AddressInputPanel extends javax.swing.JPanel implements BaseInputPa
         cityInputField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cityInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         cityInputField.setPreferredSize(new java.awt.Dimension(300, 30));
-        cityInputField.setSize(new java.awt.Dimension(300, 30));
         cityInputField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 cityInputFieldKeyReleased(evt);
@@ -164,7 +156,6 @@ public class AddressInputPanel extends javax.swing.JPanel implements BaseInputPa
         stateInputField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         stateInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         stateInputField.setPreferredSize(new java.awt.Dimension(300, 30));
-        stateInputField.setSize(new java.awt.Dimension(300, 30));
         stateInputField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 stateInputFieldKeyReleased(evt);
@@ -173,10 +164,9 @@ public class AddressInputPanel extends javax.swing.JPanel implements BaseInputPa
 
         numberInputField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         numberInputField.setPreferredSize(new java.awt.Dimension(300, 30));
-        numberInputField.setSize(new java.awt.Dimension(300, 30));
-        numberInputField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                numberInputFieldKeyReleased(evt);
+        numberInputField.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                numberInputFieldStateChanged(evt);
             }
         });
 
@@ -186,18 +176,18 @@ public class AddressInputPanel extends javax.swing.JPanel implements BaseInputPa
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(addressHeaderLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(stateLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                            .addComponent(stateLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
                             .addComponent(citylabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                             .addComponent(neighborhoodLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                             .addComponent(streetLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                             .addComponent(numberLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(cepLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cepLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(streetInputField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(neighborhoodInputField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cityInputField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -205,7 +195,7 @@ public class AddressInputPanel extends javax.swing.JPanel implements BaseInputPa
                             .addComponent(numberInputField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cepInputField, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)))
                     .addComponent(headerSeparator))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,21 +228,9 @@ public class AddressInputPanel extends javax.swing.JPanel implements BaseInputPa
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(stateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(stateInputField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void cepInputFieldMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cepInputFieldMouseReleased
-        this.data.setZipCode(
-                this.cepInputField.getText()
-        );
-    }//GEN-LAST:event_cepInputFieldMouseReleased
-
-    private void numberInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numberInputFieldKeyReleased
-        this.data.setNumber(
-                ViewUtils.getIntFromJSpinner(this.numberInputField)
-        );
-    }//GEN-LAST:event_numberInputFieldKeyReleased
 
     private void streetInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_streetInputFieldKeyReleased
         this.data.setStreet(
@@ -277,6 +255,18 @@ public class AddressInputPanel extends javax.swing.JPanel implements BaseInputPa
                 this.stateInputField.getText()
         );
     }//GEN-LAST:event_stateInputFieldKeyReleased
+
+    private void cepInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cepInputFieldKeyReleased
+        this.data.setZipCode(
+                this.cepInputField.getText()
+        );
+    }//GEN-LAST:event_cepInputFieldKeyReleased
+
+    private void numberInputFieldStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_numberInputFieldStateChanged
+        this.data.setNumber(
+                ViewUtils.getIntFromJSpinner(this.numberInputField)
+        );
+    }//GEN-LAST:event_numberInputFieldStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

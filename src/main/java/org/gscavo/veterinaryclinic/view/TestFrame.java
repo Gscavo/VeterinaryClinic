@@ -4,9 +4,8 @@
  */
 package org.gscavo.veterinaryclinic.view;
 
-import org.gscavo.veterinaryclinic.view.model_panel.AddressInputPanel;
-import org.gscavo.veterinaryclinic.view.model_panel.AppointmentInputPanel;
-import org.gscavo.veterinaryclinic.view.model_panel.SpeciesInputPanel;
+import org.gscavo.veterinaryclinic.view.model_panel.*;
+import org.gscavo.veterinaryclinic.view.model_panel.abstractions.PersonInputPanel;
 import org.gscavo.veterinaryclinic.view.panels.register.RegisterPanel;
 
 /**
@@ -31,27 +30,23 @@ public class TestFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        registerPanel = new RegisterPanel(new AddressInputPanel());
+        registerPanel = new RegisterPanel(new AnimalInputPanel());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(registerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 136, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(registerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 310, Short.MAX_VALUE))
-        );
+        addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                formPropertyChange(evt);
+            }
+        });
+        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.PAGE_AXIS));
+        getContentPane().add(registerPanel);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_formPropertyChange
+        System.out.println("Property Changed");
+    }//GEN-LAST:event_formPropertyChange
 
     /**
      * @param args the command line arguments

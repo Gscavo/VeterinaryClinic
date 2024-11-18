@@ -36,13 +36,9 @@ public class RegisterPanel extends javax.swing.JPanel {
             this.baseInputPanel = (BaseInputPanel<?>) panel;
         } else {
             System.err.println("Panel: " + panel.getClass().getSimpleName() + " doesn't implements BaseInputPanel");
-        }
-
-        mainPanel.add(panel, CARD_NAME);
+        }        
         
-        CardLayout cl = (CardLayout) mainPanel.getLayout();
-        
-        cl.show(mainPanel, CARD_NAME);
+        mainPanel.add(panel, BorderLayout.CENTER);
     }
 
     /**
@@ -55,51 +51,37 @@ public class RegisterPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
+        buttonRow = new javax.swing.JPanel();
         cancelButton = new javax.swing.JButton();
         registerButton = new javax.swing.JButton();
 
-        mainPanel.setLayout(new java.awt.CardLayout());
+        setPreferredSize(new java.awt.Dimension(420, 420));
+        setLayout(new java.awt.BorderLayout());
+
+        mainPanel.setLayout(new java.awt.BorderLayout());
+        add(mainPanel, java.awt.BorderLayout.CENTER);
+
+        buttonRow.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         cancelButton.setText("Cancelar");
         cancelButton.setPreferredSize(new java.awt.Dimension(100, 25));
-        cancelButton.setSize(new java.awt.Dimension(100, 25));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }
         });
+        buttonRow.add(cancelButton);
 
         registerButton.setText("Cadastrar");
         registerButton.setPreferredSize(new java.awt.Dimension(100, 25));
-        registerButton.setSize(new java.awt.Dimension(100, 25));
         registerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 registerButtonActionPerformed(evt);
             }
         });
+        buttonRow.add(registerButton);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
+        add(buttonRow, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -107,15 +89,19 @@ public class RegisterPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        SystemOperationResult<ObjectId> res = this.baseInputPanel
-                .getMainController()
-                .register(this.baseInputPanel.getData());
+        SystemOperationResult<ObjectId> res = this.
+        baseInputPanel
+            .getMainController()
+            .register(
+            this.baseInputPanel.getData()
+        );
         ViewUtils.showInformationDialog(this, res);
 
     }//GEN-LAST:event_registerButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel buttonRow;
     private javax.swing.JButton cancelButton;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton registerButton;

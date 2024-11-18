@@ -42,7 +42,7 @@ public class PersonInputPanel extends javax.swing.JPanel implements BaseInputPan
     }
 
     private void initControllers() {
-        this.mainController = (UserController) Controllers.getByName(SimplePerson.class);
+        this.mainController = (UserController) Controllers.getByName("PERSON");
     }
 
     /**

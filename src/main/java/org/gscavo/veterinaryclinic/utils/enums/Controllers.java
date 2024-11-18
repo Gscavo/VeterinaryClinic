@@ -18,10 +18,10 @@ public enum Controllers {
     APPOINTMENT(new AppointmentController()),
     CLIENT(new ClientController()),
     PASSWORD(new PasswordController()),
+    PERSON(new UserController()),
     PROCEDURE(new ProcedureController()),
     SPECIES(new SpeciesController()),
     SYMPTOM(new SymptomController()),
-    USER(new UserController()),
     VETERINARIAN(new VeterinarianController());
     
     @Getter
