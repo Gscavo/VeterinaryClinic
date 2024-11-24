@@ -26,7 +26,6 @@ public class ClientDAOTest {
                 .name("John Does")
                 .password(PASSWORD)
                 .email(EMAIL)
-                .address(new ObjectId())
                 .phoneNumber("19900001234")
                 .animal(new ArrayList<>(Collections.singletonList(new ObjectId())))
                 .appointmentList(new ArrayList<>(Collections.singletonList(new ObjectId())))

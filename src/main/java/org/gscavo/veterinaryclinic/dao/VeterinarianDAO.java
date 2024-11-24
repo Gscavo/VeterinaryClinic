@@ -35,7 +35,6 @@ public class VeterinarianDAO extends PersonDAO<Veterinarian> {
                 .crmv("123455")
                 .email("pera.dr@gmail.com")
                 .phoneNumber("18901233214")
-                .address(new ObjectId())
                 .appointmentsList(new ArrayList<>(Collections.singletonList(new ObjectId())))
                 .build();
     }

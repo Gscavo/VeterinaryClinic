@@ -33,9 +33,7 @@ public abstract class Person implements BaseModel<Person>  {
 
     private String email = "";
 
-    private ObjectId address;
-
-    private PersonType type = PersonType.NONE;
+    private PersonType type = null;
 
 
     public Person(Document document) {
@@ -45,7 +43,6 @@ public abstract class Person implements BaseModel<Person>  {
         this.email = document.getString("email");
         this.password = document.getString("password");
         this.phoneNumber = document.getString("phoneNumber");
-        this.address = getNullableDocumentObjectId(document, "address");
         this.type = PersonType.getByName(document.getString("type"));
     }
     
@@ -56,7 +53,6 @@ public abstract class Person implements BaseModel<Person>  {
         this.email = p.getEmail();
         this.password = p.getPassword();
         this.phoneNumber = p.getPhoneNumber();
-        this.address = p.getAddress();
         this.type = p.getType();
     }
 }

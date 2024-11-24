@@ -14,7 +14,6 @@ public class AdminDAO extends PersonDAO<Admin> {
                 .name("Admin")
                 .password("admin")
                 .cpf("11111111199")
-                .address(new ObjectId())
                 .email("admin@admin.com")
                 .phoneNumber("9990011223344")
                 .build();

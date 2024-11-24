@@ -20,10 +20,9 @@ public class User extends Person {
                 String cpf,
                 String phoneNumber,
                 String email,
-                ObjectId address,
                 PersonType personType)
     {
-        super(id, name, password, cpf, phoneNumber, email, address, personType);
+        super(id, name, password, cpf, phoneNumber, email, personType);
     }
 
     public User(Document document) {
@@ -37,7 +36,6 @@ public class User extends Person {
                 .cpf(getRandomNumericalString(11))
                 .phoneNumber(getRandomNumericalString(11))
                 .email(getRandomString(null))
-                .address(new ObjectId())
                 .build();
     }
 }

@@ -15,7 +15,6 @@ public class UsersDAO extends PersonDAO<User> {
                 .cpf("12345678921")
                 .name("John Does")
                 .email("john.doe@gmail.com")
-                .address(new ObjectId())
                 .phoneNumber("19900001234")
                 .personType(null)
                 .build();

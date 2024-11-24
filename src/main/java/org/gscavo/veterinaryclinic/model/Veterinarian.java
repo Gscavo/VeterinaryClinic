@@ -3,7 +3,6 @@ package org.gscavo.veterinaryclinic.model;
 import lombok.*;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import org.gscavo.veterinaryclinic.model.abstractions.Person;
 import org.gscavo.veterinaryclinic.utils.enums.PersonType;
 
@@ -29,11 +28,10 @@ public class Veterinarian extends Person {
                         String cpf,
                         String phoneNumber,
                         String email,
-                        ObjectId address,
                         String crmv,
                         ArrayList<ObjectId> appointmentsList)
     {
-        super(id, name, password, cpf, phoneNumber, email, address, PersonType.VETERINARIAN);
+        super(id, name, password, cpf, phoneNumber, email, PersonType.VETERINARIAN);
         this.crmv = crmv;
         this.appointmentList = appointmentsList;
     }
@@ -51,7 +49,6 @@ public class Veterinarian extends Person {
                 .cpf(getRandomNumericalString(11))
                 .phoneNumber(getRandomNumericalString(11))
                 .email(getRandomString(null))
-                .address(new ObjectId())
                 .build();
     }
 }

@@ -15,7 +15,6 @@ public class DAOController {
     private static final Map<Object, Object> DAO_MAP = new HashMap<>();
 
     static {
-        DAO_MAP.put(Address.class, new AddressDAO());
         DAO_MAP.put(Admin.class, new AdminDAO());
         DAO_MAP.put(Animal.class, new AnimalDAO());
         DAO_MAP.put(Appointment.class, new AppointmentDAO());

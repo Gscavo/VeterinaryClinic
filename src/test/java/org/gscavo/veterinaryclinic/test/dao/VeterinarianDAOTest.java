@@ -12,7 +12,6 @@ public class VeterinarianDAOTest {
         return Veterinarian.builder()
                 .name("Dr. Pera")
                 .cpf("09190128931")
-                .address(new ObjectId())
                 .crmv("123455")
                 .email("pera.dr@gmail.com")
                 .appointmentsList((ArrayList) Collections.singletonList(new ObjectId()))

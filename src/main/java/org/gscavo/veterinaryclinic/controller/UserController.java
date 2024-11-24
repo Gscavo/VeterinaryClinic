@@ -10,7 +10,6 @@ import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
 import org.gscavo.veterinaryclinic.dao.*;
 import org.gscavo.veterinaryclinic.model.*;
 import org.gscavo.veterinaryclinic.model.abstractions.Person;
-import org.gscavo.veterinaryclinic.model.simpleModels.PersonXAddress;
 import org.gscavo.veterinaryclinic.utils.ConversionUtils;
 import org.gscavo.veterinaryclinic.utils.StringUtils;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
@@ -49,8 +48,6 @@ public class UserController extends BaseController<User>  {
     
     @Override
     public SystemOperationResult<?> register(User person) {
-
-
         InsertOneResult result = getDAOByUseCase(person).insertOne(person);
 
         if (result == null || !result.wasAcknowledged() || result.getInsertedId() == null) {
@@ -61,22 +58,6 @@ public class UserController extends BaseController<User>  {
                 StatusCode.SUCCESS,
                 ConversionUtils.bsonValueToObjectId(result.getInsertedId())
         );
-    }
-
-    public SystemOperationResult<?> register(PersonXAddress personXAddress) {
-
-        AddressController addressController = (AddressController) Controllers.getByName(Address.class);
-
-        SystemOperationResult<?> addressResult = addressController.register(personXAddress.getAddress());
-
-        if (!addressResult.isSuccess()) {
-            return SystemOperationResult.failedToInsertResourceSOR(User.class);
-        };
-
-        personXAddress.getPerson().setAddress((ObjectId) addressResult.getValue());
-
-
-        return register((User) personXAddress.getPerson());
     }
     
     public static SystemOperationResult login(String email, String password) {
@@ -158,7 +139,7 @@ public class UserController extends BaseController<User>  {
             case SECRETARY -> SECRETARY_DAO;
             case VETERINARIAN -> VETERINARIAN_DAO;
             case CLIENT -> CLIENT_DAO;
-            case NONE -> USERS_DAO;
+            default -> throw new NullPointerException("No personType specified!");
         };
     }
 

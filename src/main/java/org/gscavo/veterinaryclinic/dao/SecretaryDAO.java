@@ -15,7 +15,6 @@ public class SecretaryDAO extends PersonDAO<Secretary> {
                 .name("Maria")
                 .password("12345678")
                 .cpf("12312312348")
-                .address(new ObjectId())
                 .email("maria.mari@gmail.com")
                 .phoneNumber("12907867451")
                 .build();

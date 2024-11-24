@@ -9,7 +9,6 @@ import java.beans.PropertyChangeListener;
 import lombok.Getter;
 import lombok.Setter;
 import org.gscavo.veterinaryclinic.model.Client;
-import org.gscavo.veterinaryclinic.model.simpleModels.PersonXAddress;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
 /**
@@ -19,7 +18,7 @@ import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 public class ClientInputPanel extends javax.swing.JPanel {
 
     @Getter @Setter
-    private PersonXAddress<Client> data;
+    private Client data;
     
     /**
      * Creates new form ClientInputPanel
@@ -30,8 +29,16 @@ public class ClientInputPanel extends javax.swing.JPanel {
         myInitComponents();
     }
     
+    public ClientInputPanel(Client client) {
+        initComponents();
+        
+        myInitComponents();
+        
+        this.personInputPanel1.getData().fill(client);
+    }
+    
     private void myInitComponents() {
-        this.userInputPanel1.addPropertyChangeListener(BaseInputPanel.DATA_PROPERTY_KEY, new PropertyChangeListener() {
+        this.personInputPanel1.addPropertyChangeListener(BaseInputPanel.DATA_PROPERTY_KEY, new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 changedData(evt);
@@ -40,7 +47,7 @@ public class ClientInputPanel extends javax.swing.JPanel {
     }
 
     private void changedData(PropertyChangeEvent evt) {        
-        this.data = (PersonXAddress<Client>) this.userInputPanel1.getData();
+        this.data = (Client) this.personInputPanel1.getData();
     }
     
     /**
@@ -52,26 +59,24 @@ public class ClientInputPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        userInputPanel1 = new org.gscavo.veterinaryclinic.view.model_panel.UserInputPanel();
+        personInputPanel1 = new org.gscavo.veterinaryclinic.view.model_panel.abstractions.PersonInputPanel();
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(userInputPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(personInputPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(userInputPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(personInputPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.gscavo.veterinaryclinic.view.model_panel.UserInputPanel userInputPanel1;
+    private org.gscavo.veterinaryclinic.view.model_panel.abstractions.PersonInputPanel personInputPanel1;
     // End of variables declaration//GEN-END:variables
 }

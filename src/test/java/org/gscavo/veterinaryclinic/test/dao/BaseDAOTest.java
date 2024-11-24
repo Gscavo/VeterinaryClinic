@@ -35,7 +35,6 @@ public class BaseDAOTest {
 
         daos = new ArrayList<>(
                 Arrays.asList(
-                    new AddressDAO(),
                     new AdminDAO(),
                     new AnimalDAO(),
                     new AppointmentDAO(),

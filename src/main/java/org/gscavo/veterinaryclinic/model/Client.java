@@ -43,10 +43,9 @@ public class Client extends Person {
                   String cpf,
                   String phoneNumber,
                   String email,
-                  ObjectId address,
                   ArrayList<ObjectId> animal,
                   ArrayList<ObjectId> appointmentList) {
-        super(id, name, password, cpf, phoneNumber, email, address, PersonType.CLIENT);
+        super(id, name, password, cpf, phoneNumber, email, PersonType.CLIENT);
         this.animal = animal;
         this.appointmentList = appointmentList;
     }
@@ -60,7 +59,6 @@ public class Client extends Person {
                 .cpf(getRandomNumericalString(11))
                 .phoneNumber(getRandomNumericalString(11))
                 .email(getRandomString(null))
-                .address(new ObjectId())
                 .build();
     }
 

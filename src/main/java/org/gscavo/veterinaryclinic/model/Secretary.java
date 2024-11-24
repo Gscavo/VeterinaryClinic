@@ -22,10 +22,9 @@ public class Secretary extends Person {
                      String password,
                      String cpf,
                      String phoneNumber,
-                     String email,
-                     ObjectId address)
+                     String email)
     {
-        super(id, name, password, cpf, phoneNumber, email, address, PersonType.SECRETARY);
+        super(id, name, password, cpf, phoneNumber, email, PersonType.SECRETARY);
     }
 
     public Secretary(Document document) {
@@ -39,7 +38,6 @@ public class Secretary extends Person {
                 .cpf(getRandomNumericalString(11))
                 .phoneNumber(getRandomNumericalString(11))
                 .email(getRandomString(null))
-                .address(new ObjectId())
                 .build();
     }
 }

@@ -9,8 +9,7 @@ public enum PersonType {
     ADMIN(Admin.class),
     SECRETARY(Secretary.class),
     CLIENT(Client.class),
-    VETERINARIAN(Veterinarian.class),
-    NONE(User.class);
+    VETERINARIAN(Veterinarian.class);
 
     private final Class<? extends Person> modelClass;
 

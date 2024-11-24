@@ -7,8 +7,6 @@ package org.gscavo.veterinaryclinic.utils.enums;
 import lombok.Getter;
 import org.gscavo.veterinaryclinic.controller.*;
 import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
-import org.gscavo.veterinaryclinic.model.Secretary;
-import org.gscavo.veterinaryclinic.model.User;
 
 /**
  *
@@ -16,7 +14,6 @@ import org.gscavo.veterinaryclinic.model.User;
  */
 @Getter
 public enum Controllers {
-    ADDRESS(new AddressController()),
     ADMIN(new AdminController()),
     ANIMAL(new AnimalController()),
     APPOINTMENT(new AppointmentController()),
