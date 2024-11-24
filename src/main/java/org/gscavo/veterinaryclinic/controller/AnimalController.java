@@ -24,6 +24,10 @@ public class AnimalController extends BaseController<Animal> {
         super(Animal.class);
     }
     
+    public Animal get(ObjectId animalId) {
+        return ANIMAL_DAO.findById(animalId);
+    }
+    
     @Override
     public SystemOperationResult<?> register(Animal animal) {
         if (!canUserDoAction(Permissions::canRegister)) {

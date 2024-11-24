@@ -4,10 +4,15 @@
  */
 package org.gscavo.veterinaryclinic.controller.abstractions;
 
+import com.mongodb.client.model.Filters;
 import com.sun.jdi.ClassType;
 import java.util.ArrayList;
+
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.gscavo.veterinaryclinic.controller.DAOController;
 import org.gscavo.veterinaryclinic.dao.BaseDAO;
+import org.gscavo.veterinaryclinic.utils.ConversionUtils;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 
 /**
@@ -24,9 +29,15 @@ public abstract class BaseController<T> {
     
     public abstract SystemOperationResult register(T object);
     
-    public <T> ArrayList<T> getAll() {
+    public ArrayList<T> getAll() {
         BaseDAO<T> dao = DAOController.getDaoByClass(this.classType);
         
         return dao.findAll();
     };
+
+    public ArrayList<T> filter(Bson filter) {
+        BaseDAO<T> dao = DAOController.getDaoByClass(this.classType);
+
+        return ConversionUtils.documentsListToTypeList(dao.getCollection().find(filter), classType);
+    }
 }

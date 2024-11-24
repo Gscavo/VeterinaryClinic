@@ -10,8 +10,21 @@ import java.util.stream.IntStream;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.TableModel;
+
+import com.mongodb.client.model.Filters;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.AbstractCellEditor;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 import lombok.Getter;
 import lombok.Setter;
+import org.bson.conversions.Bson;
 import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
 import org.gscavo.veterinaryclinic.dao.BaseDAO;
 import org.gscavo.veterinaryclinic.utils.ObjectUtils;
@@ -32,6 +45,9 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
     
     @Getter @Setter
     private ArrayList<Field> allFieldsFromClass;
+    private String searchTerm;
+
+    private String[] searchFields;
     
     /**
      * Creates new form DatabaseTable
@@ -52,11 +68,14 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
                 .getAll();
         
         this.allFieldsFromClass = ObjectUtils.getAllFieldsFromClass(classType);
-        
+
+        this.searchFields = this.allFieldsFromClass.stream()
+                .map(Field::getName)
+                .toList()
+                .toArray(new String[0]);
+
         ComboBoxModel<String> searchModel = new DefaultComboBoxModel(
-                this.allFieldsFromClass.stream()
-                        .map(Field::getName)
-                        .toArray()
+                searchFields
         );
         
         this.fieldSearchSelection.setModel(searchModel);
@@ -75,7 +94,7 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
     
     public void setModel(ArrayList<T> objectList) {
         TableModel model = ViewUtils.generateDataModelFromObjectList(objectList, classType);
-        
+
         this.dataTable.setModel(model);
     }
 
@@ -102,8 +121,18 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
 
         searchTextField.setText("Pesquisar");
         searchTextField.setPreferredSize(new java.awt.Dimension(78, 30));
+        searchTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchTextFieldKeyReleased(evt);
+            }
+        });
 
         searchButton.setIcon(new javax.swing.ImageIcon("/Users/gscavo/Documents/Unicamp/TT001/VeterinaryClinic/src/main/resources/org/gscavo/veterinaryclinic/icons/search-interface-symbol.png")); // NOI18N
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
 
         fieldSearchSelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Field" }));
         fieldSearchSelection.addActionListener(new java.awt.event.ActionListener() {
@@ -165,6 +194,22 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
     private void fieldSearchSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldSearchSelectionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldSearchSelectionActionPerformed
+
+    private void searchTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextFieldKeyReleased
+        this.searchTerm = this.searchTextField.getText();
+    }//GEN-LAST:event_searchTextFieldKeyReleased
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        if (!StringUtils.isEmpty(searchTerm)) {
+            String searchField = this.searchFields[this.fieldSearchSelection.getSelectedIndex()];
+
+            Bson filter = Filters.eq(searchField, searchTerm);
+
+            this.setModel(CONTROLLER.filter(filter));
+        } else {
+            this.setModel(CONTROLLER.getAll());
+        }
+    }//GEN-LAST:event_searchButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

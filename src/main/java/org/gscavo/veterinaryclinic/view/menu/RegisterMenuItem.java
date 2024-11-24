@@ -1,12 +1,13 @@
 package org.gscavo.veterinaryclinic.view.menu;
 
 
+import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import org.gscavo.veterinaryclinic.utils.enums.Models;
-import org.gscavo.veterinaryclinic.view.dialog.BaseOperationsDialog;
+import org.gscavo.veterinaryclinic.view.MainUserFrame;
 import org.gscavo.veterinaryclinic.view.panels.register.RegisterPanel;
 
 /*
@@ -20,13 +21,19 @@ import org.gscavo.veterinaryclinic.view.panels.register.RegisterPanel;
  */
 public class RegisterMenuItem extends JMenuItem {
     
-    private final JFrame frame;
+    private final MainUserFrame frame;
+    private final JPanel mainPanel;
     private final Models model;
+    private final String cardName;
     
-    public RegisterMenuItem(JFrame frame, Models model) {
+    public RegisterMenuItem(MainUserFrame frame, Models model) {
         super();
         this.model = model;
         this.frame = frame;
+        
+        this.mainPanel = this.frame.getMainPanel();
+        
+        this.cardName = createCardLayoutName();
         
         this.setText(model.getLocalString());
        
@@ -39,10 +46,27 @@ public class RegisterMenuItem extends JMenuItem {
     }
     
     private void menuItemActionPerformed(ActionEvent evt) {
-        new BaseOperationsDialog(
-                frame, 
-                true,
-                new RegisterPanel(model)
-        ).setVisible(true);
+        RegisterPanel registerPanel = new RegisterPanel(this.model);
+        int numberOfComponents = this.mainPanel.getComponentCount();
+        
+        if (numberOfComponents > 0) {
+            this.mainPanel.removeAll();
+        }
+        
+        this.mainPanel.add(
+            registerPanel
+        );
+        
+        CardLayout cl = (CardLayout) this.mainPanel.getLayout();
+        
+        cl.show(this.mainPanel, this.cardName);
+        
+        this.mainPanel.revalidate();
+        this.mainPanel.repaint();
+        
     }
+    
+    private String createCardLayoutName() {
+        return this.model.getClassType().getSimpleName() + "Card";
+    };
 }

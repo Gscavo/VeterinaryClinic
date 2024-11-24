@@ -4,6 +4,7 @@
  */
 package org.gscavo.veterinaryclinic.view.dialog;
 
+import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
@@ -32,6 +33,26 @@ public class OperationStatusDialog extends javax.swing.JDialog {
      * Creates new form OperationStatusDialog
      */
     public OperationStatusDialog(java.awt.Frame parent, boolean modal, SystemOperationResult<?> systemOperationResult) {
+        super(parent, modal);
+        initComponents();
+
+        // Close the dialog when Esc is pressed
+        String cancelName = "cancel";
+        InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), cancelName);
+        ActionMap actionMap = getRootPane().getActionMap();
+        actionMap.put(cancelName, new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                doClose(RET_CANCEL);
+            }
+        });
+        
+        this.messageLabel.setText(
+                systemOperationResult.getMessage()
+        );
+    }
+    
+    public OperationStatusDialog(Dialog parent, boolean modal, SystemOperationResult<?> systemOperationResult) {
         super(parent, modal);
         initComponents();
 

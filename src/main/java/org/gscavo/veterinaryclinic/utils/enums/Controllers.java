@@ -39,6 +39,7 @@ public enum Controllers {
     }
     
     public static BaseController<?> getByName(Class<?> classType) {
+        System.out.println(classType.getSimpleName());
         return Controllers.valueOf(classType.getSimpleName().toUpperCase()).getController();
     }
 }

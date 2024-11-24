@@ -73,6 +73,9 @@
           <Dimension value="[78, 30]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="searchTextFieldKeyReleased"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="searchButton">
       <Properties>
@@ -80,6 +83,9 @@
           <Image iconType="2" name="/Users/gscavo/Documents/Unicamp/TT001/VeterinaryClinic/src/main/resources/org/gscavo/veterinaryclinic/icons/search-interface-symbol.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="fieldSearchSelection">
       <Properties>

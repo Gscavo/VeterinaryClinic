@@ -51,20 +51,20 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
      * Creates new form AddressInputPanel
      */
     public AnimalInputPanel() {
+        this.data = new Animal();
+
         initComponents();
         initControllers();
         initSelections();
     }
     
     public AnimalInputPanel(Animal animal) {
+        this.data = animal;
+
         initComponents();
         initControllers();
 
         initSelections(this.data.getTutor(), this.data.getSpecies());
-
-        this.data = animal;
-
-        initSelections();
     }
 
     private void initControllers() {
@@ -78,37 +78,37 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
     }
 
     private void initSelections() {
-        this.clientController = (ClientController) Controllers
-                .getByName(Client.class);
-        this.speciesController = (SpeciesController) Controllers
-                .getByName(Species.class);
-
-        this.data = new Animal();
         this.tutorList = this.clientController.getAll();
         this.speciesList = this.speciesController.getAll();
 
-
-        ComboBoxModel<String> tutorModel = new DefaultComboBoxModel(
-                IntStream
-                        .range(0, this.tutorList.size())
-                        .mapToObj(idx -> StringUtils.formatToSelection(idx, this.tutorList.get(idx).getName()))
-                        .toList()
-                        .toArray()
-        );
-
-        ComboBoxModel<String> speciesModel = new DefaultComboBoxModel(
+        if (this.tutorList.size() > 0) {
+            ComboBoxModel<String> tutorModel = new DefaultComboBoxModel(
+                    IntStream
+                            .range(0, this.tutorList.size())
+                            .mapToObj(idx -> StringUtils.formatToSelection(idx, this.tutorList.get(idx).getName()))
+                            .toList()
+                            .toArray()
+            );
+            
+            this.data.setTutor(this.tutorList.get(0).getId());
+            animalTutorSelection.setModel(tutorModel);
+        }
+        
+        if (this.speciesList.size() > 0) {
+            ComboBoxModel<String> speciesModel = new DefaultComboBoxModel(
                 IntStream
                         .range(0, this.speciesList.size())
                         .mapToObj(idx -> StringUtils.formatToSelection(idx, this.speciesList.get(idx).getName()))
                         .toList()
                         .toArray()
-        );
+            );
 
-        this.data.setTutor(this.tutorList.get(0).getId());
-        this.data.setSpecies(this.speciesList.get(0).getId());
 
-        animalTutorSelection.setModel(tutorModel);
-        animalSpeciesSelection.setModel(speciesModel);
+            this.data.setSpecies(this.speciesList.get(0).getId());
+
+
+            animalSpeciesSelection.setModel(speciesModel);
+        }
     }
 
     /**

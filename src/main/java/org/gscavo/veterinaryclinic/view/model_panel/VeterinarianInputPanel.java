@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.gscavo.veterinaryclinic.controller.VeterinarianController;
 import org.gscavo.veterinaryclinic.model.Veterinarian;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
+import org.gscavo.veterinaryclinic.utils.enums.PersonType;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
 /**
@@ -59,6 +60,8 @@ public class VeterinarianInputPanel extends javax.swing.JPanel implements BaseIn
         this.data.fill(
                 this.personInputPanel.getData()
         );
+
+        this.data.setType(PersonType.VETERINARIAN);
     }
 
 

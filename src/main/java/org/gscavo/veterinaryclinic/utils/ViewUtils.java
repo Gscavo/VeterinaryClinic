@@ -5,14 +5,12 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import org.gscavo.veterinaryclinic.utils.exceptions.ExceptionOutput;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
-import org.gscavo.veterinaryclinic.view.dialog.BaseOperationsDialog;
 import org.gscavo.veterinaryclinic.view.dialog.OperationStatusDialog;
 
 /*
@@ -52,15 +50,17 @@ public class ViewUtils {
 
         ArrayList<Field> allFields = ObjectUtils.getAllFieldsFromClass(classType);
 
-        List<String> columnNames = allFields.stream()
+        ArrayList<String> columnNames = new ArrayList<>(allFields.stream()
                 .map(Field::getName)
-                .toList();
+                .toList());
+        columnNames.add("Delete");
+
         Object[][] data = new Object[objectList.size()][];
 
         int numOfCols = columnNames.size();
         int idx_row = 0;
         for (T object : objectList) {
-            Object[] row = new Object[numOfCols];
+            Object[] row = new Object[numOfCols + 1];
             int idx_col = 0;
             for (Field field : allFields) {
                 try {
@@ -70,6 +70,7 @@ public class ViewUtils {
                     ExceptionOutput.showExceptionErr(ex);
                 }
             };
+            row[idx_col] = "Delete";
             data[idx_row++] = row;
         };
 
@@ -83,11 +84,7 @@ public class ViewUtils {
         Component topLevelAncestor = panel.getTopLevelAncestor();
         JFrame frame = null;
         if (topLevelAncestor instanceof JFrame) {
-            System.out.println("Here1");
            frame = (JFrame) topLevelAncestor;
-        } else if (topLevelAncestor instanceof BaseOperationsDialog) {
-            System.out.println("Here2");
-           frame = (JFrame) ((BaseOperationsDialog) topLevelAncestor).getOwner();
         }
         
         if (frame != null) {
