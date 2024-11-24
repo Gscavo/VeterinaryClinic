@@ -38,7 +38,6 @@ public class BaseDAOTest {
                     new AdminDAO(),
                     new AnimalDAO(),
                     new AppointmentDAO(),
-                    new CalendarDateDAO(),
                     new ClientDAO(),
                     new ProcedureDAO(),
                     new SecretaryDAO(),
