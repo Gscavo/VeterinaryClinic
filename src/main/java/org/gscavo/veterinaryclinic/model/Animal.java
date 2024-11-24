@@ -35,8 +35,6 @@ public class Animal implements BaseModel<Animal> {
     private ObjectId species;
     
     private String race = "";
-    
-    private int age = -1;
 
     public Animal(Document document) {
         this.id = document.getObjectId("_id");
@@ -48,14 +46,11 @@ public class Animal implements BaseModel<Animal> {
         this.species = document.getObjectId("species");
 
         this.race = document.getString("race");
-
-        this.age = document.getInteger("age", -1);
     }
 
     @Override
     public Animal randomizeAttributes() {
         return Animal.builder()
-                .age(getRandomNumber())
                 .species(new ObjectId())
                 .tutor(new ObjectId())
                 .race(getRandomString(null))

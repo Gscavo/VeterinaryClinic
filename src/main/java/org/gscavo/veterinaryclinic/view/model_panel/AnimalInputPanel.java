@@ -122,11 +122,9 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
 
         animalDataHeaderLabel = new javax.swing.JLabel();
         animalNameLabel = new javax.swing.JLabel();
-        animalAgeLabel = new javax.swing.JLabel();
         animalSpeciesLabel = new javax.swing.JLabel();
         animalRaceLabel = new javax.swing.JLabel();
         animalNameInputField = new javax.swing.JTextField();
-        animalAgeInputField = new javax.swing.JSpinner();
         headerSeparator = new javax.swing.JSeparator();
         animalRaceInputField = new javax.swing.JTextField();
         animalTutorLabel = new javax.swing.JLabel();
@@ -146,13 +144,6 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
         animalNameLabel.setMaximumSize(new java.awt.Dimension(150, 30));
         animalNameLabel.setPreferredSize(new java.awt.Dimension(150, 30));
         animalNameLabel.setSize(new java.awt.Dimension(150, 30));
-
-        animalAgeLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        animalAgeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        animalAgeLabel.setText("Idade");
-        animalAgeLabel.setMaximumSize(new java.awt.Dimension(150, 30));
-        animalAgeLabel.setPreferredSize(new java.awt.Dimension(150, 30));
-        animalAgeLabel.setSize(new java.awt.Dimension(150, 30));
 
         animalSpeciesLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         animalSpeciesLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -175,16 +166,6 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
         animalNameInputField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 animalNameInputFieldKeyReleased(evt);
-            }
-        });
-
-        animalAgeInputField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        animalAgeInputField.setModel(new javax.swing.SpinnerNumberModel());
-        animalAgeInputField.setPreferredSize(new java.awt.Dimension(300, 30));
-        animalAgeInputField.setSize(new java.awt.Dimension(300, 30));
-        animalAgeInputField.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                animalAgeInputFieldStateChanged(evt);
             }
         });
 
@@ -230,20 +211,17 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(animalAgeLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
-                                .addComponent(animalNameLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addComponent(animalRaceLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(animalNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(animalAgeInputField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(animalNameInputField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(animalRaceInputField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(animalNameInputField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(headerSeparator, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(animalDataHeaderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(animalRaceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(animalRaceInputField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(animalTutorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -265,11 +243,7 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(animalNameInputField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(animalNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(animalAgeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(animalAgeInputField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(animalRaceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(animalRaceInputField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -290,12 +264,6 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
                 this.animalNameInputField.getText()
         );
     }//GEN-LAST:event_animalNameInputFieldKeyReleased
-
-    private void animalAgeInputFieldStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_animalAgeInputFieldStateChanged
-        this.data.setAge(
-                ViewUtils.getIntFromJSpinner(this.animalAgeInputField)
-        );
-    }//GEN-LAST:event_animalAgeInputFieldStateChanged
 
     private void animalRaceInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_animalRaceInputFieldKeyReleased
         this.data.setRace(
@@ -320,8 +288,6 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
     }//GEN-LAST:event_animalSpeciesSelectionActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JSpinner animalAgeInputField;
-    private javax.swing.JLabel animalAgeLabel;
     private javax.swing.JLabel animalDataHeaderLabel;
     private javax.swing.JTextField animalNameInputField;
     private javax.swing.JLabel animalNameLabel;

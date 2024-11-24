@@ -11,7 +11,6 @@ public class AnimalDAOTest {
                 .race("SRD")
                 .tutor(new ObjectId())
                 .species(new ObjectId())
-                .age(3)
                 .build();
     }
 }

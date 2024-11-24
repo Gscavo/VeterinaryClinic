@@ -15,7 +15,6 @@ public class AnimalDAO extends BaseDAO<Animal> {
                 .race("SRD")
                 .tutor(new ObjectId())
                 .species(new ObjectId())
-                .age(3)
                 .build();
     }
 }
