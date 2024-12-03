@@ -12,9 +12,13 @@ import org.gscavo.veterinaryclinic.utils.enums.PersonType;
 import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomNumericalString;
 import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomString;
 
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Secretary extends Person {
+
+    public Secretary() {
+        super();
+        this.setType(PersonType.SECRETARY);
+    }
 
     @Builder
     public Secretary(ObjectId id,

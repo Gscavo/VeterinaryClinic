@@ -11,9 +11,13 @@ import org.gscavo.veterinaryclinic.utils.enums.PersonType;
 import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomNumericalString;
 import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomString;
 
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Admin extends Person {
+
+    public Admin() {
+        super();
+        this.setType(PersonType.ADMIN);
+    }
 
     @Builder
     public Admin(ObjectId id,

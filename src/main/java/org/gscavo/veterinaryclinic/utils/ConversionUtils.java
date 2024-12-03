@@ -46,6 +46,10 @@ public class ConversionUtils {
     public static <T> Document objectToDocument(T object) {
         try {
             String json = objectMapper.writeValueAsString(object);
+
+            System.out.printf("Transforming object of type %s into String:\n%s%n",
+                    object.getClass().getSimpleName(),
+                    json);
             return Document.parse(json);
         } catch (Exception e) {
             System.err.println("!ERROR!\n" + e.getMessage());

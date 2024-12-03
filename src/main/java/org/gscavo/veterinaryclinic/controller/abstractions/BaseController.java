@@ -8,6 +8,7 @@ import com.mongodb.client.model.Filters;
 import com.sun.jdi.ClassType;
 import java.util.ArrayList;
 
+import org.bson.BsonDocument;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.gscavo.veterinaryclinic.controller.DAOController;

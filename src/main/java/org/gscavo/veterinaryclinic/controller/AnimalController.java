@@ -2,9 +2,13 @@ package org.gscavo.veterinaryclinic.controller;
 
 import com.mongodb.client.result.InsertOneResult;
 import java.util.ArrayList;
+
+import org.bson.BsonDocument;
+import org.bson.BsonValue;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
 import org.gscavo.veterinaryclinic.dao.AnimalDAO;
+import org.gscavo.veterinaryclinic.dao.BaseDAO;
 import org.gscavo.veterinaryclinic.model.Animal;
 import org.gscavo.veterinaryclinic.model.Client;
 import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
@@ -27,6 +31,10 @@ public class AnimalController extends BaseController<Animal> {
     public Animal get(ObjectId animalId) {
         return ANIMAL_DAO.findById(animalId);
     }
+
+    public ArrayList<Animal> getAllByClientId(ObjectId clientId) {
+        return ANIMAL_DAO.findByClientId(clientId);
+    };
     
     @Override
     public SystemOperationResult<?> register(Animal animal) {
@@ -41,12 +49,6 @@ public class AnimalController extends BaseController<Animal> {
         }
 
         ObjectId animalId = ConversionUtils.bsonValueToObjectId(result_animal.getInsertedId());
-
-        SystemOperationResult<?> result_client = UserController.appendAnimalToClient(animalId, animal.getTutor());
-
-        if (!result_client.getStatus().isSuccess()) {
-            return SystemOperationResult.failedToUpdateResourceSOR(Client.class);
-        }
 
         return new SystemOperationResult<ObjectId>(StatusCode.SUCCESS, animalId);
     }

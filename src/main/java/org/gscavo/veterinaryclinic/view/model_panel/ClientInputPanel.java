@@ -8,48 +8,53 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import lombok.Getter;
 import lombok.Setter;
+import org.gscavo.veterinaryclinic.controller.ClientController;
+import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
 import org.gscavo.veterinaryclinic.model.Client;
+import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
 /**
  *
  * @author gscavo
  */
-public class ClientInputPanel extends javax.swing.JPanel {
+public class ClientInputPanel extends javax.swing.JPanel implements BaseInputPanel<Client> {
 
-    @Getter @Setter
-    private Client data;
+    @Getter
+    private ClientController mainController;
     
     /**
      * Creates new form ClientInputPanel
      */
     public ClientInputPanel() {
         initComponents();
-        
+        initControllers();
         myInitComponents();
+        this.personInputPanel1.setData(new Client());
     }
     
     public ClientInputPanel(Client client) {
         initComponents();
-        
+        initControllers();
         myInitComponents();
-        
-        this.personInputPanel1.getData().fill(client);
-    }
-    
-    private void myInitComponents() {
-        this.personInputPanel1.addPropertyChangeListener(BaseInputPanel.DATA_PROPERTY_KEY, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                changedData(evt);
-            }
-        });
+        this.personInputPanel1.setData(client);
     }
 
-    private void changedData(PropertyChangeEvent evt) {        
-        this.data = (Client) this.personInputPanel1.getData();
+    private void initControllers() {
+        this.mainController = (ClientController) Controllers.getByName(Client.class);
+    };
+
+    private void myInitComponents() {
     }
-    
+
+    public Client getData() {
+        return (Client) this.personInputPanel1.getData();
+    }
+
+    public void setData(Client client) {
+        this.personInputPanel1.setData(client);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,5 +83,7 @@ public class ClientInputPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.gscavo.veterinaryclinic.view.model_panel.abstractions.PersonInputPanel personInputPanel1;
+
+
     // End of variables declaration//GEN-END:variables
 }

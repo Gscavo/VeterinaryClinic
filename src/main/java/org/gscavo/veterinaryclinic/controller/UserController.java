@@ -171,24 +171,9 @@ public class UserController extends BaseController<User>  {
              case VETERINARIAN:
                  ((Veterinarian) databaseUser).getAppointmentList().add(appointmentId);
                  break;
-            case CLIENT:
-                 ((Client) databaseUser).getAppointmentList().add(appointmentId);
-                 break;
             default:
                  return SystemOperationResult.objectNotFound();
         }
-
-        return updateUser(databaseUser);
-    }
-
-    public static SystemOperationResult<ObjectId> appendAnimalToClient(ObjectId animalId, ObjectId clientId) {
-        Client databaseUser = UserController.getClient(clientId);
-
-        if (databaseUser == null) {
-            return SystemOperationResult.objectNotFound();
-        }
-
-        databaseUser.getAnimal().add(animalId);
 
         return updateUser(databaseUser);
     }

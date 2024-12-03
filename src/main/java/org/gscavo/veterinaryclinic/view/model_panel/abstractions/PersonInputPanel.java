@@ -17,8 +17,7 @@ import org.gscavo.veterinaryclinic.utils.enums.Controllers;
  */
 public class PersonInputPanel extends javax.swing.JPanel implements BaseInputPanel<Person> {
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private Person data;
 
     @Getter
@@ -30,15 +29,12 @@ public class PersonInputPanel extends javax.swing.JPanel implements BaseInputPan
     public PersonInputPanel() {
         initComponents();
         initControllers();
-
-        this.data = new User();
     }
     
-    public PersonInputPanel(User user) {
+    public <T extends Person> PersonInputPanel(T user) {
         initComponents();
         initControllers();
         this.data = user;
-
     }
 
     private void initControllers() {

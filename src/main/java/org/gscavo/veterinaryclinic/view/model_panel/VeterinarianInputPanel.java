@@ -57,6 +57,7 @@ public class VeterinarianInputPanel extends javax.swing.JPanel implements BaseIn
     }
     
     private void dataChangedOnPersonInputPanel(PropertyChangeEvent evt) {
+        System.out.println("Changed");
         this.data.fill(
                 this.personInputPanel.getData()
         );

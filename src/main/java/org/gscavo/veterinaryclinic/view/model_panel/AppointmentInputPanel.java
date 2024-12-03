@@ -4,7 +4,7 @@
  */
 package org.gscavo.veterinaryclinic.view.model_panel;
 
-import java.awt.Dialog;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -77,7 +77,7 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
         this.mainController = (AppointmentController) Controllers.getByName(Appointment.class);
         this.clientController = (ClientController) Controllers.getByName(Client.class);
         this.animalController = (AnimalController) Controllers.getByName(Animal.class);
-        this.veterinarianController = (VeterinarianController) Controllers.getByName("VETERINARIAN");
+        this.veterinarianController = (VeterinarianController) Controllers.getByName(Veterinarian.class);
         this.symptomController = (SymptomController) Controllers.getByName(Symptom.class);
         this.procedureController = (ProcedureController) Controllers.getByName(Procedure.class);
     }
@@ -325,7 +325,7 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
 
     private void appointmentVeterinarianSelectionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_appointmentVeterinarianSelectionFocusGained
         new OperationStatusDialog(
-            (Dialog) this.getTopLevelAncestor(),
+            (Frame) this.getTopLevelAncestor(),
             true,
             SystemOperationResult.failedToUpdateResourceSOR(Appointment.class)
         );
@@ -334,26 +334,20 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
     private void appointmentClientSelectionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_appointmentClientSelectionItemStateChanged
         Client selected = this.clients.get(
                 this.appointmentClientSelection.getSelectedIndex()
-                );
+        );
         
         this.data.setClientId(
                 selected
                 .getId()
         );
         
-        this.animals = new ArrayList<>();
-        
-        for (ObjectId animalId : selected.getAnimal()) {
-            this.animals.add(
-                    animalController.get(animalId)
-            );
-        }
-        
+        this.animals = animalController.getAllByClientId(selected.getId());
+
         this.appointmentAnimalSelection.setModel(
                new DefaultComboBoxModel<>(
                        IntStream
                                .range(0, this.animals.size())
-                       .mapToObj(idx -> StringUtils.formatToSelection(idx, this.animals.get(idx)))
+                       .mapToObj(idx -> StringUtils.formatToSelection(idx, this.animals.get(idx).getName()))
                        .toList()
                        .toArray(new String[0])
                )

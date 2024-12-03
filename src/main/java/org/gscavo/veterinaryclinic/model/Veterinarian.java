@@ -13,13 +13,17 @@ import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomStri
 
 @Getter
 @Setter
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Veterinarian extends Person {
 
     private String crmv = "";
 
     private ArrayList<ObjectId> appointmentList;
+
+    public Veterinarian() {
+        super();
+        this.setType(PersonType.VETERINARIAN);
+    }
 
     @Builder
     public Veterinarian(ObjectId id,

@@ -24,17 +24,13 @@ import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomStri
  * @author gscavo
  */
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Client extends Person {
 
-    @BsonProperty("animal")
-    private ArrayList<ObjectId> animal;
-
-    @BsonProperty("appointmentList")
-    private ArrayList<ObjectId> appointmentList;
-    
+    public Client() {
+        super();
+        this.setType(PersonType.CLIENT);
+    }
 
     @Builder
     public Client(ObjectId id,
@@ -42,12 +38,8 @@ public class Client extends Person {
                   String password,
                   String cpf,
                   String phoneNumber,
-                  String email,
-                  ArrayList<ObjectId> animal,
-                  ArrayList<ObjectId> appointmentList) {
+                  String email) {
         super(id, name, password, cpf, phoneNumber, email, PersonType.CLIENT);
-        this.animal = animal;
-        this.appointmentList = appointmentList;
     }
 
 
@@ -64,11 +56,5 @@ public class Client extends Person {
 
     public Client(Document document) {
         super( document );
-        
-        List<ObjectId> animals = document.getList("animal", ObjectId.class);
-        List<ObjectId> appointmentsList = document.getList("appointmentList", ObjectId.class);
-
-        this.animal = listToArrayList(animals);
-        this.appointmentList = listToArrayList(appointmentsList);
     }
 }
