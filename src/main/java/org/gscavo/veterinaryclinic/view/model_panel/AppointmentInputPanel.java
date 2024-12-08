@@ -129,7 +129,7 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
                 )
         );
 
-        updateTutorOnData();
+        appointmentClientSelectionItemStateChanged(null);
     }
 
     private void updateDateOnData() {
@@ -380,6 +380,8 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
                        .toArray(new String[0])
                )
         );
+
+        updateAnimalOnData();
     }//GEN-LAST:event_appointmentClientSelectionItemStateChanged
 
     private void appointmentDateSelectionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_appointmentDateSelectionItemStateChanged

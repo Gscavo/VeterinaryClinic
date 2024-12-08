@@ -46,7 +46,7 @@ public class RegisterPanel extends javax.swing.JPanel {
             mainPanel.add((JPanel) this.baseInputPanel, BorderLayout.CENTER);
             setCalculatedPreferredSize();
         } catch (Exception e) {
-            ExceptionOutput.showExceptionErr(e);
+            e.printStackTrace();
         }
     }
     
