@@ -33,6 +33,9 @@ public class MainUserFrame extends javax.swing.JFrame {
         myMenu = new MainMenuBar(this);
         
         this.setJMenuBar(myMenu);
+        this.mainPanel.add(
+                new MainScreenPanel()
+        );
     }
 
     /**

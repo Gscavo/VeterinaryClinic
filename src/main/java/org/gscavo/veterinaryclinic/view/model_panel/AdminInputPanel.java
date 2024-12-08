@@ -6,6 +6,7 @@ package org.gscavo.veterinaryclinic.view.model_panel;
 
 import lombok.Getter;
 import org.gscavo.veterinaryclinic.controller.ClientController;
+import org.gscavo.veterinaryclinic.model.Admin;
 import org.gscavo.veterinaryclinic.model.Client;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.utils.enums.PersonType;
@@ -15,7 +16,7 @@ import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
  *
  * @author gscavo
  */
-public class ClientInputPanel extends javax.swing.JPanel implements BaseInputPanel<Client> {
+public class AdminInputPanel extends javax.swing.JPanel implements BaseInputPanel<Admin> {
 
     @Getter
     private ClientController mainController;
@@ -23,18 +24,18 @@ public class ClientInputPanel extends javax.swing.JPanel implements BaseInputPan
     /**
      * Creates new form ClientInputPanel
      */
-    public ClientInputPanel() {
+    public AdminInputPanel() {
         initComponents();
         initControllers();
         myInitComponents();
-        this.personInputPanel1.setData(new Client());
+        this.personInputPanel1.setData(new Admin());
     }
     
-    public ClientInputPanel(Client client) {
+    public AdminInputPanel(Admin admin) {
         initComponents();
         initControllers();
         myInitComponents();
-        this.personInputPanel1.setData(client);
+        this.personInputPanel1.setData(admin);
     }
 
     private void initControllers() {
@@ -44,14 +45,14 @@ public class ClientInputPanel extends javax.swing.JPanel implements BaseInputPan
     private void myInitComponents() {
     }
 
-    public Client getData() {
-        return (Client) this.personInputPanel1.getData();
+    public Admin getData() {
+        return (Admin) this.personInputPanel1.getData();
     }
 
-    public void setData(Client client) {
-        assert client.getType() == PersonType.CLIENT;
+    public void setData(Admin admin) {
+        assert admin.getType() == PersonType.ADMIN;
 
-        this.personInputPanel1.setData(client);
+        this.personInputPanel1.setData(admin);
     }
 
     /**
@@ -82,7 +83,5 @@ public class ClientInputPanel extends javax.swing.JPanel implements BaseInputPan
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.gscavo.veterinaryclinic.view.model_panel.abstractions.PersonInputPanel personInputPanel1;
-
-
     // End of variables declaration//GEN-END:variables
 }

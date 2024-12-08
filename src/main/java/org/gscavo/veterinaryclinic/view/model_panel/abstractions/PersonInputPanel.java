@@ -31,7 +31,14 @@ public class PersonInputPanel extends javax.swing.JPanel implements BaseInputPan
         initControllers();
         myInitComponents();
     }
-    
+
+    public  PersonInputPanel(User user) {
+        initComponents();
+        initControllers();
+        myInitComponents();
+        setData(user);
+    }
+
     public <T extends Person> PersonInputPanel(T user) {
         this.data = user;
         initComponents();
@@ -43,14 +50,18 @@ public class PersonInputPanel extends javax.swing.JPanel implements BaseInputPan
         this.mainController = (UserController) Controllers.getByName("USER");
     }
 
-    private void myInitComponents() {
-        if (this.data !=null && this.data.getId() != null) {
+    private void myInitComponents() { };
+
+    public void setData(Person person) {
+        this.data = person;
+
+        if (this.data != null && this.data.getId() != null) {
             this.personNameInputField.setText(this.data.getName());
             this.cpfInputField.setText(this.data.getCpf());
             this.emailInputField.setText(this.data.getEmail());
             this.telephoneInputField.setText(this.data.getPhoneNumber());
         }
-    };
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

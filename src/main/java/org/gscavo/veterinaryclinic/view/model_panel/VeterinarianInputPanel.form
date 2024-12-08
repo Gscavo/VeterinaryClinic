@@ -124,7 +124,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="veterinarianCrmvInputFieldMouseReleased"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="veterinarianCrmvInputFieldKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JSeparator" name="headerSeparator">

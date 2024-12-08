@@ -84,7 +84,8 @@ public class UpdateDialog extends javax.swing.JDialog {
         
             mainPanel.add((JPanel) baseInputPanel, BorderLayout.CENTER);
         } catch (Exception e) {
-            ExceptionOutput.showExceptionErr(e);
+            e.printStackTrace();
+            return;
         }
 
         this.pack();

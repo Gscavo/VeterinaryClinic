@@ -7,6 +7,7 @@ package org.gscavo.veterinaryclinic.view.model_panel;
 import lombok.Getter;
 import org.gscavo.veterinaryclinic.controller.ClientController;
 import org.gscavo.veterinaryclinic.model.Client;
+import org.gscavo.veterinaryclinic.model.Secretary;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.utils.enums.PersonType;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
@@ -15,7 +16,7 @@ import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
  *
  * @author gscavo
  */
-public class ClientInputPanel extends javax.swing.JPanel implements BaseInputPanel<Client> {
+public class SecretaryInputPanel extends javax.swing.JPanel implements BaseInputPanel<Secretary> {
 
     @Getter
     private ClientController mainController;
@@ -23,18 +24,18 @@ public class ClientInputPanel extends javax.swing.JPanel implements BaseInputPan
     /**
      * Creates new form ClientInputPanel
      */
-    public ClientInputPanel() {
+    public SecretaryInputPanel() {
         initComponents();
         initControllers();
         myInitComponents();
-        this.personInputPanel1.setData(new Client());
+        this.personInputPanel1.setData(new Secretary());
     }
     
-    public ClientInputPanel(Client client) {
+    public SecretaryInputPanel(Secretary secretary) {
         initComponents();
         initControllers();
         myInitComponents();
-        this.personInputPanel1.setData(client);
+        this.personInputPanel1.setData(secretary);
     }
 
     private void initControllers() {
@@ -44,14 +45,14 @@ public class ClientInputPanel extends javax.swing.JPanel implements BaseInputPan
     private void myInitComponents() {
     }
 
-    public Client getData() {
-        return (Client) this.personInputPanel1.getData();
+    public Secretary getData() {
+        return (Secretary) this.personInputPanel1.getData();
     }
 
-    public void setData(Client client) {
-        assert client.getType() == PersonType.CLIENT;
+    public void setData(Secretary secretary) {
+        assert secretary.getType() == PersonType.SECRETARY;
 
-        this.personInputPanel1.setData(client);
+        this.personInputPanel1.setData(secretary);
     }
 
     /**
@@ -82,7 +83,5 @@ public class ClientInputPanel extends javax.swing.JPanel implements BaseInputPan
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.gscavo.veterinaryclinic.view.model_panel.abstractions.PersonInputPanel personInputPanel1;
-
-
     // End of variables declaration//GEN-END:variables
 }

@@ -11,11 +11,14 @@ public class GoToMainScreenMenu extends JMenu {
     private MainUserFrame frame;
     private JPanel mainScreen;
 
-    public GoToMainScreenMenu(MainUserFrame frame, String label, JPanel panel) {
-        super(label);
+    public GoToMainScreenMenu(MainUserFrame frame, JPanel panel) {
+        super();
         this.frame = frame;
         this.mainScreen = panel;
         myInitComponents();
+        this.setIcon(
+                new ImageIcon("src/main/resources/org/gscavo/veterinaryclinic/icons/home.png")
+        );
     }
 
     private void myInitComponents() {

@@ -19,13 +19,13 @@ import org.gscavo.veterinaryclinic.view.model_panel.abstractions.PersonInputPane
  */
 @AllArgsConstructor
 public enum Models {
-    ADMIN("Admin", Admin.class, PersonInputPanel.class, Person.class),
+    ADMIN("Admin", Admin.class, AdminInputPanel.class, Admin.class),
     ANIMAL("Animal", Animal.class, AnimalInputPanel.class, AnimalView.class),
     APPOINTMENT("Consulta", Appointment.class, AppointmentInputPanel.class, AppointmentView.class ),
     CLIENT("Cliente", Client.class, ClientInputPanel.class, Client.class),
     USER("Usuários", User.class, PersonInputPanel.class, User.class),
     PROCEDURE("Procedimento", Procedure.class, ProcedureInputPanel.class, Procedure.class),
-    SECRETARY("Secretária", Secretary.class, PersonInputPanel.class, Secretary.class),
+    SECRETARY("Secretária", Secretary.class, SecretaryInputPanel.class, Secretary.class),
     SPECIES("Espécie", Species.class, SpeciesInputPanel.class, Species.class),
     SYMPTOM("Sintomas", Symptom.class, SymptomInputPanel.class, Symptom.class),
     VETERINARIAN("Veterinário", Veterinarian.class, VeterinarianInputPanel.class, Veterinarian.class);

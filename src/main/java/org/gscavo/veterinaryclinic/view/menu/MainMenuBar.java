@@ -46,7 +46,6 @@ public class MainMenuBar extends JMenuBar {
 
         mainScreenMenu = new GoToMainScreenMenu(
                 this.frame,
-                mainScreenLabel,
                 new MainScreenPanel()
         );
 
