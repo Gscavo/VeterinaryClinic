@@ -28,19 +28,23 @@ public class SpeciesInputPanel extends javax.swing.JPanel implements BaseInputPa
      * Creates new form AddressInputPanel
      */
     public SpeciesInputPanel() {
+        this.data = new Species();
         initComponents();
         initControllers();
-        this.data = new Species();
     }
     
     public SpeciesInputPanel(Species species) {
+        this.data = species;
         initComponents();
         initControllers();
-        this.data = species;
     }
 
     private void initControllers() {
         this.mainController = (SpeciesController) Controllers.getByName(Species.class);
+    }
+
+    private void myInitComponents() {
+
     }
 
     /**
@@ -96,9 +100,9 @@ public class SpeciesInputPanel extends javax.swing.JPanel implements BaseInputPa
 
         speciesDescriptionTextArea.setColumns(20);
         speciesDescriptionTextArea.setRows(5);
-        speciesDescriptionTextArea.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                speciesDescriptionTextAreaMouseReleased(evt);
+        speciesDescriptionTextArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                speciesDescriptionTextAreaKeyReleased(evt);
             }
         });
         jScrollPane1.setViewportView(speciesDescriptionTextArea);
@@ -178,11 +182,11 @@ public class SpeciesInputPanel extends javax.swing.JPanel implements BaseInputPa
         );
     }//GEN-LAST:event_speciesScientificNameInputFieldKeyReleased
 
-    private void speciesDescriptionTextAreaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_speciesDescriptionTextAreaMouseReleased
+    private void speciesDescriptionTextAreaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_speciesDescriptionTextAreaKeyReleased
         this.data.setDescription(
                 this.speciesDescriptionTextArea.getText()
         );
-    }//GEN-LAST:event_speciesDescriptionTextAreaMouseReleased
+    }//GEN-LAST:event_speciesDescriptionTextAreaKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
