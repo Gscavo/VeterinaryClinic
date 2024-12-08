@@ -4,7 +4,9 @@
  */
 package org.gscavo.veterinaryclinic.view.panels.register;
 
-import javax.swing.JPanel;
+import javax.swing.*;
+
+import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
 import java.awt.*;
@@ -21,6 +23,7 @@ import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 public class RegisterPanel extends javax.swing.JPanel {
 
     private final String CARD_NAME = "inputPanelCard";
+    private Models model;
 
     private BaseInputPanel baseInputPanel;
 
@@ -31,36 +34,37 @@ public class RegisterPanel extends javax.swing.JPanel {
         initComponents();
     }
     
-    public <T extends JPanel> RegisterPanel(Models model) {
+    public RegisterPanel(Models model) {
+        this.model = model;
         initComponents();
+        myInitComponents();
+    }
+
+    private <T extends BaseInputPanel> void myInitComponents() {
         try {
-            T panel = (T) model.getInputPanelClass().getDeclaredConstructor().newInstance();
-            if (panel instanceof BaseInputPanel) {
-                this.baseInputPanel = (BaseInputPanel<?>) panel;
-            } else {
-                System.err.println("Panel: " + panel.getClass().getSimpleName() + " doesn't implements BaseInputPanel");
-            }        
-        
-            mainPanel.add(panel, BorderLayout.CENTER);
+            this.baseInputPanel = (T) this.model.getInputPanelClass().getDeclaredConstructor().newInstance();
+            mainPanel.add((JPanel) this.baseInputPanel, BorderLayout.CENTER);
+            setCalculatedPreferredSize();
         } catch (Exception e) {
             ExceptionOutput.showExceptionErr(e);
         }
-
-        
     }
     
-    public <T extends JPanel> RegisterPanel(T panel) {
-        initComponents();
-
-        if (panel instanceof BaseInputPanel) {
-            this.baseInputPanel = (BaseInputPanel<?>) panel;
-        } else {
-            System.err.println("Panel: " + panel.getClass().getSimpleName() + " doesn't implements BaseInputPanel");
-        }        
+    private void setCalculatedPreferredSize() {
+        Dimension panelPreferredSize = ((JPanel) this.baseInputPanel).getPreferredSize();
+        Dimension buttonRowPreferredSize = this.buttonRow.getPreferredSize();
+        System.out.println("buttonRowPreferredSize.height: " + buttonRowPreferredSize.height);
+        int width = panelPreferredSize.width;
+        int height = buttonRowPreferredSize.height + panelPreferredSize.height;
         
-        mainPanel.add(panel, BorderLayout.CENTER);
+        this.setPreferredSize(
+                new Dimension(
+                        width, 
+                        height + 50
+                )
+        );
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -76,6 +80,7 @@ public class RegisterPanel extends javax.swing.JPanel {
         registerButton = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(420, 420));
+        setSize(new java.awt.Dimension(420, 420));
         setLayout(new java.awt.BorderLayout());
 
         mainPanel.setRequestFocusEnabled(false);
@@ -111,7 +116,7 @@ public class RegisterPanel extends javax.swing.JPanel {
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         SystemOperationResult<ObjectId> res = this.baseInputPanel.getMainController()
-                .register(this.baseInputPanel.getData());
+                .register((BaseModel<?>) this.baseInputPanel.getData());
 
         ViewUtils.showInformationDialog(this, res);
 

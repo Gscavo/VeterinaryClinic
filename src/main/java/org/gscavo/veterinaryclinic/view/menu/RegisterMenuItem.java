@@ -1,6 +1,7 @@
 package org.gscavo.veterinaryclinic.view.menu;
 
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +25,7 @@ public class RegisterMenuItem extends JMenuItem {
     private final MainUserFrame frame;
     private final JPanel mainPanel;
     private final Models model;
-    private final String cardName;
+//    private final String cardName;
     
     public RegisterMenuItem(MainUserFrame frame, Models model) {
         super();
@@ -33,7 +34,7 @@ public class RegisterMenuItem extends JMenuItem {
         
         this.mainPanel = this.frame.getMainPanel();
         
-        this.cardName = createCardLayoutName();
+//        this.cardName = createCardLayoutName();
         
         this.setText(model.getLocalString());
        
@@ -54,16 +55,17 @@ public class RegisterMenuItem extends JMenuItem {
         }
         
         this.mainPanel.add(
-            registerPanel
+            registerPanel,
+            BorderLayout.CENTER
         );
-        
-        CardLayout cl = (CardLayout) this.mainPanel.getLayout();
-        
-        cl.show(this.mainPanel, this.cardName);
         
         this.mainPanel.revalidate();
         this.mainPanel.repaint();
-        
+//        this.frame.pack();
+
+        this.frame.setSize(
+                registerPanel.getPreferredSize()
+        );
     }
     
     private String createCardLayoutName() {

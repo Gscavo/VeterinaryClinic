@@ -1,17 +1,12 @@
 package org.gscavo.veterinaryclinic.test.dao;
 
-import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.dao.ClientDAO;
 import org.gscavo.veterinaryclinic.model.Client;
-import org.gscavo.veterinaryclinic.utils.ConversionUtils;
-import org.junit.After;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class ClientDAOTest {
 
@@ -27,8 +22,6 @@ public class ClientDAOTest {
                 .password(PASSWORD)
                 .email(EMAIL)
                 .phoneNumber("19900001234")
-                .animal(new ArrayList<>(Collections.singletonList(new ObjectId())))
-                .appointmentList(new ArrayList<>(Collections.singletonList(new ObjectId())))
                 .build();
     }
 

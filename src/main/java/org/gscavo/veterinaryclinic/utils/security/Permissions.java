@@ -18,5 +18,7 @@ public class Permissions {
 //    public static boolean canRegister(Person person) { return !isPersonClient(person); }
     public static boolean canRegister(Person person) { return true; }
 
+    public static boolean canUpdateInfo(Person person) { return true; }
+
     public static boolean any(Person person) { return true; }
 }

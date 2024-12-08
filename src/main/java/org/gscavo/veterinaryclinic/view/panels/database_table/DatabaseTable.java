@@ -6,38 +6,35 @@ package org.gscavo.veterinaryclinic.view.panels.database_table;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.stream.IntStream;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.TableModel;
 
 import com.mongodb.client.model.Filters;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.AbstractCellEditor;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
+import java.awt.Font;
+import javax.swing.JFrame;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
-import org.gscavo.veterinaryclinic.dao.BaseDAO;
+import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import org.gscavo.veterinaryclinic.utils.ObjectUtils;
 import org.gscavo.veterinaryclinic.utils.StringUtils;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.utils.enums.Models;
+import org.gscavo.veterinaryclinic.view.dialog.UpdateDialog;
 
 /**
  *
  * @author gscavo
  */
-public class DatabaseTable<T> extends javax.swing.JPanel {
+public class DatabaseTable<T extends BaseModel> extends javax.swing.JPanel {
+    private int selectedRow;
+    private int selectedColumn;
+    private ObjectId selectedId;
+    private Object selectedData;
 
     private final Class<T> classType;
 
@@ -86,6 +83,8 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
         
         this.setModel(dataList);
         
+        this.dataTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 18));
+        
     }
     
     public void setHeader(String text) {
@@ -96,6 +95,38 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
         TableModel model = ViewUtils.generateDataModelFromObjectList(objectList, classType);
 
         this.dataTable.setModel(model);
+    }
+
+    public void updateSelectedRowColumn() {
+        int idRow = this.dataTable.getTableHeader().getColumnModel().getColumnIndex("id");
+
+        this.selectedRow = this.dataTable.getSelectedRow();
+        this.selectedColumn = this.dataTable.getSelectedColumn();
+
+        this.selectedId = (ObjectId) this.dataTable.getModel().getValueAt(
+                selectedRow,
+                idRow
+        );
+
+        this.selectedData = this.dataTable.getModel().getValueAt(
+                selectedRow,
+                selectedColumn
+        );
+
+        System.out.println("-------- SELECTED INFORMATION --------");
+        System.out.println("idRow: " + idRow);
+        System.out.println("selectedRow: " + selectedRow);
+        System.out.println("selectedColumn: " + selectedColumn);
+        System.out.println("selectedId: " + selectedId);
+        System.out.println("selectedData: " + selectedData);
+        System.out.println("--------------------------------------");
+        
+        new UpdateDialog(
+                (JFrame) this.getTopLevelAncestor(), 
+                true, 
+                Models.getByClassType(classType), 
+                selectedId)
+                .setVisible(true);
     }
 
     /**
@@ -135,13 +166,9 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
         });
 
         fieldSearchSelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Field" }));
-        fieldSearchSelection.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldSearchSelectionActionPerformed(evt);
-            }
-        });
 
         dataTable.setAutoCreateRowSorter(true);
+        dataTable.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         dataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -153,6 +180,14 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        dataTable.setRowHeight(30);
+        dataTable.setRowSelectionAllowed(false);
+        dataTable.setShowGrid(true);
+        dataTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dataTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(dataTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -191,10 +226,6 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fieldSearchSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldSearchSelectionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldSearchSelectionActionPerformed
-
     private void searchTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextFieldKeyReleased
         this.searchTerm = this.searchTextField.getText();
     }//GEN-LAST:event_searchTextFieldKeyReleased
@@ -210,6 +241,11 @@ public class DatabaseTable<T> extends javax.swing.JPanel {
             this.setModel(CONTROLLER.getAll());
         }
     }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void dataTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dataTableMouseClicked
+        updateSelectedRowColumn();
+        System.out.println();
+    }//GEN-LAST:event_dataTableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -10,6 +10,8 @@ import org.gscavo.veterinaryclinic.view.menu.RegisterMenuItem;
 import org.gscavo.veterinaryclinic.utils.enums.Models;
 import org.gscavo.veterinaryclinic.view.menu.MainMenuBar;
 
+import java.awt.*;
+
 /**
  *
  * @author gscavo
@@ -44,10 +46,10 @@ public class MainUserFrame extends javax.swing.JFrame {
         mainPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1200, 1200));
-        setSize(new java.awt.Dimension(1200, 1200));
+        setPreferredSize(new java.awt.Dimension(1200, 500));
+        setSize(new java.awt.Dimension(600, 200));
 
-        mainPanel.setLayout(new java.awt.CardLayout());
+        mainPanel.setLayout(new java.awt.BorderLayout());
         getContentPane().add(mainPanel, java.awt.BorderLayout.CENTER);
 
         pack();

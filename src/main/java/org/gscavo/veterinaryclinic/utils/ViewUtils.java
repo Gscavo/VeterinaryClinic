@@ -1,6 +1,5 @@
 package org.gscavo.veterinaryclinic.utils;
 
-import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.lang.reflect.Field;
@@ -8,10 +7,10 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import org.gscavo.veterinaryclinic.utils.enums.Message;
 
 import org.gscavo.veterinaryclinic.utils.exceptions.ExceptionOutput;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
-import org.gscavo.veterinaryclinic.view.dialog.OperationStatusDialog;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -81,15 +80,16 @@ public class ViewUtils {
     }
 
     public static void showInformationDialog(JPanel panel, SystemOperationResult<?> sysOpRes) {
-        Component topLevelAncestor = panel.getTopLevelAncestor();
-        JFrame frame = null;
-        if (topLevelAncestor instanceof JFrame) {
-           frame = (JFrame) topLevelAncestor;
-        }
+        Message message = Message.getByString(sysOpRes.getStatus().name());
         
-        if (frame != null) {
-            OperationStatusDialog dialog = new OperationStatusDialog(frame, false, sysOpRes);
-            dialog.setVisible(true);
-        }
+        ImageIcon icon = new ImageIcon(message.getIconPath());
+        
+        JOptionPane.showMessageDialog(
+                null, 
+                message.getLocalizedString(),
+                "Resultado da Operação",
+                JOptionPane.INFORMATION_MESSAGE,
+                icon
+        );
     }
 }

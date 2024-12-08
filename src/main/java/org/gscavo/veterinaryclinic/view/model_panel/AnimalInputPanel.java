@@ -5,7 +5,6 @@
 package org.gscavo.veterinaryclinic.view.model_panel;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.IntStream;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -16,13 +15,10 @@ import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.controller.AnimalController;
 import org.gscavo.veterinaryclinic.controller.ClientController;
 import org.gscavo.veterinaryclinic.controller.SpeciesController;
-import org.gscavo.veterinaryclinic.controller.UserController;
 import org.gscavo.veterinaryclinic.model.Animal;
 import org.gscavo.veterinaryclinic.model.Client;
 import org.gscavo.veterinaryclinic.model.Species;
-import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import org.gscavo.veterinaryclinic.utils.StringUtils;
-import org.gscavo.veterinaryclinic.utils.ViewUtils;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
@@ -56,6 +52,7 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
         initComponents();
         initControllers();
         initSelections();
+        myInitComponents();
     }
     
     public AnimalInputPanel(Animal animal) {
@@ -63,8 +60,7 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
 
         initComponents();
         initControllers();
-
-        initSelections(this.data.getTutor(), this.data.getSpecies());
+        myInitComponents();
     }
 
     private void initControllers() {
@@ -72,9 +68,43 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
         this.clientController = (ClientController) Controllers.getByName(Client.class);
         this.speciesController = (SpeciesController) Controllers.getByName(Species.class);
     }
+    
+    private void myInitComponents() {
+        initFieldsIfIdNotNull();
+        initSelections(this.data.getTutor(), this.data.getSpecies());
+    }
+    
+    private void initFieldsIfIdNotNull() {
+        if (this.data.getId() != null) {
+            this.animalNameInputField.setText(this.data.getName());
+            this.animalRaceInputField.setText(this.data.getRace());
+        }
+    }
 
     private void initSelections(ObjectId tutorId, ObjectId speciesId) {
         initSelections();
+        if (tutorId != null) {
+            int indexTutor = IntStream.range(0, this.tutorList.size())
+                .filter(i -> this.tutorList.get(i).getId().equals(tutorId))
+                .findFirst()
+                .orElse(-1);
+
+            if (indexTutor != -1) {
+                this.animalTutorSelection.setSelectedIndex(indexTutor);
+            }
+        }
+
+        if (speciesId != null) {
+            int indexSpecies = IntStream.range(0, this.speciesList.size())
+                .filter(i -> this.speciesList.get(i).getId().equals(speciesId))
+                .findFirst()
+                .orElse(-1);
+            
+            if (indexSpecies != -1) {
+
+                this.animalSpeciesSelection.setSelectedIndex(indexSpecies);
+            }
+        }
     }
 
     private void initSelections() {
@@ -130,6 +160,8 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
         animalTutorLabel = new javax.swing.JLabel();
         animalSpeciesSelection = new javax.swing.JComboBox<>();
         animalTutorSelection = new javax.swing.JComboBox<>();
+
+        setSize(new java.awt.Dimension(420, 215));
 
         animalDataHeaderLabel.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         animalDataHeaderLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -297,4 +329,6 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
     private javax.swing.JComboBox<String> animalTutorSelection;
     private javax.swing.JSeparator headerSeparator;
     // End of variables declaration//GEN-END:variables
+
+    
 }

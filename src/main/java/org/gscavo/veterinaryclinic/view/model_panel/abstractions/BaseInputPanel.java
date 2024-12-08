@@ -11,6 +11,7 @@ import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
  * @author gscavo
  */
 public interface BaseInputPanel<T> {
+    
     public static String DATA_PROPERTY_KEY = "data";
     
     public T getData();

@@ -12,10 +12,14 @@ import org.bson.BsonDocument;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
+import org.gscavo.veterinaryclinic.utils.ConversionUtils;
 import org.gscavo.veterinaryclinic.utils.connection.MongoDBConnection;
+import org.gscavo.veterinaryclinic.utils.enums.StatusCode;
 import org.gscavo.veterinaryclinic.utils.exceptions.DeleteDocumentException;
 import org.gscavo.veterinaryclinic.utils.exceptions.InsertOnDatabaseException;
 import org.gscavo.veterinaryclinic.utils.exceptions.UpdateDocumentException;
+import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
+import org.gscavo.veterinaryclinic.view.dialog.UpdateDialog;
 
 import javax.print.Doc;
 import java.io.DataInput;
@@ -111,6 +115,7 @@ public abstract class BaseDAO<T> {
 
                 currentClass = currentClass.getSuperclass();
             }
+
             return this.collection.replaceOne(Filters.eq("_id", id), Objects.requireNonNull(objectToDocument(item)));
         } catch (IllegalAccessException e) {
             throw new IllegalAccessException(e.getMessage());

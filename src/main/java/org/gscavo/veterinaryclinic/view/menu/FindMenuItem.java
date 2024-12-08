@@ -1,6 +1,7 @@
 package org.gscavo.veterinaryclinic.view.menu;
 
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,13 +25,11 @@ public class FindMenuItem extends JMenuItem {
     private final MainUserFrame frame;
     private final Models model;
     private final JPanel mainPanel;
-    private final String cardName;
     
     public FindMenuItem(MainUserFrame frame, Models model) {
         super();
         this.model = model;
         this.frame = frame;
-        this.cardName = createCardLayoutName();
         this.mainPanel = frame.getMainPanel();
         
         this.setText(model.getLocalString());
@@ -51,17 +50,10 @@ public class FindMenuItem extends JMenuItem {
             this.mainPanel.removeAll();
         }
         
-        this.mainPanel.add(table, this.cardName);
-        
-        CardLayout cl = (CardLayout) this.mainPanel.getLayout();
-        
-        cl.show(this.mainPanel, cardName);
-        
+        this.mainPanel.add(table, BorderLayout.CENTER);
+       
         this.mainPanel.revalidate();
         this.mainPanel.repaint();
+        this.frame.pack();
     }
-    
-    private String createCardLayoutName() {
-        return this.model.getClassType().getSimpleName() + "Card";
-    };
-}
+ }

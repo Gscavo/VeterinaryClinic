@@ -13,7 +13,7 @@ import org.gscavo.veterinaryclinic.view.panels.LoginPanel;
 public class LoginFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form TestFrame
+     * Creates new form
      */
     public LoginFrame() {    
         initComponents();

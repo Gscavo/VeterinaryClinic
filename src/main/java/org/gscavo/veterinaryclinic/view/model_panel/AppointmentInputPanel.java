@@ -4,21 +4,15 @@
  */
 package org.gscavo.veterinaryclinic.view.model_panel;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.IntStream;
 import javax.swing.DefaultComboBoxModel;
 import lombok.Getter;
 import lombok.Setter;
-import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.controller.*;
 import org.gscavo.veterinaryclinic.model.*;
 import org.gscavo.veterinaryclinic.utils.StringUtils;
-import org.gscavo.veterinaryclinic.utils.ViewUtils;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
-import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
-import org.gscavo.veterinaryclinic.view.dialog.OperationStatusDialog;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
 /**
@@ -324,11 +318,7 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
     }//GEN-LAST:event_appointmentVeterinarianSelectionActionPerformed
 
     private void appointmentVeterinarianSelectionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_appointmentVeterinarianSelectionFocusGained
-        new OperationStatusDialog(
-            (Frame) this.getTopLevelAncestor(),
-            true,
-            SystemOperationResult.failedToUpdateResourceSOR(Appointment.class)
-        );
+
     }//GEN-LAST:event_appointmentVeterinarianSelectionFocusGained
 
     private void appointmentClientSelectionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_appointmentClientSelectionItemStateChanged
