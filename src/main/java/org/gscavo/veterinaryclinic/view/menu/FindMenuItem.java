@@ -52,8 +52,6 @@ public class FindMenuItem extends JMenuItem {
         
         this.mainPanel.add(table, BorderLayout.CENTER);
        
-        this.mainPanel.revalidate();
-        this.mainPanel.repaint();
-        this.frame.pack();
+        this.frame.updateScreen(true);
     }
  }

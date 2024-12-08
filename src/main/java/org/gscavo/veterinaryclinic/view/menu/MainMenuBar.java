@@ -4,12 +4,14 @@
  */
 package org.gscavo.veterinaryclinic.view.menu;
 
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
+import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
+
 import lombok.Getter;
 import org.gscavo.veterinaryclinic.utils.enums.Models;
 import org.gscavo.veterinaryclinic.view.MainUserFrame;
+import org.gscavo.veterinaryclinic.view.panels.mainScreen.MainScreenPanel;
 
 /**
  *
@@ -17,9 +19,13 @@ import org.gscavo.veterinaryclinic.view.MainUserFrame;
  */
 public class MainMenuBar extends JMenuBar {
 
-    private String registerMenuLabel = "Cadastrar";
-    private String findMenuLabel = "Procurar";
-    
+    private final String registerMenuLabel = "Cadastrar";
+    private final String findMenuLabel = "Procurar";
+    private final String mainScreenLabel = "Tela Inicial";
+
+    @Getter
+    private JMenu mainScreenMenu;
+
     @Getter
     private JMenu registerMenu;
     
@@ -30,14 +36,21 @@ public class MainMenuBar extends JMenuBar {
     
     public MainMenuBar(MainUserFrame frame) {
         this.frame = frame;
-        initComponents();
+        myInitComponents();
     }
     
     
-    private void initComponents() {
+    private void myInitComponents() {
         registerMenu = new JMenu(registerMenuLabel);
         findMenu = new JMenu(findMenuLabel);
-        
+
+        mainScreenMenu = new GoToMainScreenMenu(
+                this.frame,
+                mainScreenLabel,
+                new MainScreenPanel()
+        );
+
+        add(mainScreenMenu);
         add(registerMenu);
         add(findMenu);
         

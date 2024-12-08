@@ -59,9 +59,7 @@ public class RegisterMenuItem extends JMenuItem {
             BorderLayout.CENTER
         );
         
-        this.mainPanel.revalidate();
-        this.mainPanel.repaint();
-//        this.frame.pack();
+        this.frame.updateScreen(false);
 
         this.frame.setSize(
                 registerPanel.getPreferredSize()
