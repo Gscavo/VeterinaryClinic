@@ -102,7 +102,7 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
 
         updateDateOnData();
 
-        this.veterinarians = this.veterinarianController.getAll();
+        this.veterinarians = this.veterinarianController.getAllForDatabaseTable();
 
         this.appointmentVeterinarianSelection.setModel(
                 new DefaultComboBoxModel<>(
@@ -116,7 +116,7 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
 
         updateVeterinarianOnData();
 
-        this.clients = this.clientController.getAll();
+        this.clients = this.clientController.getAllForDatabaseTable();
 
         this.appointmentClientSelection.setModel(
                 new DefaultComboBoxModel<>(
@@ -260,6 +260,11 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
         appointmentPriceInputField.setModel(new javax.swing.SpinnerNumberModel(0.0f, null, null, 1.0f));
         appointmentPriceInputField.setPreferredSize(new java.awt.Dimension(300, 30));
         appointmentPriceInputField.setSize(new java.awt.Dimension(300, 30));
+        appointmentPriceInputField.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                appointmentPriceInputFieldStateChanged(evt);
+            }
+        });
 
         appointmentDateSelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ERROR" }));
         appointmentDateSelection.setPreferredSize(new java.awt.Dimension(300, 30));
@@ -398,6 +403,13 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
         // TODO add your handling code here:
         updateAnimalOnData();
     }//GEN-LAST:event_appointmentAnimalSelectionItemStateChanged
+
+    private void appointmentPriceInputFieldStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_appointmentPriceInputFieldStateChanged
+        // TODO add your handling code here:
+        this.data.setCostAmount(
+                (float) this.appointmentPriceInputField.getValue()
+        );
+    }//GEN-LAST:event_appointmentPriceInputFieldStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

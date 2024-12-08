@@ -1,15 +1,9 @@
 package org.gscavo.veterinaryclinic.utils;
 
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.result.UpdateResult;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
-
-import static org.gscavo.veterinaryclinic.utils.ConversionUtils.objectToDocument;
 
 public class ObjectUtils {
     public static <T> ArrayList<Field> getAllFieldsFromClass(Class<T> classType) {

@@ -15,9 +15,7 @@ public class AppointmentDAOTest {
                 .animalId(new ObjectId())
                 .clientId(new ObjectId())
                 .costAmount(100.0f)
-                .date(new BsonDateTime(new Date().getTime()))
-                .proceduresIdList(new ArrayList<>(Collections.singletonList(new ObjectId())))
-                .symptomsIdList(new ArrayList<>(Collections.singletonList(new ObjectId())))
+                .date(new Date())
                 .veterinarianId(new ObjectId())
                 .build();
     }

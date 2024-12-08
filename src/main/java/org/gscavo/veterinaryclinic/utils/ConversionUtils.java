@@ -8,6 +8,7 @@ import org.bson.BsonValue;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.utils.exceptions.ExceptionOutput;
+import org.gscavo.veterinaryclinic.utils.mapper.DateSerializer;
 import org.gscavo.veterinaryclinic.utils.mapper.ObjectIdDeserializer;
 import org.gscavo.veterinaryclinic.utils.mapper.ObjectIdSerializer;
 
@@ -28,6 +29,7 @@ public class ConversionUtils {
         SimpleModule module = new SimpleModule();
 
         module.addSerializer(ObjectId.class, new ObjectIdSerializer());
+        module.addSerializer(Date.class, new DateSerializer());
         module.addDeserializer(ObjectId.class, new ObjectIdDeserializer());
 
         objMp.registerModule(module);
@@ -40,11 +42,12 @@ public class ConversionUtils {
     }
 
     public static <T> T documentToType(Document document, Class<T> type) {
+        if (document == null) { return null; }
         try {
             T obj = type.getConstructor(Document.class).newInstance(document);
             return obj;
         } catch (Exception e) {
-            ExceptionOutput.showExceptionErr(e);
+            e.printStackTrace();
             return null;
         }
     }
@@ -58,7 +61,7 @@ public class ConversionUtils {
                     json);
             return Document.parse(json);
         } catch (Exception e) {
-            System.err.println("!ERROR!\n" + e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
@@ -97,8 +100,7 @@ public class ConversionUtils {
         return formatter.parse(dayPlusTime);
     }
 
-    public static ArrayList<String> parseDayAndHourString(BsonDateTime dateTime) {
-        Date date = new Date(dateTime.getValue());
+    public static ArrayList<String> parseDayAndHourString(Date date) {
         String dayPlusTime = formatter.format(date);
         return Arrays.stream(
                         dayPlusTime.split(" ")

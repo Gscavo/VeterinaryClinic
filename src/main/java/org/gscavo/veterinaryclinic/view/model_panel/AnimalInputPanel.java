@@ -108,8 +108,8 @@ public class AnimalInputPanel extends javax.swing.JPanel implements BaseInputPan
     }
 
     private void initSelections() {
-        this.tutorList = this.clientController.getAll();
-        this.speciesList = this.speciesController.getAll();
+        this.tutorList = this.clientController.getAllForDatabaseTable();
+        this.speciesList = this.speciesController.getAllForDatabaseTable();
 
         if (this.tutorList.size() > 0) {
             ComboBoxModel<String> tutorModel = new DefaultComboBoxModel(

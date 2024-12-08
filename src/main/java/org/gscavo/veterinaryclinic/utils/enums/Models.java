@@ -4,9 +4,12 @@
  */
 package org.gscavo.veterinaryclinic.utils.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.gscavo.veterinaryclinic.model.*;
 import org.gscavo.veterinaryclinic.model.abstractions.Person;
+import org.gscavo.veterinaryclinic.model.view.AnimalView;
+import org.gscavo.veterinaryclinic.model.view.AppointmentView;
 import org.gscavo.veterinaryclinic.view.model_panel.*;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.PersonInputPanel;
 
@@ -14,17 +17,18 @@ import org.gscavo.veterinaryclinic.view.model_panel.abstractions.PersonInputPane
  *
  * @author gscavo
  */
+@AllArgsConstructor
 public enum Models {
-    ADMIN("Admin", Admin.class, PersonInputPanel.class),
-    ANIMAL("Animal", Animal.class, AnimalInputPanel.class),
-    APPOINTMENT("Consulta", Appointment.class, AppointmentInputPanel.class),
-    CLIENT("Cliente", Client.class, ClientInputPanel.class),
-    USER("Usuários", User.class, PersonInputPanel.class),
-    PROCEDURE("Procedimento", Procedure.class, ProcedureInputPanel.class),
-    SECRETARY("Secretária", Secretary.class, PersonInputPanel.class),
-    SPECIES("Espécie", Species.class, SpeciesInputPanel.class),
-    SYMPTOM("Sintomas", Symptom.class, SymptomInputPanel.class),
-    VETERINARIAN("Veterinário", Veterinarian.class, VeterinarianInputPanel.class);
+    ADMIN("Admin", Admin.class, PersonInputPanel.class, Person.class),
+    ANIMAL("Animal", Animal.class, AnimalInputPanel.class, AnimalView.class),
+    APPOINTMENT("Consulta", Appointment.class, AppointmentInputPanel.class, AppointmentView.class ),
+    CLIENT("Cliente", Client.class, ClientInputPanel.class, Client.class),
+    USER("Usuários", User.class, PersonInputPanel.class, User.class),
+    PROCEDURE("Procedimento", Procedure.class, ProcedureInputPanel.class, Procedure.class),
+    SECRETARY("Secretária", Secretary.class, PersonInputPanel.class, Secretary.class),
+    SPECIES("Espécie", Species.class, SpeciesInputPanel.class, Species.class),
+    SYMPTOM("Sintomas", Symptom.class, SymptomInputPanel.class, Symptom.class),
+    VETERINARIAN("Veterinário", Veterinarian.class, VeterinarianInputPanel.class, Veterinarian.class);
     
     @Getter
     private String localString;
@@ -34,12 +38,9 @@ public enum Models {
     
     @Getter
     private Class<?> inputPanelClass;
-    
-    private Models(String localizedString, Class<?> classType, Class<?> inputPanelClass) {
-        this.localString = localizedString;
-        this.classType = classType;
-        this.inputPanelClass = inputPanelClass;
-    }
+
+    @Getter
+    private Class<?> view;
 
     public static Models getByClassType(Class<?> classType) {
         for (Models model : Models.values()) {

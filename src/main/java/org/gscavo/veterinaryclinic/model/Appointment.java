@@ -1,6 +1,7 @@
 package org.gscavo.veterinaryclinic.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +32,7 @@ public class Appointment implements BaseModel<Appointment> {
 
 //    private ArrayList<ObjectId> proceduresIdList;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     private Date date;
 
     private float costAmount = -1f;
@@ -42,7 +44,7 @@ public class Appointment implements BaseModel<Appointment> {
         this.veterinarianId = document.getObjectId("veterinarianId");
 //        this.symptomsIdList = new ArrayList<>(document.getList("symptomsIdList", ObjectId.class));
 //        this.proceduresIdList = new ArrayList<>(document.getList("proceduresIdList", ObjectId.class));
-        this.date = document.getDate("dateId");
+        this.date = document.getDate("date");
         this.costAmount = document.getDouble("costAmount").floatValue();
     }
 

@@ -1,48 +1,69 @@
 package org.gscavo.veterinaryclinic.controller;
 
-import com.mongodb.client.result.InsertOneResult;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import lombok.Getter;
-import org.bson.types.ObjectId;
-import org.gscavo.veterinaryclinic.dao.AppointmentDAO;
+import org.gscavo.veterinaryclinic.dao.AnimalDAO;
+import org.gscavo.veterinaryclinic.dao.ClientDAO;
+import org.gscavo.veterinaryclinic.dao.VeterinarianDAO;
+import org.gscavo.veterinaryclinic.model.Animal;
 import org.gscavo.veterinaryclinic.model.Appointment;
-import org.gscavo.veterinaryclinic.utils.enums.StatusCode;
-import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
-import org.gscavo.veterinaryclinic.utils.security.Permissions;
+import org.gscavo.veterinaryclinic.model.Client;
+import org.gscavo.veterinaryclinic.model.Veterinarian;
+import org.gscavo.veterinaryclinic.model.view.AppointmentView;
+import org.gscavo.veterinaryclinic.utils.ConversionUtils;
 
 import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
-
-import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
+import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 
 @Getter
-public class AppointmentController extends BaseController<Appointment> {
+public class AppointmentController extends BaseController {
 
-    private static final AppointmentDAO APPOINTMENT_DAO = DAOController.getDaoByClass(Appointment.class);
+    private AnimalController animalController;
+    private ClientController clientController;
+    private VeterinarianController veterinarianController;
 
     public AppointmentController() {
         super(Appointment.class);
     }
-    
+
+    public ArrayList<Appointment> getAllRaw() {
+        return this.dao.findAll();
+    }
+
     @Override
-    public SystemOperationResult<?> register(Appointment appointment) {
-        if (!canUserDoAction(Permissions::canRegister)) {
-            return SystemOperationResult.notAuthenticatedOrAllowedActionSOR();
+    public ArrayList<AppointmentView> getAllForDatabaseTable() {
+        initAdditionalControllers();
+        ArrayList<AppointmentView> finalViews = new ArrayList<>();
+        ArrayList<Appointment> appointments = this.dao.findAll();
+
+        for (Appointment appointment : appointments) {
+            Animal animal = (Animal) animalController.getById(appointment.getAnimalId());
+
+            Client client = clientController.getById(appointment.getClientId());
+
+            Veterinarian veterinarian = veterinarianController.getById(appointment.getVeterinarianId());
+
+
+            ArrayList<String> dateStrings = ConversionUtils.parseDayAndHourString(appointment.getDate());
+            AppointmentView appointmentView = AppointmentView
+                    .builder()
+                    .id(appointment.getId())
+                    .price(appointment.getCostAmount())
+                    .date(dateStrings.get(0))
+                    .time(dateStrings.get(1))
+                    .animalName(animal == null ? "Animal não encontrado" : animal.getName())
+                    .tutorName(client == null ? "Tutor não encontrado" : client.getName())
+                    .veterinarianName(veterinarian == null ? "Veterinário não encontrado" : veterinarian.getName())
+                    .build();
+
+            finalViews.add(appointmentView);
         }
 
-        InsertOneResult result = APPOINTMENT_DAO.insertOne(appointment);
-
-        if (result == null || !result.wasAcknowledged() || result.getInsertedId() == null) {
-            return SystemOperationResult.failedToInsertResourceSOR(appointment.getClass());
-        }
-
-        ObjectId insertedAppointmentId = result.getInsertedId().asObjectId().getValue();
-
-
-        return new SystemOperationResult<>(StatusCode.SUCCESS, insertedAppointmentId);
+        return finalViews;
     }
     
     public List<String> getNextDates() {
@@ -81,5 +102,11 @@ public class AppointmentController extends BaseController<Appointment> {
         }
 
         return hours;
+    }
+
+    private void initAdditionalControllers() {
+        animalController = (AnimalController) Controllers.ANIMAL.getController();
+        clientController = (ClientController) Controllers.CLIENT.getController();
+        veterinarianController = (VeterinarianController) Controllers.VETERINARIAN.getController();
     }
 }

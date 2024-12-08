@@ -38,33 +38,42 @@ public class DatabaseTable<T extends BaseModel> extends javax.swing.JPanel {
 
     private final Class<T> classType;
 
-    private final BaseController<T> CONTROLLER; 
+    private BaseController<T> controller;
     
     @Getter @Setter
     private ArrayList<Field> allFieldsFromClass;
     private String searchTerm;
 
     private String[] searchFields;
+
+    private Models modelData;
     
     /**
      * Creates new form DatabaseTable
      */
     public DatabaseTable() {
-        initComponents();
-        this.CONTROLLER = null;
         this.classType = null;
+        this.controller = null;
+        this.modelData = null;
+        initComponents();
     }
     
     public DatabaseTable(Class<T> classType) {
-        initComponents();  
-
         this.classType = classType;
-        this.CONTROLLER = (BaseController<T>) Controllers.getByName(classType);
-        
-        ArrayList<T> dataList = this.CONTROLLER
-                .getAll();
-        
-        this.allFieldsFromClass = ObjectUtils.getAllFieldsFromClass(classType);
+        initComponents();
+        initController();
+        myInitComponents();
+    }
+
+    private void myInitComponents() {
+        this.modelData = Models.getByClassType(classType);
+
+        Class<?> viewClass = modelData.getView();
+
+        ArrayList<?> dataList = this.controller
+                .getAllForDatabaseTable();
+
+        this.allFieldsFromClass = ObjectUtils.getAllFieldsFromClass(viewClass);
 
         this.searchFields = this.allFieldsFromClass.stream()
                 .map(Field::getName)
@@ -74,25 +83,28 @@ public class DatabaseTable<T extends BaseModel> extends javax.swing.JPanel {
         ComboBoxModel<String> searchModel = new DefaultComboBoxModel(
                 searchFields
         );
-        
+
         this.fieldSearchSelection.setModel(searchModel);
-        
+
         this.setHeader(
-                Models.getByClassType(classType).getLocalString()
+                Models.getByClassType(this.classType).getLocalString()
         );
-        
+
         this.setModel(dataList);
-        
+
         this.dataTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 18));
-        
+    }
+
+    private void initController() {
+        this.controller = (BaseController<T>) Controllers.getByName(this.classType);
     }
     
     public void setHeader(String text) {
         this.headerLabel.setText(text);
     }
     
-    public void setModel(ArrayList<T> objectList) {
-        TableModel model = ViewUtils.generateDataModelFromObjectList(objectList, classType);
+    public void setModel(ArrayList<?> objectList) {
+        TableModel model = ViewUtils.generateDataModelFromObjectList(objectList, this.modelData.getView());
 
         this.dataTable.setModel(model);
     }
@@ -236,9 +248,9 @@ public class DatabaseTable<T extends BaseModel> extends javax.swing.JPanel {
 
             Bson filter = Filters.eq(searchField, searchTerm);
 
-            this.setModel(CONTROLLER.filter(filter));
+            this.setModel(controller.filter(filter));
         } else {
-            this.setModel(CONTROLLER.getAll());
+            this.setModel(controller.getAllForDatabaseTable());
         }
     }//GEN-LAST:event_searchButtonActionPerformed
 

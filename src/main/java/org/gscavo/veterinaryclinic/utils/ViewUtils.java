@@ -44,9 +44,7 @@ public class ViewUtils {
         win.dispose();
     }
     
-    public static <T> TableModel generateDataModelFromObjectList(ArrayList<T> objectList, Class<T> classType) {
-
-
+    public static <T> TableModel generateDataModelFromObjectList(ArrayList<?> objectList, Class<T> classType) {
         ArrayList<Field> allFields = ObjectUtils.getAllFieldsFromClass(classType);
 
         ArrayList<String> columnNames = new ArrayList<>(allFields.stream()
@@ -58,7 +56,7 @@ public class ViewUtils {
 
         int numOfCols = columnNames.size();
         int idx_row = 0;
-        for (T object : objectList) {
+        for (Object object : objectList) {
             Object[] row = new Object[numOfCols + 1];
             int idx_col = 0;
             for (Field field : allFields) {

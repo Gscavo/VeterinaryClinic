@@ -4,14 +4,11 @@
  */
 package org.gscavo.veterinaryclinic.controller.abstractions;
 
-import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
-import com.sun.jdi.ClassType;
-import java.util.ArrayList;
-import java.util.Objects;
 
-import org.bson.BsonDocument;
-import org.bson.Document;
+import java.util.ArrayList;
+
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.controller.DAOController;
@@ -22,7 +19,6 @@ import org.gscavo.veterinaryclinic.utils.enums.StatusCode;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 import org.gscavo.veterinaryclinic.utils.security.Permissions;
 
-import static org.gscavo.veterinaryclinic.utils.ConversionUtils.objectToDocument;
 import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
 import static org.gscavo.veterinaryclinic.utils.information.SystemOperationResult.notAuthenticatedOrAllowedActionSOR;
 
@@ -32,17 +28,31 @@ import static org.gscavo.veterinaryclinic.utils.information.SystemOperationResul
  */
 public abstract class BaseController<T extends BaseModel> {
     
-    private BaseDAO<T> dao;
-    private Class<T> classType;
+    protected final BaseDAO<T> dao;
+    protected final Class<T> classType;
     
     public BaseController(Class<T> classType) {
         this.classType = classType;
         this.dao = DAOController.getDaoByClass(this.classType);
     }
-    
-    public abstract SystemOperationResult<?> register(T object);
 
-    public SystemOperationResult<ObjectId> update(T object) {
+    public SystemOperationResult<?> register(T object) {
+        if (!canUserDoAction(Permissions::canRegister)) {
+            return SystemOperationResult.notAuthenticatedOrAllowedActionSOR();
+        }
+
+        InsertOneResult result = this.dao.insertOne(object);
+
+        if (result == null || !result.wasAcknowledged() || result.getInsertedId() == null) {
+            return SystemOperationResult.failedToInsertResourceSOR(object.getClass());
+        }
+
+        ObjectId insertedAppointmentId = result.getInsertedId().asObjectId().getValue();
+
+        return new SystemOperationResult<>(StatusCode.SUCCESS, insertedAppointmentId);
+    }
+
+    public SystemOperationResult<?> update(T object) {
         if (!canUserDoAction(Permissions::canUpdateInfo)) {
             return notAuthenticatedOrAllowedActionSOR();
         }
@@ -71,7 +81,7 @@ public abstract class BaseController<T extends BaseModel> {
         return dao.findById(id);
     }
     
-    public ArrayList<T> getAll() {
+    public ArrayList<T> getAllForDatabaseTable() {
         return dao.findAll();
     };
 
