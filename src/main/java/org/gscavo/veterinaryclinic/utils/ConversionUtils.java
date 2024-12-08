@@ -3,6 +3,7 @@ package org.gscavo.veterinaryclinic.utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.mongodb.client.MongoIterable;
+import org.bson.BsonDateTime;
 import org.bson.BsonValue;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -10,9 +11,14 @@ import org.gscavo.veterinaryclinic.utils.exceptions.ExceptionOutput;
 import org.gscavo.veterinaryclinic.utils.mapper.ObjectIdDeserializer;
 import org.gscavo.veterinaryclinic.utils.mapper.ObjectIdSerializer;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ConversionUtils {
+
+    private static final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     private static final ObjectMapper objectMapper = initObjectMapper();
 
@@ -85,6 +91,23 @@ public class ConversionUtils {
         }
         return null;
     }
+
+    public static Date parseBsonDateTime(String day, String time) throws ParseException {
+        String dayPlusTime = day + " " + time;
+        return formatter.parse(dayPlusTime);
+    }
+
+    public static ArrayList<String> parseDayAndHourString(BsonDateTime dateTime) {
+        Date date = new Date(dateTime.getValue());
+        String dayPlusTime = formatter.format(date);
+        return Arrays.stream(
+                        dayPlusTime.split(" ")
+                ).collect(
+                        Collectors.toCollection(ArrayList::new)
+                );
+    }
+
+
 
     public static ObjectId bsonValueToObjectId(BsonValue value) {
 
