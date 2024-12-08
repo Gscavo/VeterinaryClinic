@@ -56,25 +56,29 @@ public class ViewUtils {
 
         int numOfCols = columnNames.size();
         int idx_row = 0;
-        for (Object object : objectList) {
-            Object[] row = new Object[numOfCols + 1];
-            int idx_col = 0;
-            for (Field field : allFields) {
-                try {
-                    Object value = field.get(object);
-                    row[idx_col++] = value;
-                } catch (Exception ex) {
-                    ExceptionOutput.showExceptionErr(ex);
-                }
-            };
-            row[idx_col] = "Delete";
-            data[idx_row++] = row;
-        };
 
-        return new DefaultTableModel(
-                data,
-                columnNames.toArray()
-        );
+        try {
+            for (Object object : objectList) {
+                Object[] row = new Object[numOfCols + 1];
+                int idx_col = 0;
+                for (Field field : allFields) {
+
+                        Object value = field.get(object);
+                        row[idx_col++] = value;
+
+                };
+                row[idx_col] = "Delete";
+                data[idx_row++] = row;
+            };
+
+            return new DefaultTableModel(
+                    data,
+                    columnNames.toArray()
+            );
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     public static void showInformationDialog(JPanel panel, SystemOperationResult<?> sysOpRes) {

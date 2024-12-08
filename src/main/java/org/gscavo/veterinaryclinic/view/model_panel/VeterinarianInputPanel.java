@@ -23,7 +23,7 @@ public class VeterinarianInputPanel extends javax.swing.JPanel implements BaseIn
     @Getter
     @Setter
     private Veterinarian data;
-
+    
     @Getter
     private VeterinarianController mainController;
 
@@ -31,16 +31,17 @@ public class VeterinarianInputPanel extends javax.swing.JPanel implements BaseIn
      * Creates new form AddressInputPanel
      */
     public VeterinarianInputPanel() {
-        initComponents();
-        initControllers();
         this.data = new Veterinarian();
-    }
-    
-    public VeterinarianInputPanel(Veterinarian veterinarian) {
         initComponents();
         myInitComponents();
         initControllers();
+    }
+    
+    public VeterinarianInputPanel(Veterinarian veterinarian) {
         this.data = veterinarian;
+        initComponents();
+        myInitComponents();
+        initControllers();
     }
 
     private void initControllers() {
@@ -48,21 +49,22 @@ public class VeterinarianInputPanel extends javax.swing.JPanel implements BaseIn
     }
     
     private void myInitComponents() {
-        this.personInputPanel.addPropertyChangeListener(DATA_PROPERTY_KEY, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                dataChangedOnPersonInputPanel(evt);
-            }
-        });
+        updateData();
     }
-    
-    private void dataChangedOnPersonInputPanel(PropertyChangeEvent evt) {
-        System.out.println("Changed");
+
+    private void updateData() {
+        if (this.personInputPanel.getData() == null) {
+            this.personInputPanel.setData(this.data);
+        }
+
         this.data.fill(
                 this.personInputPanel.getData()
         );
+    }
 
-        this.data.setType(PersonType.VETERINARIAN);
+    public Veterinarian getData() {
+        this.updateData();
+        return this.data;
     }
 
 
@@ -103,9 +105,9 @@ public class VeterinarianInputPanel extends javax.swing.JPanel implements BaseIn
         veterinarianCrmvInputField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         veterinarianCrmvInputField.setPreferredSize(new java.awt.Dimension(150, 30));
         veterinarianCrmvInputField.setSize(new java.awt.Dimension(300, 30));
-        veterinarianCrmvInputField.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                veterinarianCrmvInputFieldMouseReleased(evt);
+        veterinarianCrmvInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                veterinarianCrmvInputFieldKeyReleased(evt);
             }
         });
 
@@ -149,11 +151,11 @@ public class VeterinarianInputPanel extends javax.swing.JPanel implements BaseIn
         add(personInputPanel, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void veterinarianCrmvInputFieldMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_veterinarianCrmvInputFieldMouseReleased
+    private void veterinarianCrmvInputFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_veterinarianCrmvInputFieldKeyReleased
         this.data.setCrmv(
                 this.veterinarianCrmvInputField.getText()
         );
-    }//GEN-LAST:event_veterinarianCrmvInputFieldMouseReleased
+    }//GEN-LAST:event_veterinarianCrmvInputFieldKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

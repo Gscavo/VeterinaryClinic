@@ -18,8 +18,6 @@ public class Veterinarian extends Person {
 
     private String crmv = "";
 
-    private ArrayList<ObjectId> appointmentList;
-
     public Veterinarian() {
         super();
         this.setType(PersonType.VETERINARIAN);
@@ -32,18 +30,15 @@ public class Veterinarian extends Person {
                         String cpf,
                         String phoneNumber,
                         String email,
-                        String crmv,
-                        ArrayList<ObjectId> appointmentsList)
+                        String crmv)
     {
         super(id, name, password, cpf, phoneNumber, email, PersonType.VETERINARIAN);
         this.crmv = crmv;
-        this.appointmentList = appointmentsList;
     }
 
     public Veterinarian(Document document) {
         super(document);
         this.crmv = document.getString("crmv");
-        this.appointmentList = new ArrayList<>(document.getList("appointmentList", ObjectId.class));
     }
 
     @Override

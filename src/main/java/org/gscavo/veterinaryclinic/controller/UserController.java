@@ -159,22 +159,4 @@ public class UserController extends BaseController<User>  {
     public static ArrayList<Client> getAllClients() {
         return CLIENT_DAO.findAll();
     }
-
-    public static <T extends Person> SystemOperationResult appendAppointmentToUser(ObjectId appointmentId, ObjectId userId) {
-        T databaseUser = UserController.getUser(userId);
-
-        if (databaseUser == null) {
-            return SystemOperationResult.objectNotFound();
-        }
-
-         switch (databaseUser.getType()) {
-             case VETERINARIAN:
-                 ((Veterinarian) databaseUser).getAppointmentList().add(appointmentId);
-                 break;
-            default:
-                 return SystemOperationResult.objectNotFound();
-        }
-
-        return updateUser(databaseUser);
-    }
 }
