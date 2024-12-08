@@ -1,30 +1,22 @@
 package org.gscavo.veterinaryclinic.controller;
 
-import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.InsertOneResult;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
 import lombok.Getter;
-import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.dao.AppointmentDAO;
 import org.gscavo.veterinaryclinic.model.Appointment;
-import org.gscavo.veterinaryclinic.model.abstractions.Person;
 import org.gscavo.veterinaryclinic.utils.enums.StatusCode;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 import org.gscavo.veterinaryclinic.utils.security.Permissions;
 
-import static org.gscavo.veterinaryclinic.controller.UserController.appendAppointmentToUser;
 import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
-import org.gscavo.veterinaryclinic.dao.VeterinarianDAO;
-import org.gscavo.veterinaryclinic.model.Veterinarian;
+
 import static org.gscavo.veterinaryclinic.utils.UserUtils.canUserDoAction;
-import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 
 @Getter
 public class AppointmentController extends BaseController<Appointment> {
@@ -36,7 +28,7 @@ public class AppointmentController extends BaseController<Appointment> {
     }
     
     @Override
-    public SystemOperationResult register(Appointment appointment) {
+    public SystemOperationResult<?> register(Appointment appointment) {
         if (!canUserDoAction(Permissions::canRegister)) {
             return SystemOperationResult.notAuthenticatedOrAllowedActionSOR();
         }
@@ -49,14 +41,8 @@ public class AppointmentController extends BaseController<Appointment> {
 
         ObjectId insertedAppointmentId = result.getInsertedId().asObjectId().getValue();
 
-        SystemOperationResult result_client = appendAppointmentToUser(insertedAppointmentId, appointment.getClientId());
-        SystemOperationResult result_veterinarian = appendAppointmentToUser(insertedAppointmentId, appointment.getVeterinarianId());
 
-        if (!result_client.getStatus().isSuccess() || !result_veterinarian.getStatus().isSuccess()) {
-            return SystemOperationResult.failedToUpdateResourceSOR(Person.class);
-        }
-
-        return new SystemOperationResult(StatusCode.SUCCESS);
+        return new SystemOperationResult<>(StatusCode.SUCCESS, insertedAppointmentId);
     }
     
     public List<String> getNextDates() {

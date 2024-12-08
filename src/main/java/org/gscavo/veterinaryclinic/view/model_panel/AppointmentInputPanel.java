@@ -4,13 +4,16 @@
  */
 package org.gscavo.veterinaryclinic.view.model_panel;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.stream.IntStream;
 import javax.swing.DefaultComboBoxModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.gscavo.veterinaryclinic.controller.*;
 import org.gscavo.veterinaryclinic.model.*;
+import org.gscavo.veterinaryclinic.utils.ConversionUtils;
 import org.gscavo.veterinaryclinic.utils.StringUtils;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
@@ -46,6 +49,9 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
     private ArrayList<Veterinarian> veterinarians;
     private ArrayList<Client> clients;
     private ArrayList<Animal> animals;
+    
+    private String dayString;
+    private String hourString;
 
     /**
      * Creates new form AddressInputPanel
@@ -83,12 +89,18 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
                         this.mainController.getNextDates().toArray(new String[0])
                 )
         );
+        
+        this.dayString = (String) this.appointmentDateSelection.getSelectedItem();
 
         this.appointmentHourSelection.setModel(
                 new DefaultComboBoxModel<>(
                         this.mainController.getHours().toArray(new String[0])
                 )
         );
+
+        this.hourString = (String) this.appointmentHourSelection.getSelectedItem();
+
+        updateDateOnData();
 
         this.veterinarians = this.veterinarianController.getAll();
 
@@ -102,6 +114,8 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
                 )
         );
 
+        updateVeterinarianOnData();
+
         this.clients = this.clientController.getAll();
 
         this.appointmentClientSelection.setModel(
@@ -113,6 +127,48 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
                         .toArray(new String[0])
                             
                 )
+        );
+
+        updateTutorOnData();
+    }
+
+    private void updateDateOnData() {
+        try {
+            Date date = ConversionUtils.parseBsonDateTime(this.dayString, this.hourString);
+
+            this.data.setDate(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateVeterinarianOnData() {
+        Veterinarian selected = this.veterinarians.get(
+                this.appointmentVeterinarianSelection.getSelectedIndex()
+        );
+
+        this.data.setVeterinarianId(
+                selected.getId()
+        );
+    }
+
+    private void updateTutorOnData() {
+        Client selected = this.clients.get(
+                this.appointmentClientSelection.getSelectedIndex()
+        );
+
+        this.data.setClientId(
+                selected.getId()
+        );
+    }
+
+    private void updateAnimalOnData() {
+        Animal selected = this.animals.get(
+                this.appointmentAnimalSelection.getSelectedIndex()
+        );
+
+        this.data.setAnimalId(
+                selected.getId()
         );
     }
 
@@ -136,7 +192,7 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
         appointmentVeterinarianSelection = new javax.swing.JComboBox<>();
         appointmentPriceInputField = new javax.swing.JSpinner();
         appointmentDateSelection = new javax.swing.JComboBox<>();
-        appointmentDateLabel1 = new javax.swing.JLabel();
+        appointmentHourLabel = new javax.swing.JLabel();
         appointmentHourSelection = new javax.swing.JComboBox<>();
         appointmentClientSelection = new javax.swing.JComboBox<>();
 
@@ -186,23 +242,18 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
         appointmentAnimalSelection.setFocusCycleRoot(true);
         appointmentAnimalSelection.setPreferredSize(new java.awt.Dimension(300, 30));
         appointmentAnimalSelection.setSize(new java.awt.Dimension(300, 30));
-        appointmentAnimalSelection.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                appointmentAnimalSelectionActionPerformed(evt);
+        appointmentAnimalSelection.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                appointmentAnimalSelectionItemStateChanged(evt);
             }
         });
 
         appointmentVeterinarianSelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ERROR" }));
         appointmentVeterinarianSelection.setPreferredSize(new java.awt.Dimension(300, 30));
         appointmentVeterinarianSelection.setSize(new java.awt.Dimension(300, 30));
-        appointmentVeterinarianSelection.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                appointmentVeterinarianSelectionFocusGained(evt);
-            }
-        });
-        appointmentVeterinarianSelection.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                appointmentVeterinarianSelectionActionPerformed(evt);
+        appointmentVeterinarianSelection.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                appointmentVeterinarianSelectionItemStateChanged(evt);
             }
         });
 
@@ -213,22 +264,27 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
         appointmentDateSelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ERROR" }));
         appointmentDateSelection.setPreferredSize(new java.awt.Dimension(300, 30));
         appointmentDateSelection.setSize(new java.awt.Dimension(300, 30));
-        appointmentDateSelection.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                appointmentDateSelectionActionPerformed(evt);
+        appointmentDateSelection.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                appointmentDateSelectionItemStateChanged(evt);
             }
         });
 
-        appointmentDateLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        appointmentDateLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        appointmentDateLabel1.setText("Horário");
-        appointmentDateLabel1.setMaximumSize(new java.awt.Dimension(150, 30));
-        appointmentDateLabel1.setPreferredSize(new java.awt.Dimension(150, 30));
-        appointmentDateLabel1.setSize(new java.awt.Dimension(150, 30));
+        appointmentHourLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        appointmentHourLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appointmentHourLabel.setText("Horário");
+        appointmentHourLabel.setMaximumSize(new java.awt.Dimension(150, 30));
+        appointmentHourLabel.setPreferredSize(new java.awt.Dimension(150, 30));
+        appointmentHourLabel.setSize(new java.awt.Dimension(150, 30));
 
         appointmentHourSelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ERROR" }));
         appointmentHourSelection.setPreferredSize(new java.awt.Dimension(300, 30));
         appointmentHourSelection.setSize(new java.awt.Dimension(300, 30));
+        appointmentHourSelection.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                appointmentHourSelectionItemStateChanged(evt);
+            }
+        });
 
         appointmentClientSelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ERROR" }));
         appointmentClientSelection.setPreferredSize(new java.awt.Dimension(300, 30));
@@ -258,7 +314,7 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(appointmentDateLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
                                     .addComponent(appointmentPriceLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                    .addComponent(appointmentDateLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
+                                    .addComponent(appointmentHourLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
                                 .addComponent(appointmentVeterinarianLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(appointmentTutorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
@@ -287,7 +343,7 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
                     .addComponent(appointmentDateSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(appointmentDateLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(appointmentHourLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(appointmentHourSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -305,33 +361,10 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void appointmentDateSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appointmentDateSelectionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_appointmentDateSelectionActionPerformed
-
-    private void appointmentAnimalSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appointmentAnimalSelectionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_appointmentAnimalSelectionActionPerformed
-
-    private void appointmentVeterinarianSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appointmentVeterinarianSelectionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_appointmentVeterinarianSelectionActionPerformed
-
-    private void appointmentVeterinarianSelectionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_appointmentVeterinarianSelectionFocusGained
-
-    }//GEN-LAST:event_appointmentVeterinarianSelectionFocusGained
-
     private void appointmentClientSelectionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_appointmentClientSelectionItemStateChanged
-        Client selected = this.clients.get(
-                this.appointmentClientSelection.getSelectedIndex()
-        );
+        updateTutorOnData();
         
-        this.data.setClientId(
-                selected
-                .getId()
-        );
-        
-        this.animals = animalController.getAllByClientId(selected.getId());
+        this.animals = animalController.getAllByClientId(this.data.getClientId());
 
         this.appointmentAnimalSelection.setModel(
                new DefaultComboBoxModel<>(
@@ -344,15 +377,37 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
         );
     }//GEN-LAST:event_appointmentClientSelectionItemStateChanged
 
+    private void appointmentDateSelectionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_appointmentDateSelectionItemStateChanged
+        // TODO add your handling code here:
+        this.dayString = (String) this.appointmentDateSelection.getSelectedItem();
+        updateDateOnData();
+        
+    }//GEN-LAST:event_appointmentDateSelectionItemStateChanged
+
+    private void appointmentHourSelectionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_appointmentHourSelectionItemStateChanged
+        this.hourString = (String) this.appointmentHourSelection.getSelectedItem();
+        updateDateOnData();
+    }//GEN-LAST:event_appointmentHourSelectionItemStateChanged
+
+    private void appointmentVeterinarianSelectionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_appointmentVeterinarianSelectionItemStateChanged
+        // TODO add your handling code here:
+        updateVeterinarianOnData();
+    }//GEN-LAST:event_appointmentVeterinarianSelectionItemStateChanged
+
+    private void appointmentAnimalSelectionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_appointmentAnimalSelectionItemStateChanged
+        // TODO add your handling code here:
+        updateAnimalOnData();
+    }//GEN-LAST:event_appointmentAnimalSelectionItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel appointmentAnimalLabel;
     private javax.swing.JComboBox<String> appointmentAnimalSelection;
     private javax.swing.JComboBox<String> appointmentClientSelection;
     private javax.swing.JLabel appointmentDateLabel;
-    private javax.swing.JLabel appointmentDateLabel1;
     private javax.swing.JComboBox<String> appointmentDateSelection;
     private javax.swing.JLabel appointmentHeaderLabel;
+    private javax.swing.JLabel appointmentHourLabel;
     private javax.swing.JComboBox<String> appointmentHourSelection;
     private javax.swing.JSpinner appointmentPriceInputField;
     private javax.swing.JLabel appointmentPriceLabel;
