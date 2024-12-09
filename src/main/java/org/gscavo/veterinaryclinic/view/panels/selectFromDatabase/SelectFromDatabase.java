@@ -4,16 +4,19 @@
  */
 package org.gscavo.veterinaryclinic.view.panels.selectFromDatabase;
 
-import java.awt.CardLayout;
+import java.awt.*;
 import javax.swing.JFrame;
 import lombok.Getter;
 import lombok.Setter;
 import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
+import org.gscavo.veterinaryclinic.model.Appointment;
 import org.gscavo.veterinaryclinic.model.Veterinarian;
 import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.utils.enums.Models;
 import org.gscavo.veterinaryclinic.view.dialog.SearchInfoOnDatabaseDialog;
+import org.gscavo.veterinaryclinic.view.model_panel.AppointmentInputPanel;
+import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
 /**
  *
@@ -21,7 +24,9 @@ import org.gscavo.veterinaryclinic.view.dialog.SearchInfoOnDatabaseDialog;
  */
 public class SelectFromDatabase<T extends BaseModel> extends javax.swing.JPanel {
 
-    BaseController<T> controller;
+    private BaseInputPanel parentInputPanel;
+
+    private BaseController<T> controller;
     
     private Models model;
     
@@ -40,11 +45,12 @@ public class SelectFromDatabase<T extends BaseModel> extends javax.swing.JPanel 
         myInitComponents();
     }
     
-    public SelectFromDatabase(Models model) {
+    public SelectFromDatabase(Models model, T data) {
         this.model = model;
         initComponents();
         initController();
         myInitComponents();
+        this.setData(data);
     }
     
     private void initController() {
@@ -62,11 +68,17 @@ public class SelectFromDatabase<T extends BaseModel> extends javax.swing.JPanel 
 
     public void setData(Object data) {
 
+        if (data == null) { return; }
+
         this.data = (T) data;
 
         this.itemNameField.setText(
                 controller.getReadableIdentifier(this.data)
         );
+        
+        if (this.data.getId() != null) {
+            this.flipCardLayout();
+        }
     }
 
     /**
@@ -117,8 +129,8 @@ public class SelectFromDatabase<T extends BaseModel> extends javax.swing.JPanel 
     }// </editor-fold>//GEN-END:initComponents
 
     private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
-        new SearchInfoOnDatabaseDialog(
-                (JFrame) this.getTopLevelAncestor(),
+        new SearchInfoOnDatabaseDialog<>(
+                (Frame) null,
                 this,
                 true,
                 model
@@ -126,8 +138,8 @@ public class SelectFromDatabase<T extends BaseModel> extends javax.swing.JPanel 
     }//GEN-LAST:event_changeButtonActionPerformed
 
     private void selectItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectItemActionPerformed
-        new SearchInfoOnDatabaseDialog<Veterinarian>(
-                (JFrame) this.getTopLevelAncestor(),
+        new SearchInfoOnDatabaseDialog<>(
+                (Frame) null,
                 this,
                 true,
                 model

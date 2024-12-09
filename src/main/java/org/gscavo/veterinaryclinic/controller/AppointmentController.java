@@ -6,13 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import lombok.Getter;
-import org.gscavo.veterinaryclinic.dao.AnimalDAO;
-import org.gscavo.veterinaryclinic.dao.ClientDAO;
-import org.gscavo.veterinaryclinic.dao.VeterinarianDAO;
-import org.gscavo.veterinaryclinic.model.Animal;
-import org.gscavo.veterinaryclinic.model.Appointment;
-import org.gscavo.veterinaryclinic.model.Client;
-import org.gscavo.veterinaryclinic.model.Veterinarian;
+import org.gscavo.veterinaryclinic.model.*;
 import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import org.gscavo.veterinaryclinic.model.view.AppointmentView;
 import org.gscavo.veterinaryclinic.utils.ConversionUtils;
@@ -26,6 +20,8 @@ public class AppointmentController extends BaseController {
     private AnimalController animalController;
     private ClientController clientController;
     private VeterinarianController veterinarianController;
+    private SymptomController symptomController;
+    private ProcedureController procedureController;
 
     public AppointmentController() {
         super(Appointment.class);
@@ -48,6 +44,9 @@ public class AppointmentController extends BaseController {
 
             Veterinarian veterinarian = veterinarianController.getById(appointment.getVeterinarianId());
 
+            Symptom symptom = symptomController.getById(appointment.getSymptomId());
+
+            Procedure procedure = procedureController.getById(appointment.getProcedureId());
 
             ArrayList<String> dateStrings = ConversionUtils.parseDayAndHourString(appointment.getDate());
             AppointmentView appointmentView = AppointmentView
@@ -56,9 +55,12 @@ public class AppointmentController extends BaseController {
                     .price(appointment.getCostAmount())
                     .date(dateStrings.get(0))
                     .time(dateStrings.get(1))
+                    .status(appointment.getStatus())
                     .animalName(animal == null ? "Animal não encontrado" : animal.getName())
                     .tutorName(client == null ? "Tutor não encontrado" : client.getName())
                     .veterinarianName(veterinarian == null ? "Veterinário não encontrado" : veterinarian.getName())
+                    .procedureName(procedure == null ? "Procedimento não cadastrado" : procedure.getName())
+                    .symptomsDescription(symptom == null ? "Sintoma não cadastrado" : symptom.getDescription())
                     .build();
 
             finalViews.add(appointmentView);
@@ -114,5 +116,7 @@ public class AppointmentController extends BaseController {
         animalController = (AnimalController) Controllers.ANIMAL.getController();
         clientController = (ClientController) Controllers.CLIENT.getController();
         veterinarianController = (VeterinarianController) Controllers.VETERINARIAN.getController();
+        symptomController = (SymptomController) Controllers.SYMPTOM.getController();
+        procedureController = (ProcedureController) Controllers.PROCEDURE.getController();
     }
 }

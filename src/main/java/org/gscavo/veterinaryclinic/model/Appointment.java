@@ -1,7 +1,6 @@
 package org.gscavo.veterinaryclinic.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +12,7 @@ import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import java.util.Date;
 
 import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomNumber;
+import org.gscavo.veterinaryclinic.utils.enums.AppointmentStatus;
 
 @Data
 @Builder
@@ -28,13 +28,16 @@ public class Appointment implements BaseModel<Appointment> {
 
     private ObjectId veterinarianId;
 
-//    private ArrayList<ObjectId> symptomsIdList;
-
-//    private ArrayList<ObjectId> proceduresIdList;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
+    private ObjectId symptomId;
+    
+    private ObjectId procedureId;
+    
+    @Builder.Default
+    private AppointmentStatus status = AppointmentStatus.NOT_REALIZED;
+    
     private Date date;
 
+    @Builder.Default
     private float costAmount = -1f;
 
     public Appointment(Document document) {
@@ -42,10 +45,16 @@ public class Appointment implements BaseModel<Appointment> {
         this.clientId = document.getObjectId("clientId");
         this.animalId = document.getObjectId("animalId");
         this.veterinarianId = document.getObjectId("veterinarianId");
-//        this.symptomsIdList = new ArrayList<>(document.getList("symptomsIdList", ObjectId.class));
-//        this.proceduresIdList = new ArrayList<>(document.getList("proceduresIdList", ObjectId.class));
+        this.symptomId = document.getObjectId("symptomId");
+        this.procedureId = document.getObjectId("procedureId");
         this.date = document.getDate("date");
         this.costAmount = document.getDouble("costAmount").floatValue();
+        String statusStr = document.getString("status");
+        this.status = AppointmentStatus.valueOf(
+                statusStr != null ?
+                        statusStr :
+                        AppointmentStatus.NOT_REALIZED.name()
+        );
     }
 
     @Override
@@ -54,8 +63,6 @@ public class Appointment implements BaseModel<Appointment> {
                 .clientId(new ObjectId())
                 .animalId(new ObjectId())
                 .veterinarianId(new ObjectId())
-//                .symptomsIdList(getSymptomsIdList())
-//                .proceduresIdList(getProceduresIdList())
                 .date(new Date())
                 .costAmount(getRandomNumber().floatValue())
                 .build();

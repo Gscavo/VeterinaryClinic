@@ -71,6 +71,7 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
         initControllers();
         initComponents();
         setData(appointment);
+        
         myInitComponents();
     }
     
@@ -89,14 +90,34 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
         updateVeterinarian();
         updateTutor();
         updateAnimal(true);
+        
+        Client currClient = null;
+        Veterinarian currVeterinarian = null;
+        
+        if (this.data.getId() != null) {
+            currClient = clientController.getById(this.data.getClientId());
+            currVeterinarian = veterinarianController.getById(this.data.getVeterinarianId());
+        }
+        
         this.tutorPanel.add(
-                new SelectFromDatabase(Models.CLIENT),
+                new SelectFromDatabase(Models.CLIENT, currClient),
                 BorderLayout.CENTER
+                
         );
         this.veterinarianPanel.add(
-                new SelectFromDatabase(Models.VETERINARIAN),
+                new SelectFromDatabase(Models.VETERINARIAN, currVeterinarian),
                 BorderLayout.CENTER
         );
+    }
+
+    public Appointment getData() {
+        SelectFromDatabase<Client> tutorSelection = (SelectFromDatabase<Client>) this.tutorPanel.getComponent(0);
+        SelectFromDatabase<Veterinarian> veterinarianSelection = (SelectFromDatabase<Veterinarian>) this.veterinarianPanel.getComponent(0);
+
+        this.data.setClientId(tutorSelection.getData().getId());
+        this.data.setVeterinarianId(veterinarianSelection.getData().getId());
+
+        return this.data;
     }
 
     public void setData(Appointment appointment) {
@@ -326,6 +347,7 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
         appointmentHourSelection = new javax.swing.JComboBox<>();
         tutorPanel = new javax.swing.JPanel();
         veterinarianPanel = new javax.swing.JPanel();
+        refreshAnimalButton = new javax.swing.JButton();
 
         appointmentClientSelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ERROR" }));
         appointmentClientSelection.setPreferredSize(new java.awt.Dimension(300, 30));
@@ -396,6 +418,11 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
                 appointmentAnimalSelectionItemStateChanged(evt);
             }
         });
+        appointmentAnimalSelection.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                appointmentAnimalSelectionMousePressed(evt);
+            }
+        });
 
         appointmentPriceInputField.setModel(new javax.swing.SpinnerNumberModel(0.0f, null, null, 1.0f));
         appointmentPriceInputField.setPreferredSize(new java.awt.Dimension(300, 30));
@@ -439,6 +466,13 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
         veterinarianPanel.setSize(new java.awt.Dimension(300, 30));
         veterinarianPanel.setLayout(new java.awt.BorderLayout());
 
+        refreshAnimalButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/gscavo/veterinaryclinic/icons/refresh.png"))); // NOI18N
+        refreshAnimalButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                refreshAnimalButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -451,7 +485,9 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(appointmentAnimalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(appointmentAnimalSelection, 0, 312, Short.MAX_VALUE))
+                        .addComponent(appointmentAnimalSelection, 0, 1, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(refreshAnimalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -500,7 +536,9 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(appointmentAnimalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(appointmentAnimalSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(appointmentAnimalSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(refreshAnimalButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -537,6 +575,24 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
         updateCostOnData();
     }//GEN-LAST:event_appointmentPriceInputFieldStateChanged
 
+    private void appointmentAnimalSelectionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_appointmentAnimalSelectionMousePressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_appointmentAnimalSelectionMousePressed
+
+    private void refreshAnimalButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshAnimalButtonMouseClicked
+        // TODO add your handling code here:
+        SelectFromDatabase<Client> tutorSelection = (SelectFromDatabase<Client>) this.tutorPanel.getComponent(0);
+        
+        System.out.println("this.data.getClientId() + " + this.data.getClientId().toString());
+        System.out.println("tutorSelection.getData().getId() + " + tutorSelection.getData().getId().toString());
+
+        if (this.data.getClientId() != tutorSelection.getData().getId()) {
+            this.data.setClientId(tutorSelection.getData().getId());
+            this.updateAnimal(false);
+        }
+    }//GEN-LAST:event_refreshAnimalButtonMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel appointmentAnimalLabel;
@@ -553,6 +609,7 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
     private javax.swing.JLabel appointmentVeterinarianLabel;
     private javax.swing.JComboBox<String> appointmentVeterinarianSelection;
     private javax.swing.JSeparator headerSeparator;
+    private javax.swing.JButton refreshAnimalButton;
     private javax.swing.JPanel tutorPanel;
     private javax.swing.JPanel veterinarianPanel;
     // End of variables declaration//GEN-END:variables
