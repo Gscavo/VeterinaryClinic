@@ -38,4 +38,9 @@ public class SymptomController extends BaseController<Symptom> {
                 ConversionUtils.bsonValueToObjectId(result.getInsertedId())
         );
     }
+
+    @Override
+    public String getReadableIdentifier(Symptom symptom) {
+        return symptom.getId().toString();
+    }
 }

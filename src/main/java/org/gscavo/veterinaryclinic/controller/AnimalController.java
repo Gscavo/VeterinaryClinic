@@ -9,6 +9,7 @@ import org.gscavo.veterinaryclinic.model.Animal;
 
 import org.gscavo.veterinaryclinic.model.Client;
 import org.gscavo.veterinaryclinic.model.Species;
+import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import org.gscavo.veterinaryclinic.model.view.AnimalView;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 
@@ -45,6 +46,11 @@ public class AnimalController extends BaseController {
         }
 
         return finalViews;
+    }
+
+    @Override
+    public String getReadableIdentifier(BaseModel animal) {
+        return ((Animal) animal).getName();
     }
 
     public ArrayList<Animal> getAllByClientId(ObjectId clientId) {

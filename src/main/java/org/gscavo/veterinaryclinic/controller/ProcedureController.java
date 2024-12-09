@@ -36,4 +36,9 @@ public class ProcedureController extends BaseController<Procedure> {
 
         return new SystemOperationResult<>(StatusCode.SUCCESS, ConversionUtils.bsonValueToObjectId(result.getInsertedId()));
     }
+
+    @Override
+    public String getReadableIdentifier(Procedure procedure) {
+        return procedure.getName();
+    }
 }

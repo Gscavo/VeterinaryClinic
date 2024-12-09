@@ -88,4 +88,6 @@ public abstract class BaseController<T extends BaseModel> {
     public ArrayList<T> filter(Bson filter) {
         return ConversionUtils.documentsListToTypeList(dao.getCollection().find(filter), classType);
     }
+
+    public abstract String getReadableIdentifier(T object);
 }

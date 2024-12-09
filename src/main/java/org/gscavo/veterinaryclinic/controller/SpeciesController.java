@@ -39,4 +39,9 @@ public class SpeciesController extends BaseController<Species> {
                 ConversionUtils.bsonValueToObjectId(result.getInsertedId())
         );
     }
+
+    @Override
+    public String getReadableIdentifier(Species species) {
+        return species.getName();
+    }
 }

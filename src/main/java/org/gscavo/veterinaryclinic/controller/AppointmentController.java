@@ -13,6 +13,7 @@ import org.gscavo.veterinaryclinic.model.Animal;
 import org.gscavo.veterinaryclinic.model.Appointment;
 import org.gscavo.veterinaryclinic.model.Client;
 import org.gscavo.veterinaryclinic.model.Veterinarian;
+import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import org.gscavo.veterinaryclinic.model.view.AppointmentView;
 import org.gscavo.veterinaryclinic.utils.ConversionUtils;
 
@@ -65,7 +66,12 @@ public class AppointmentController extends BaseController {
 
         return finalViews;
     }
-    
+
+    @Override
+    public String getReadableIdentifier(BaseModel appointment) {
+        return ((Appointment) appointment).getId().toString();
+    }
+
     public List<String> getNextDates() {
         ArrayList<String> dates = new ArrayList<>();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");

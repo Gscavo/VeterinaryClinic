@@ -6,6 +6,7 @@ package org.gscavo.veterinaryclinic.view.panels.register;
 
 import javax.swing.*;
 
+import lombok.Getter;
 import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
@@ -25,6 +26,7 @@ public class RegisterPanel extends javax.swing.JPanel {
     private final String CARD_NAME = "inputPanelCard";
     private Models model;
 
+    @Getter
     private BaseInputPanel baseInputPanel;
 
     /**

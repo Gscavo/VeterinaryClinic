@@ -59,7 +59,12 @@ public class UserController extends BaseController<User>  {
                 ConversionUtils.bsonValueToObjectId(result.getInsertedId())
         );
     }
-    
+
+    @Override
+    public String getReadableIdentifier(User user) {
+        return user.getName();
+    }
+
     public static SystemOperationResult login(String email, String password) {
         if (StringUtils.isEmpty(email) || StringUtils.isEmpty(password)) {
             return new SystemOperationResult(StatusCode.FAILED, "Either email or password is empty.");

@@ -256,7 +256,6 @@ public class DatabaseTable<T extends BaseModel> extends javax.swing.JPanel {
 
     private void dataTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dataTableMouseClicked
         updateSelectedRowColumn();
-        System.out.println();
     }//GEN-LAST:event_dataTableMouseClicked
 
 

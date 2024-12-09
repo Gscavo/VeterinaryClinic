@@ -1,13 +1,19 @@
 package org.gscavo.veterinaryclinic.controller;
 
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.InsertOneResult;
+import org.bson.conversions.Bson;
 import org.gscavo.veterinaryclinic.controller.abstractions.BaseController;
 import org.gscavo.veterinaryclinic.dao.BaseDAO;
 import org.gscavo.veterinaryclinic.dao.SecretaryDAO;
+import org.gscavo.veterinaryclinic.model.Admin;
 import org.gscavo.veterinaryclinic.model.Secretary;
 import org.gscavo.veterinaryclinic.utils.ConversionUtils;
+import org.gscavo.veterinaryclinic.utils.enums.PersonType;
 import org.gscavo.veterinaryclinic.utils.enums.StatusCode;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
+
+import java.util.ArrayList;
 
 public class SecretaryController extends BaseController<Secretary> {
 
@@ -30,6 +36,17 @@ public class SecretaryController extends BaseController<Secretary> {
                 StatusCode.SUCCESS,
                 ConversionUtils.bsonValueToObjectId(result.getInsertedId())
         );
+    }
+
+    @Override
+    public ArrayList<Secretary> filter(Bson filter) {
+        Bson filterAnd = Filters.and(Filters.eq("type", PersonType.SECRETARY), filter);
+        return ConversionUtils.documentsListToTypeList(dao.getCollection().find(filterAnd), classType);
+    }
+
+    @Override
+    public String getReadableIdentifier(Secretary secretary) {
+        return secretary.getName();
     }
 
 }

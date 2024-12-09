@@ -1,10 +1,7 @@
 package org.gscavo.veterinaryclinic.test.dao;
 
-import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.model.Veterinarian;
 
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class VeterinarianDAOTest {
 
@@ -14,7 +11,6 @@ public class VeterinarianDAOTest {
                 .cpf("09190128931")
                 .crmv("123455")
                 .email("pera.dr@gmail.com")
-                .appointmentsList((ArrayList) Collections.singletonList(new ObjectId()))
                 .phoneNumber("18901233214")
                 .build();
     }
