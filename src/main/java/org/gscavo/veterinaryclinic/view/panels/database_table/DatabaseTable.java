@@ -6,13 +6,13 @@ package org.gscavo.veterinaryclinic.view.panels.database_table;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.*;
 import javax.swing.table.TableModel;
 
 import com.mongodb.client.model.Filters;
 import java.awt.Font;
-import javax.swing.JFrame;
+import java.util.Locale;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.conversions.Bson;
@@ -24,6 +24,7 @@ import org.gscavo.veterinaryclinic.utils.StringUtils;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.utils.enums.Models;
+import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 import org.gscavo.veterinaryclinic.view.dialog.UpdateDialog;
 
 /**
@@ -70,8 +71,7 @@ public class DatabaseTable<T extends BaseModel> extends javax.swing.JPanel {
 
         Class<?> viewClass = modelData.getView();
 
-        ArrayList<?> dataList = this.controller
-                .getAllForDatabaseTable();
+        refreshTable();
 
         this.allFieldsFromClass = ObjectUtils.getAllFieldsFromClass(viewClass);
 
@@ -90,8 +90,6 @@ public class DatabaseTable<T extends BaseModel> extends javax.swing.JPanel {
                 Models.getByClassType(this.classType).getLocalString()
         );
 
-        this.setModel(dataList);
-
         this.dataTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 18));
     }
 
@@ -107,6 +105,13 @@ public class DatabaseTable<T extends BaseModel> extends javax.swing.JPanel {
         TableModel model = ViewUtils.generateDataModelFromObjectList(objectList, this.modelData.getView());
 
         this.dataTable.setModel(model);
+    }
+
+    private void refreshTable() {
+        ArrayList<?> dataList = this.controller
+                .getAllForDatabaseTable();
+
+        this.setModel(dataList);
     }
 
     public void updateSelectedRowColumn() {
@@ -132,13 +137,31 @@ public class DatabaseTable<T extends BaseModel> extends javax.swing.JPanel {
         System.out.println("selectedId: " + selectedId);
         System.out.println("selectedData: " + selectedData);
         System.out.println("--------------------------------------");
-        
+
+        if (selectedData.toString().toLowerCase(Locale.ROOT).equals("delete")) {
+            deleteSelectedItem();
+            return;
+        }
+
         new UpdateDialog(
                 (JFrame) this.getTopLevelAncestor(), 
                 true, 
                 Models.getByClassType(classType), 
                 selectedId)
                 .setVisible(true);
+    }
+
+    private void deleteSelectedItem() {
+        int resposta = JOptionPane.showConfirmDialog(
+                null,
+                "Deseja mesmo excluir esse registro?",
+                "Confirme a exclusão",
+                JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION) {
+            SystemOperationResult<ObjectId> systemOperationResult = controller.deleteById(this.selectedId);
+            ViewUtils.showInformationDialog(this, systemOperationResult);
+            refreshTable();
+        }
     }
 
     /**

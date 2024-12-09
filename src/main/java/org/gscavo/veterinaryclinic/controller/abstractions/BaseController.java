@@ -4,6 +4,7 @@
  */
 package org.gscavo.veterinaryclinic.controller.abstractions;
 
+import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
 
@@ -90,4 +91,17 @@ public abstract class BaseController<T extends BaseModel> {
     }
 
     public abstract String getReadableIdentifier(T object);
+
+    public SystemOperationResult<ObjectId> deleteById(ObjectId id) {
+        DeleteResult result = this.dao.deleteById(id);
+
+        if (result == null || !result.wasAcknowledged()) {
+            SystemOperationResult.failedToUpdateResourceSOR(this.classType);
+        }
+
+        return new SystemOperationResult<>(
+                StatusCode.SUCCESS,
+                id
+        );
+    }
 }
