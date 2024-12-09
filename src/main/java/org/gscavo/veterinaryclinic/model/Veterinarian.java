@@ -6,8 +6,6 @@ import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.model.abstractions.Person;
 import org.gscavo.veterinaryclinic.utils.enums.PersonType;
 
-import java.util.ArrayList;
-
 import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomNumericalString;
 import static org.gscavo.veterinaryclinic.utils.DefaultRandomizers.getRandomString;
 

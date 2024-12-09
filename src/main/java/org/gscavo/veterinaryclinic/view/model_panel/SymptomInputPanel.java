@@ -30,19 +30,32 @@ public class SymptomInputPanel extends javax.swing.JPanel implements BaseInputPa
     public SymptomInputPanel() {
         initComponents();
         initControllers();
-        this.data = new Symptom();
+        setData(new Symptom());
     }
     
     public SymptomInputPanel(Symptom symptom) {
         initComponents();
         initControllers();
-        this.data = symptom;
+        setData(symptom);
     }
 
     private void initControllers() {
         this.mainController = (SymptomController) Controllers.getByName(Symptom.class);
     }
 
+    public void setData(Symptom symptom) {
+        this.data = symptom;
+
+        if (data != null && data.getId() != null) {
+            updateFields();
+        }
+    }
+
+    private void updateFields() {
+        this.symptomsDescriptionTextArea.setText(
+                this.data.getDescription()
+        );
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,7 +66,6 @@ public class SymptomInputPanel extends javax.swing.JPanel implements BaseInputPa
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        procedureTypeButtonGroup = new javax.swing.ButtonGroup();
         symptomsHeaderLabel = new javax.swing.JLabel();
         symptomsDescriptionLabel = new javax.swing.JLabel();
         headerSeparator = new javax.swing.JSeparator();
@@ -125,7 +137,6 @@ public class SymptomInputPanel extends javax.swing.JPanel implements BaseInputPa
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSeparator headerSeparator;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.ButtonGroup procedureTypeButtonGroup;
     private javax.swing.JLabel symptomsDescriptionLabel;
     private javax.swing.JTextArea symptomsDescriptionTextArea;
     private javax.swing.JLabel symptomsHeaderLabel;

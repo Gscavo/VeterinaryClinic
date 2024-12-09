@@ -11,6 +11,7 @@ import java.util.stream.IntStream;
 import javax.swing.DefaultComboBoxModel;
 import lombok.Getter;
 import lombok.Setter;
+import org.gscavo.veterinaryclinic.App;
 import org.gscavo.veterinaryclinic.controller.*;
 import org.gscavo.veterinaryclinic.model.*;
 import org.gscavo.veterinaryclinic.utils.ConversionUtils;
@@ -57,18 +58,16 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
      * Creates new form AddressInputPanel
      */
     public AppointmentInputPanel() {
-        this.data = new Appointment();
-        
         initControllers();
         initComponents();
+        setData(new Appointment());
         myInitComponents();
     }
 
     public AppointmentInputPanel(Appointment appointment) {
-        this.data = appointment;
-        
         initControllers();
         initComponents();
+        setData(appointment);
         myInitComponents();
     }
     
@@ -83,13 +82,37 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
     }
     
     private void myInitComponents() {
+        updateDate();
+        updateVeterinarian();
+        updateTutor();
+        updateAnimal(true);
+    }
+
+    public void setData(Appointment appointment) {
+        this.data = appointment;
+
+        if (data.getId() != null) {
+            this.appointmentPriceInputField.setValue(
+                    this.data.getCostAmount()
+            );
+        }
+    }
+
+    private void updateDate() {
+        ArrayList<String> dateFromServer = null;
+
+        if (data != null && data.getId() != null) {
+            dateFromServer = ConversionUtils.parseDayAndHourString(data.getDate());
+        }
 
         this.appointmentDateSelection.setModel(
                 new DefaultComboBoxModel<>(
                         this.mainController.getNextDates().toArray(new String[0])
                 )
         );
-        
+        if (dateFromServer != null) {
+            this.appointmentDateSelection.setSelectedItem(dateFromServer.get(0));
+        }
         this.dayString = (String) this.appointmentDateSelection.getSelectedItem();
 
         this.appointmentHourSelection.setModel(
@@ -98,9 +121,29 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
                 )
         );
 
+        if (dateFromServer != null) {
+            this.appointmentHourSelection.setSelectedItem(dateFromServer.get(1));
+        }
+
         this.hourString = (String) this.appointmentHourSelection.getSelectedItem();
 
         updateDateOnData();
+    }
+
+    private void updateDateOnData() {
+        if (dayString == null || hourString == null) {
+            return;
+        }
+        try {
+            Date date = ConversionUtils.parseBsonDateTime(this.dayString, this.hourString);
+
+            this.data.setDate(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateVeterinarian() {
 
         this.veterinarians = this.veterinarianController.getAllForDatabaseTable();
 
@@ -114,37 +157,32 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
                 )
         );
 
-        updateVeterinarianOnData();
+        if (data != null && data.getId() != null) {
+            int indexOf = -1;
 
-        this.clients = this.clientController.getAllForDatabaseTable();
+            for (int i = 0; i < veterinarians.size(); i++) {
+                if (veterinarians.get(i).getId().equals(data.getVeterinarianId())) {
+                    indexOf = i;
+                    break;
+                }
+            }
 
-        this.appointmentClientSelection.setModel(
-                new DefaultComboBoxModel<>(
-                    IntStream
-                        .range(0, this.clients.size())
-                        .mapToObj(idx -> StringUtils.formatToSelection(idx, this.clients.get(idx).getName()))
-                        .toList()
-                        .toArray(new String[0])
-                            
-                )
-        );
-
-        appointmentClientSelectionItemStateChanged(null);
-    }
-
-    private void updateDateOnData() {
-        try {
-            Date date = ConversionUtils.parseBsonDateTime(this.dayString, this.hourString);
-
-            this.data.setDate(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
+            this.appointmentVeterinarianSelection
+                .setSelectedIndex(
+                    indexOf
+                );
         }
+
+        updateVeterinarianOnData();
     }
 
     private void updateVeterinarianOnData() {
+        int selectedIndex = this.appointmentVeterinarianSelection.getSelectedIndex();
+
+        if (selectedIndex == -1) { return; }
+
         Veterinarian selected = this.veterinarians.get(
-                this.appointmentVeterinarianSelection.getSelectedIndex()
+                selectedIndex
         );
 
         this.data.setVeterinarianId(
@@ -152,9 +190,46 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
         );
     }
 
+    private void updateTutor() {
+        this.clients = this.clientController.getAllForDatabaseTable();
+
+        this.appointmentClientSelection.setModel(
+                new DefaultComboBoxModel<>(
+                        IntStream
+                                .range(0, this.clients.size())
+                                .mapToObj(idx -> StringUtils.formatToSelection(idx, this.clients.get(idx).getName()))
+                                .toList()
+                                .toArray(new String[0])
+
+                )
+        );
+
+        if (data != null && data.getId() != null) {
+            int indexOf = -1;
+
+            for (int i = 0; i < clients.size(); i++) {
+                if (clients.get(i).getId().equals(data.getClientId())) {
+                    indexOf = i;
+                    break;
+                }
+            }
+
+            this.appointmentClientSelection
+                    .setSelectedIndex(
+                            indexOf
+                    );
+        }
+
+        updateTutorOnData();
+    }
+
     private void updateTutorOnData() {
+        int selectedIndex = this.appointmentClientSelection.getSelectedIndex();
+
+        if (selectedIndex == -1) { return; }
+
         Client selected = this.clients.get(
-                this.appointmentClientSelection.getSelectedIndex()
+                selectedIndex
         );
 
         this.data.setClientId(
@@ -162,13 +237,56 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
         );
     }
 
+    private void updateAnimal(Boolean init) {
+        this.animals = animalController.getAllByClientId(this.data.getClientId());
+
+        this.appointmentAnimalSelection.setModel(
+                new DefaultComboBoxModel<>(
+                        IntStream
+                                .range(0, this.animals.size())
+                                .mapToObj(idx -> StringUtils.formatToSelection(idx, this.animals.get(idx).getName()))
+                                .toList()
+                                .toArray(new String[0])
+                )
+        );
+
+        if (data != null && data.getId() != null && init) {
+            int indexOf = -1;
+
+            for (int i = 0; i < animals.size(); i++) {
+                if (animals.get(i).getId().equals(data.getAnimalId())) {
+                    indexOf = i;
+                    break;
+                }
+            }
+
+            this.appointmentAnimalSelection
+                .setSelectedIndex(
+                        indexOf
+                );
+
+        }
+
+        updateAnimalOnData();
+    }
+
     private void updateAnimalOnData() {
+        int selectedIndex = this.appointmentAnimalSelection.getSelectedIndex();
+
+        if (selectedIndex == -1) { return; }
+
         Animal selected = this.animals.get(
-                this.appointmentAnimalSelection.getSelectedIndex()
+                selectedIndex
         );
 
         this.data.setAnimalId(
                 selected.getId()
+        );
+    }
+
+    private void updateCostOnData() {
+        this.data.setCostAmount(
+                (float) this.appointmentPriceInputField.getValue()
         );
     }
 
@@ -368,20 +486,7 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
 
     private void appointmentClientSelectionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_appointmentClientSelectionItemStateChanged
         updateTutorOnData();
-        
-        this.animals = animalController.getAllByClientId(this.data.getClientId());
-
-        this.appointmentAnimalSelection.setModel(
-               new DefaultComboBoxModel<>(
-                       IntStream
-                               .range(0, this.animals.size())
-                       .mapToObj(idx -> StringUtils.formatToSelection(idx, this.animals.get(idx).getName()))
-                       .toList()
-                       .toArray(new String[0])
-               )
-        );
-
-        updateAnimalOnData();
+        updateAnimal(false);
     }//GEN-LAST:event_appointmentClientSelectionItemStateChanged
 
     private void appointmentDateSelectionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_appointmentDateSelectionItemStateChanged
@@ -408,9 +513,7 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
 
     private void appointmentPriceInputFieldStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_appointmentPriceInputFieldStateChanged
         // TODO add your handling code here:
-        this.data.setCostAmount(
-                (float) this.appointmentPriceInputField.getValue()
-        );
+        updateCostOnData();
     }//GEN-LAST:event_appointmentPriceInputFieldStateChanged
 
 

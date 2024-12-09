@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.gscavo.veterinaryclinic.controller.ProcedureController;
 import org.gscavo.veterinaryclinic.model.Procedure;
+import org.gscavo.veterinaryclinic.model.Species;
+import org.gscavo.veterinaryclinic.model.Symptom;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
 import org.gscavo.veterinaryclinic.utils.enums.ProcedureType;
@@ -32,19 +34,50 @@ public class ProcedureInputPanel extends javax.swing.JPanel implements BaseInput
     public ProcedureInputPanel() {
         initComponents();
         initControllers();
-        this.data = new Procedure();
+        setData(new Procedure());
     }
     
     public ProcedureInputPanel(Procedure procedure) {
         initComponents();
         initControllers();
-        this.data = procedure;
+        setData(procedure);
     }
 
     private void initControllers() {
         this.mainController = (ProcedureController) Controllers.getByName(Procedure.class);
     }
 
+    public void setData(Procedure procedure) {
+        this.data = procedure;
+
+        if (data != null && data.getId() != null) {
+            updateFields();
+        }
+    }
+
+    private void updateFields() {
+        this.procedureNameInputField.setText(
+                this.data.getName()
+        );
+
+        this.procedurePriceInputField.setValue(
+                this.data.getPrice()
+        );
+
+        this.procedureDescriptionTextArea.setText(
+                this.data.getDescription()
+        );
+
+        switch (this.data.getType()) {
+            case EXAM:
+                this.examRadioButton.setSelected(true);
+                break;
+            case TREATMENT:
+                this.treatmentRadioButton.setSelected(true);
+                break;
+
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

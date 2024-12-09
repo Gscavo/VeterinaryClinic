@@ -28,15 +28,15 @@ public class SpeciesInputPanel extends javax.swing.JPanel implements BaseInputPa
      * Creates new form AddressInputPanel
      */
     public SpeciesInputPanel() {
-        this.data = new Species();
         initComponents();
         initControllers();
+        setData(new Species());
     }
     
     public SpeciesInputPanel(Species species) {
-        this.data = species;
         initComponents();
         initControllers();
+        setData(species);
     }
 
     private void initControllers() {
@@ -45,6 +45,28 @@ public class SpeciesInputPanel extends javax.swing.JPanel implements BaseInputPa
 
     private void myInitComponents() {
 
+    }
+
+    public void setData(Species species) {
+        this.data = species;
+
+        if (data != null && data.getId() != null) {
+            updateFields();
+        }
+    }
+
+    private void updateFields() {
+        this.speciesNameInputField.setText(
+                this.data.getName()
+        );
+
+        this.speciesScientificNameInputField.setText(
+                this.data.getScientificName()
+        );
+
+        this.speciesDescriptionTextArea.setText(
+                this.data.getDescription()
+        );
     }
 
     /**
@@ -56,7 +78,6 @@ public class SpeciesInputPanel extends javax.swing.JPanel implements BaseInputPa
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        procedureTypeButtonGroup = new javax.swing.ButtonGroup();
         speciesHeaderLabel = new javax.swing.JLabel();
         speciesNameLabel = new javax.swing.JLabel();
         speciesDescriptionLabel = new javax.swing.JLabel();
@@ -192,7 +213,6 @@ public class SpeciesInputPanel extends javax.swing.JPanel implements BaseInputPa
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSeparator headerSeparator;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.ButtonGroup procedureTypeButtonGroup;
     private javax.swing.JLabel speciesDescriptionLabel;
     private javax.swing.JTextArea speciesDescriptionTextArea;
     private javax.swing.JLabel speciesHeaderLabel;
