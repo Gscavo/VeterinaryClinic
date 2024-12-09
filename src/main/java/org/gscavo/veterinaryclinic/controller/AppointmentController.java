@@ -3,11 +3,16 @@ package org.gscavo.veterinaryclinic.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import com.mongodb.client.model.Filters;
 import lombok.Getter;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.gscavo.veterinaryclinic.model.*;
 import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
+import org.gscavo.veterinaryclinic.model.view.AppointmentSimpleView;
 import org.gscavo.veterinaryclinic.model.view.AppointmentView;
 import org.gscavo.veterinaryclinic.utils.ConversionUtils;
 
@@ -29,6 +34,50 @@ public class AppointmentController extends BaseController {
 
     public ArrayList<Appointment> getAllRaw() {
         return this.dao.findAll();
+    }
+
+    public ArrayList<Appointment> getAllToday() {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date startOfToday = calendar.getTime();
+
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        Date startOfTomorrow = calendar.getTime();
+
+        Bson filter = Filters.and(Filters.gte("date", startOfToday), Filters.lte("date", startOfTomorrow));
+
+        return this.filter(filter);
+    }
+
+    public ArrayList<AppointmentSimpleView> getAllForSimpleView(ArrayList<Appointment> appointments) {
+        initAdditionalControllers();
+        ArrayList<AppointmentSimpleView> finalViews = new ArrayList<>();
+        for (Appointment appointment : appointments) {
+            Animal animal = (Animal) animalController.getById(appointment.getAnimalId());
+
+            Client client = clientController.getById(appointment.getClientId());
+
+            ArrayList<String> dateStrings = ConversionUtils.parseDayAndHourString(appointment.getDate());
+
+            AppointmentSimpleView appointmentView = AppointmentSimpleView
+                    .builder()
+                    .id(appointment.getId())
+                    .price(appointment.getCostAmount())
+                    .date(dateStrings.get(0))
+                    .time(dateStrings.get(1))
+                    .status(appointment.getStatus())
+                    .animalName(animal == null ? "Animal não encontrado" : animal.getName())
+                    .tutorName(client == null ? "Tutor não encontrado" : client.getName())
+                    .build();
+
+            finalViews.add(appointmentView);
+        }
+
+        return finalViews;
     }
 
     @Override

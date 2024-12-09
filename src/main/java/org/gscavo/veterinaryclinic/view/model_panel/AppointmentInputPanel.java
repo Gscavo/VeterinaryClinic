@@ -98,14 +98,15 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
             currClient = clientController.getById(this.data.getClientId());
             currVeterinarian = veterinarianController.getById(this.data.getVeterinarianId());
         }
-        
+
         this.tutorPanel.add(
-                new SelectFromDatabase(Models.CLIENT, currClient),
+                new SelectFromDatabase<>(Models.CLIENT, currClient),
                 BorderLayout.CENTER
                 
         );
+
         this.veterinarianPanel.add(
-                new SelectFromDatabase(Models.VETERINARIAN, currVeterinarian),
+                new SelectFromDatabase<>(Models.VETERINARIAN, currVeterinarian),
                 BorderLayout.CENTER
         );
     }
@@ -122,6 +123,8 @@ public class AppointmentInputPanel extends javax.swing.JPanel implements BaseInp
 
     public void setData(Appointment appointment) {
         this.data = appointment;
+
+
 
         if (data.getId() != null) {
             this.appointmentPriceInputField.setValue(

@@ -4,17 +4,70 @@
  */
 package org.gscavo.veterinaryclinic.view.panels;
 
+import org.gscavo.veterinaryclinic.utils.ViewUtils;
+import org.gscavo.veterinaryclinic.view.model_panel.AppointmentInputPanel;
+import org.gscavo.veterinaryclinic.view.tables.TodayAppointmentsTable;
+
+import javax.swing.*;
+import org.gscavo.veterinaryclinic.controller.AppointmentController;
+import org.gscavo.veterinaryclinic.model.Appointment;
+import org.gscavo.veterinaryclinic.utils.enums.AppointmentStatus;
+import org.gscavo.veterinaryclinic.utils.enums.Controllers;
+
 /**
  *
  * @author gscavo
  */
-public class todayAppointments extends javax.swing.JPanel {
+public class TodayAppointments extends javax.swing.JPanel {
 
+    private TodayAppointmentsTable table;
+    
+    private AppointmentController controller;
+    
+    private Appointment selectedData;
+    
     /**
      * Creates new form todayAppointments
      */
-    public todayAppointments() {
+    public TodayAppointments() {
         initComponents();
+        myInitComponents();
+    }
+    
+    private void myInitComponents() {
+        myInitController();
+        this.table = new TodayAppointmentsTable (
+                this
+                );
+        
+        this.leftTabbedPanel.addTab(
+                "Hoje",
+                this.table
+        );
+                
+    }
+    
+    private void myInitController() {
+        this.controller = (AppointmentController) Controllers.APPOINTMENT.getController();
+    }
+
+    public void updatedDatabaseSelection () {
+        this.selectedData = this.table.getSelectedData();
+        
+        this.appointmentInputPanel = new AppointmentInputPanel(
+                selectedData
+        );
+
+        this.appointmentViewPanel.removeAll();
+        this.appointmentViewPanel.add(this.appointmentInputPanel);
+        
+        if (this.selectedData.getStatus() == AppointmentStatus.CANCELED) {
+            this.deleteButton.setEnabled(true);
+        } else {
+            this.deleteButton.setEnabled(false);
+        }
+
+        ViewUtils.updateScreen((JFrame) this.getTopLevelAncestor(), true);
     }
 
     /**
@@ -25,44 +78,22 @@ public class todayAppointments extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         leftTabbedPanel = new javax.swing.JTabbedPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        databaseTable = new javax.swing.JTable();
         rightPanel = new javax.swing.JPanel();
-        appointmentViewPanel = new org.gscavo.veterinaryclinic.view.model_panel.AppointmentInputPanel();
         buttonRow = new javax.swing.JPanel();
         clientAppearedButton = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
+        didntAppearedButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        appointmentViewPanel = new javax.swing.JPanel();
+        appointmentInputPanel = new org.gscavo.veterinaryclinic.view.model_panel.AppointmentInputPanel();
 
         setLayout(new java.awt.GridLayout(1, 2));
-
-        databaseTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(databaseTable);
-
-        leftTabbedPanel.addTab("tab3", jScrollPane1);
-
         add(leftTabbedPanel);
 
         rightPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         rightPanel.setLayout(new java.awt.BorderLayout());
-
-        appointmentViewPanel.setEnabled(false);
-        appointmentViewPanel.setFocusable(false);
-        rightPanel.add(appointmentViewPanel, java.awt.BorderLayout.CENTER);
 
         buttonRow.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         buttonRow.setPreferredSize(new java.awt.Dimension(460, 80));
@@ -70,42 +101,99 @@ public class todayAppointments extends javax.swing.JPanel {
         buttonRow.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
 
         clientAppearedButton.setText("Presente");
-        buttonRow.add(clientAppearedButton);
-
-        jButton3.setText("Adicionar Procedimento");
-        buttonRow.add(jButton3);
-
-        jButton2.setText("Não Veio");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        clientAppearedButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                clientAppearedButtonActionPerformed(evt);
             }
         });
-        buttonRow.add(jButton2);
+        buttonRow.add(clientAppearedButton);
 
-        jButton1.setText("Adicionar Sintomas");
-        jButton1.setToolTipText("");
-        buttonRow.add(jButton1);
+        cancelButton.setText("Cancelar");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+        buttonRow.add(cancelButton);
+
+        didntAppearedButton.setText("Não Veio");
+        didntAppearedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                didntAppearedButtonActionPerformed(evt);
+            }
+        });
+        buttonRow.add(didntAppearedButton);
+
+        deleteButton.setText("Apagar");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+        buttonRow.add(deleteButton);
 
         rightPanel.add(buttonRow, java.awt.BorderLayout.PAGE_END);
+
+        appointmentViewPanel.setLayout(new java.awt.BorderLayout());
+        appointmentViewPanel.add(appointmentInputPanel, java.awt.BorderLayout.CENTER);
+
+        rightPanel.add(appointmentViewPanel, java.awt.BorderLayout.CENTER);
 
         add(rightPanel);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void clientAppearedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientAppearedButtonActionPerformed
+        this.selectedData.setStatus(AppointmentStatus.REALIZED);
+        
+        this.controller.update(this.selectedData);
+        
+        this.table.updateModel();
+        
+        ViewUtils.updateScreen((JFrame) this.getTopLevelAncestor(), Boolean.TRUE);
+    }//GEN-LAST:event_clientAppearedButtonActionPerformed
+
+    private void didntAppearedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_didntAppearedButtonActionPerformed
+        this.selectedData.setStatus(AppointmentStatus.DIDNT_SHOW);
+        
+        this.controller.update(this.selectedData);
+        
+        this.table.updateModel();
+        
+        ViewUtils.updateScreen((JFrame) this.getTopLevelAncestor(), Boolean.TRUE);
+    }//GEN-LAST:event_didntAppearedButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        if (!this.deleteButton.isEnabled()) { return; }
+        
+        int result = JOptionPane.showConfirmDialog(rightPanel, "Tem certeza que deseja deletar essa consulta?");
+        
+        if (result == JOptionPane.YES_OPTION) {
+            this.controller.deleteById(this.selectedData.getId());
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.deleteButton.setEnabled(true);
+        
+        this.selectedData.setStatus(AppointmentStatus.CANCELED);
+        
+        this.controller.update(this.selectedData);
+        
+        this.table.updateModel();
+        
+        ViewUtils.updateScreen((JFrame) this.getTopLevelAncestor(), Boolean.TRUE);
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.gscavo.veterinaryclinic.view.model_panel.AppointmentInputPanel appointmentViewPanel;
+    private org.gscavo.veterinaryclinic.view.model_panel.AppointmentInputPanel appointmentInputPanel;
+    private javax.swing.JPanel appointmentViewPanel;
     private javax.swing.JPanel buttonRow;
+    private javax.swing.JButton cancelButton;
     private javax.swing.JButton clientAppearedButton;
-    private javax.swing.JTable databaseTable;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JButton didntAppearedButton;
     private javax.swing.JTabbedPane leftTabbedPanel;
     private javax.swing.JPanel rightPanel;
     // End of variables declaration//GEN-END:variables

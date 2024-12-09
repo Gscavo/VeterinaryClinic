@@ -2,6 +2,7 @@ package org.gscavo.veterinaryclinic.view.menu;
 
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
 import org.gscavo.veterinaryclinic.view.MainUserFrame;
+import org.gscavo.veterinaryclinic.view.panels.TodayAppointments;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -10,12 +11,10 @@ import java.awt.event.MouseListener;
 public class GoToMainScreenMenu extends JMenu {
 
     private MainUserFrame frame;
-    private JPanel mainScreen;
 
-    public GoToMainScreenMenu(MainUserFrame frame, JPanel panel) {
+    public GoToMainScreenMenu(MainUserFrame frame) {
         super();
         this.frame = frame;
-        this.mainScreen = panel;
         myInitComponents();
         this.setIcon(
                 new ImageIcon("src/main/resources/org/gscavo/veterinaryclinic/icons/home.png")
@@ -33,10 +32,10 @@ public class GoToMainScreenMenu extends JMenu {
         return new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("Hey");
+
 
                 mainPanel.removeAll();
-                mainPanel.add(mainScreen);
+                mainPanel.add(new TodayAppointments());
 
                 ViewUtils.updateScreen(frame, true);
             }

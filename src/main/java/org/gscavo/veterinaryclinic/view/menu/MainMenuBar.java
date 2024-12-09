@@ -11,6 +11,7 @@ import javax.swing.event.MenuListener;
 import lombok.Getter;
 import org.gscavo.veterinaryclinic.utils.enums.Models;
 import org.gscavo.veterinaryclinic.view.MainUserFrame;
+import org.gscavo.veterinaryclinic.view.panels.TodayAppointments;
 import org.gscavo.veterinaryclinic.view.panels.mainScreen.MainScreenPanel;
 
 /**
@@ -45,8 +46,7 @@ public class MainMenuBar extends JMenuBar {
         findMenu = new JMenu(findMenuLabel);
 
         mainScreenMenu = new GoToMainScreenMenu(
-                this.frame,
-                new MainScreenPanel()
+                this.frame
         );
 
         add(mainScreenMenu);
