@@ -90,4 +90,12 @@ public class ViewUtils {
                 icon
         );
     }
+
+    public static void updateScreen(JFrame frame,  Boolean pack) {
+        if (pack != null && pack) {
+            frame.pack();
+        }
+
+        frame.repaint();
+    }
 }

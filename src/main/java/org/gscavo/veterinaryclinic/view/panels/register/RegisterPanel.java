@@ -8,13 +8,13 @@ import javax.swing.*;
 
 import lombok.Getter;
 import org.gscavo.veterinaryclinic.model.abstractions.BaseModel;
+import org.gscavo.veterinaryclinic.view.MainUserFrame;
 import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 
 import java.awt.*;
 import org.bson.types.ObjectId;
 import org.gscavo.veterinaryclinic.utils.ViewUtils;
 import org.gscavo.veterinaryclinic.utils.enums.Models;
-import org.gscavo.veterinaryclinic.utils.exceptions.ExceptionOutput;
 import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
 
 /**
@@ -23,7 +23,7 @@ import org.gscavo.veterinaryclinic.utils.information.SystemOperationResult;
  */
 public class RegisterPanel extends javax.swing.JPanel {
 
-    private final String CARD_NAME = "inputPanelCard";
+    private JFrame frame;
     private Models model;
 
     @Getter
@@ -36,8 +36,9 @@ public class RegisterPanel extends javax.swing.JPanel {
         initComponents();
     }
     
-    public RegisterPanel(Models model) {
+    public RegisterPanel(MainUserFrame mainUserFrame, Models model) {
         this.model = model;
+        this.frame = mainUserFrame;
         initComponents();
         myInitComponents();
     }
@@ -45,8 +46,12 @@ public class RegisterPanel extends javax.swing.JPanel {
     private <T extends BaseInputPanel> void myInitComponents() {
         try {
             this.baseInputPanel = (T) this.model.getInputPanelClass().getDeclaredConstructor().newInstance();
+            if (mainPanel.getComponentCount() > 0) {
+                mainPanel.removeAll();
+            }
             mainPanel.add((JPanel) this.baseInputPanel, BorderLayout.CENTER);
             setCalculatedPreferredSize();
+            ViewUtils.updateScreen(frame,false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -121,6 +126,8 @@ public class RegisterPanel extends javax.swing.JPanel {
                 .register((BaseModel<?>) this.baseInputPanel.getData());
 
         ViewUtils.showInformationDialog(this, res);
+
+        myInitComponents();
 
     }//GEN-LAST:event_registerButtonActionPerformed
 

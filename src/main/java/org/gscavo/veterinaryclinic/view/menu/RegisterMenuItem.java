@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+
+import org.gscavo.veterinaryclinic.utils.ViewUtils;
 import org.gscavo.veterinaryclinic.utils.enums.Models;
 import org.gscavo.veterinaryclinic.view.MainUserFrame;
 import org.gscavo.veterinaryclinic.view.panels.register.RegisterPanel;
@@ -47,7 +49,7 @@ public class RegisterMenuItem extends JMenuItem {
     }
     
     private void menuItemActionPerformed(ActionEvent evt) {
-        RegisterPanel registerPanel = new RegisterPanel(this.model);
+        RegisterPanel registerPanel = new RegisterPanel(frame, this.model);
         int numberOfComponents = this.mainPanel.getComponentCount();
         
         if (numberOfComponents > 0) {
@@ -59,7 +61,7 @@ public class RegisterMenuItem extends JMenuItem {
             BorderLayout.CENTER
         );
         
-        this.frame.updateScreen(false);
+        ViewUtils.updateScreen(this.frame, false);
 
         this.frame.setSize(
                 registerPanel.getPreferredSize()

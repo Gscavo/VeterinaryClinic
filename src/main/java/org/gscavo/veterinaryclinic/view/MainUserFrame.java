@@ -4,8 +4,8 @@
  */
 package org.gscavo.veterinaryclinic.view;
 
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
+import javax.swing.*;
+
 import org.gscavo.veterinaryclinic.view.menu.RegisterMenuItem;
 import org.gscavo.veterinaryclinic.utils.enums.Models;
 import org.gscavo.veterinaryclinic.view.menu.MainMenuBar;
@@ -61,14 +61,6 @@ public class MainUserFrame extends javax.swing.JFrame {
 
     public JPanel getMainPanel() {
         return this.mainPanel;
-    }
-
-    public void updateScreen(Boolean pack) {
-        if (pack != null && pack) {
-            this.pack();
-        }
-
-        this.repaint();
     }
 
     /**

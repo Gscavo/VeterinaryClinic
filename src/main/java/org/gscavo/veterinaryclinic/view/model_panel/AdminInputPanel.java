@@ -5,6 +5,7 @@
 package org.gscavo.veterinaryclinic.view.model_panel;
 
 import lombok.Getter;
+import org.gscavo.veterinaryclinic.controller.AdminController;
 import org.gscavo.veterinaryclinic.controller.ClientController;
 import org.gscavo.veterinaryclinic.model.Admin;
 import org.gscavo.veterinaryclinic.model.Client;
@@ -19,7 +20,7 @@ import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 public class AdminInputPanel extends javax.swing.JPanel implements BaseInputPanel<Admin> {
 
     @Getter
-    private ClientController mainController;
+    private AdminController mainController;
     
     /**
      * Creates new form ClientInputPanel
@@ -39,7 +40,7 @@ public class AdminInputPanel extends javax.swing.JPanel implements BaseInputPane
     }
 
     private void initControllers() {
-        this.mainController = (ClientController) Controllers.getByName(Client.class);
+        this.mainController = (AdminController) Controllers.getByName(Admin.class);
     };
 
     private void myInitComponents() {

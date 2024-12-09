@@ -6,6 +6,7 @@ package org.gscavo.veterinaryclinic.view.model_panel;
 
 import lombok.Getter;
 import org.gscavo.veterinaryclinic.controller.ClientController;
+import org.gscavo.veterinaryclinic.controller.SecretaryController;
 import org.gscavo.veterinaryclinic.model.Client;
 import org.gscavo.veterinaryclinic.model.Secretary;
 import org.gscavo.veterinaryclinic.utils.enums.Controllers;
@@ -19,7 +20,7 @@ import org.gscavo.veterinaryclinic.view.model_panel.abstractions.BaseInputPanel;
 public class SecretaryInputPanel extends javax.swing.JPanel implements BaseInputPanel<Secretary> {
 
     @Getter
-    private ClientController mainController;
+    private SecretaryController mainController;
     
     /**
      * Creates new form ClientInputPanel
@@ -39,7 +40,7 @@ public class SecretaryInputPanel extends javax.swing.JPanel implements BaseInput
     }
 
     private void initControllers() {
-        this.mainController = (ClientController) Controllers.getByName(Client.class);
+        this.mainController = (SecretaryController) Controllers.getByName(Secretary.class);
     };
 
     private void myInitComponents() {

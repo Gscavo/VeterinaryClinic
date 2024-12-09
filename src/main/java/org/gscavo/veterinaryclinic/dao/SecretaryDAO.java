@@ -1,12 +1,34 @@
 package org.gscavo.veterinaryclinic.dao;
 
+import com.mongodb.client.model.Filters;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
+import org.gscavo.veterinaryclinic.model.Admin;
 import org.gscavo.veterinaryclinic.model.Secretary;
+import org.gscavo.veterinaryclinic.utils.enums.PersonType;
+
+import java.util.ArrayList;
 
 public class SecretaryDAO extends PersonDAO<Secretary> {
 
     public SecretaryDAO() {
         super(Secretary.class);
+    }
+
+    @Override
+    public ArrayList<Secretary> findAll() {
+        Bson filter = Filters.eq("type", PersonType.SECRETARY);
+
+        ArrayList<Secretary> allSecretaries = new ArrayList<>();
+
+        for (Document document : this.collection.find(filter)) {
+            Secretary secretary = new Secretary(document);
+
+            allSecretaries.add(secretary);
+        }
+
+        return allSecretaries;
     }
 
     @Override

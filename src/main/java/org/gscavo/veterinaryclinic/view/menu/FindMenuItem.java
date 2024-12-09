@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+
+import org.gscavo.veterinaryclinic.utils.ViewUtils;
 import org.gscavo.veterinaryclinic.utils.enums.Models;
 import org.gscavo.veterinaryclinic.view.MainUserFrame;
 import org.gscavo.veterinaryclinic.view.panels.database_table.DatabaseTable;
@@ -52,6 +54,6 @@ public class FindMenuItem extends JMenuItem {
         
         this.mainPanel.add(table, BorderLayout.CENTER);
        
-        this.frame.updateScreen(true);
+        ViewUtils.updateScreen(this.frame, true);
     }
  }

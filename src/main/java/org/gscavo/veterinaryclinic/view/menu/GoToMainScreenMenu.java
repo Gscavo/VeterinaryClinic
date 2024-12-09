@@ -1,5 +1,6 @@
 package org.gscavo.veterinaryclinic.view.menu;
 
+import org.gscavo.veterinaryclinic.utils.ViewUtils;
 import org.gscavo.veterinaryclinic.view.MainUserFrame;
 
 import javax.swing.*;
@@ -37,7 +38,7 @@ public class GoToMainScreenMenu extends JMenu {
                 mainPanel.removeAll();
                 mainPanel.add(mainScreen);
 
-                frame.updateScreen(true);
+                ViewUtils.updateScreen(frame, true);
             }
 
             @Override
